@@ -74,94 +74,95 @@ st.markdown("""
 
 # ── Imágenes por tema ─────────────────────────────────────────
 # Todas de Wikipedia Commons (licencia libre)
+_BASE = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/"
 IMAGENES = {
     "manguito_rotador": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gray412.png/500px-Gray412.png",
-        "titulo": "🦴 Manguito rotador — Gray's Anatomy",
-        "caption": "Vista posterior del hombro. Identifica los 4 músculos del SITS."
+        "url": _BASE + "Shoulderjoint.PNG&width=600",
+        "titulo": "🦴 Manguito rotador — articulación del hombro",
+        "caption": "Vista anterior. Identifica los 4 músculos del SITS: Supraespinoso, Infraespinoso, Teres minor, Subescapular."
     },
     "plexo_braquial": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Brachial_plexus_color.svg/700px-Brachial_plexus_color.svg.png",
+        "url": _BASE + "Brachial_plexus_color.svg&width=700",
         "titulo": "🧠 Plexo braquial (C5–T1)",
         "caption": "Raíces → Troncos → Divisiones → Fascículos → Nervios terminales"
     },
     "huesos_ms": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Arm_bones.jpg/350px-Arm_bones.jpg",
-        "titulo": "🦴 Huesos del miembro superior",
-        "caption": "Clavícula, escápula, húmero, radio, cúbito y carpo"
+        "url": _BASE + "Gray207.png&width=500",
+        "titulo": "🦴 Húmero — hueso del miembro superior",
+        "caption": "Cabeza, cuello anatómico, troquíter, troquín, surco bicipital, epicóndilos"
     },
     "huesos_mi": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Leg_anterior_labeled.jpg/300px-Leg_anterior_labeled.jpg",
-        "titulo": "🦴 Huesos del miembro inferior",
-        "caption": "Coxal, fémur, rótula, tibia, peroné y tarso"
+        "url": _BASE + "Gray243.png&width=500",
+        "titulo": "🦴 Fémur — hueso del miembro inferior",
+        "caption": "Cabeza, cuello, trocánteres, cóndilos medial y lateral"
     },
     "rodilla": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Knee_diagram.svg/500px-Knee_diagram.svg.png",
+        "url": _BASE + "Knee_diagram.svg&width=600",
         "titulo": "🦵 Articulación de la rodilla",
         "caption": "LCA, LCP, LCM, LCL y meniscos medial y lateral"
     },
     "huesos_craneo": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Human_skull_side_simplified_%28bones%29.svg/600px-Human_skull_side_simplified_%28bones%29.svg.png",
+        "url": _BASE + "Human_skull_side_simplified_%28bones%29.svg&width=650",
         "titulo": "💀 Huesos del cráneo — vista lateral",
         "caption": "Neurocráneo (8 huesos): frontal, parietales, occipital, temporales, esfenoides, etmoides"
     },
     "craneo_foramenes": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Cranial_bones_en.svg/700px-Cranial_bones_en.svg.png",
+        "url": _BASE + "Gray193.png&width=650",
         "titulo": "💀 Base del cráneo — forámenes",
         "caption": "Fosa anterior, media y posterior con sus forámenes"
     },
     "nervios_craneales": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Cranial_nerve_components_english.svg/700px-Cranial_nerve_components_english.svg.png",
+        "url": _BASE + "Cranial_nerve_components_english.svg&width=700",
         "titulo": "🧠 Los 12 nervios craneales",
         "caption": "Origen y función de cada par craneal"
     },
     "columna": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Human_vertebral_column.svg/280px-Human_vertebral_column.svg.png",
+        "url": _BASE + "Human_vertebral_column.svg&width=400",
         "titulo": "🦴 Columna vertebral",
         "caption": "Regiones cervical (7), torácica (12), lumbar (5), sacra y coccígea"
     },
     "atlas_axis": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Gray86.png/400px-Gray86.png",
+        "url": _BASE + "Gray86.png&width=500",
         "titulo": "🦴 Atlas (C1) y Axis (C2)",
         "caption": "C1 = flexoextensión (decir SÍ) · C2 = rotación (decir NO)"
     },
     "carpo_tarso": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Carpus.svg/450px-Carpus.svg.png",
+        "url": _BASE + "Gray219.png&width=500",
         "titulo": "🦴 Huesos del carpo",
-        "caption": "Fila proximal: E-S-P-P / Fila distal: T-T-G-G"
+        "caption": "Fila proximal: E-S-P-P / Fila distal: T-T-G-G (Escafoides, Semilunar, Piramidal, Pisiforme)"
     },
     "nervios_mmii": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Nerves_of_the_right_lower_extremity.jpg/350px-Nerves_of_the_right_lower_extremity.jpg",
+        "url": _BASE + "Gray826and831.PNG&width=550",
         "titulo": "🧠 Nervios del miembro inferior",
         "caption": "Plexo lumbar (femoral, obturador) y plexo sacro (ciático, tibial, peroneo)"
     },
     "articulacion_hombro": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Shoulder_joint.svg/500px-Shoulder_joint.svg.png",
+        "url": _BASE + "Gray327.png&width=550",
         "titulo": "🦴 Articulación glenohumeral",
         "caption": "Cabeza del húmero, cavidad glenoidea, labrum y ligamentos"
     },
     "musculos_ms": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Arm_muscles_front.png/350px-Arm_muscles_front.png",
-        "titulo": "💪 Músculos del miembro superior",
-        "caption": "Compartimentos anterior (flexores) y posterior (extensores)"
+        "url": _BASE + "Gray413.png&width=500",
+        "titulo": "💪 Músculos del brazo — compartimento anterior",
+        "caption": "Bíceps braquial (cabeza larga y corta), braquial anterior, coracobraquial"
     },
     "musculos_mi": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Anterior_Hip_Muscles_2.PNG/350px-Anterior_Hip_Muscles_2.PNG",
-        "titulo": "🦵 Músculos del miembro inferior",
-        "caption": "Glúteos, cuádriceps, isquiotibiales, aductores y músculos de la pierna"
+        "url": _BASE + "Gray430.png&width=500",
+        "titulo": "🦵 Músculos del muslo — compartimento anterior",
+        "caption": "Cuádriceps femoral: recto femoral, vasto medial, lateral e intermedio"
     },
     "arterias_ms_mi": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Blausen_0609_LegArteries.png/350px-Blausen_0609_LegArteries.png",
+        "url": _BASE + "Gray549.png&width=500",
         "titulo": "🩸 Arterias del miembro inferior",
-        "caption": "Ilíaca → Femoral → Poplítea → Tibial anterior y posterior"
+        "caption": "Ilíaca externa → Femoral → Poplítea → Tibial anterior y posterior"
     },
     "ligamentos_columna": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Spinal_ligaments.jpg/400px-Spinal_ligaments.jpg",
+        "url": _BASE + "Gray301.png&width=550",
         "titulo": "🦴 Ligamentos de la columna vertebral",
         "caption": "LLA, LLP, ligamento amarillo, interespinosos y supraespinoso"
     },
     "disco_intervertebral": {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Cervical_vertebra_english.png/500px-Cervical_vertebra_english.png",
+        "url": _BASE + "Gray_111_-_Vertebral_column.png&width=500",
         "titulo": "🦴 Disco intervertebral y vértebra",
         "caption": "Núcleo pulposo y anillo fibroso. Hernia posterolateral."
     },
