@@ -11,125 +11,160 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── CSS global ──────────────────────────────────────────────
+# ── CSS ──────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  /* Fondo oscuro suave */
   .stApp { background: #0f1117; }
-
-  /* Tarjeta de esquema */
   .schema-card {
     background: #1a1d2e;
     border: 1px solid #3a3f5c;
     border-radius: 12px;
     padding: 18px 20px;
     font-family: 'Courier New', monospace;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
     color: #e2e8f0;
     white-space: pre;
     overflow-x: auto;
+    margin-bottom: 12px;
   }
-
-  /* Badge de nivel */
   .nivel-badge {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
-  .nivel-1 { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed55; }
-  .nivel-2 { background: #1d4ed822; color: #60a5fa; border: 1px solid #1d4ed855; }
-  .nivel-3 { background: #05966922; color: #34d399; border: 1px solid #05966955; }
-
-  /* Tarjeta de pregunta */
-  .pregunta-card {
+  .nivel-1 { background:#7c3aed22; color:#a78bfa; border:1px solid #7c3aed55; }
+  .nivel-2 { background:#1d4ed822; color:#60a5fa; border:1px solid #1d4ed855; }
+  .nivel-3 { background:#05966922; color:#34d399; border:1px solid #05966955; }
+  .img-title {
     background: #1a1d2e;
-    border-left: 4px solid #7c3aed;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    color: #e2e8f0;
-    font-size: 16px;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 16px;
+    color: #a78bfa;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid #3a3f5c;
+    border-bottom: none;
   }
-
-  /* Imagen anatómica */
-  .img-caption {
+  .img-box {
+    background: #13152a;
+    border-radius: 0 0 12px 12px;
+    padding: 16px;
+    border: 1px solid #3a3f5c;
+    border-top: none;
     text-align: center;
-    color: #94a3b8;
-    font-size: 12px;
-    margin-top: 6px;
+    margin-bottom: 20px;
   }
-
-  /* Resultado correcto/incorrecto */
-  div[data-testid="stAlert"] { border-radius: 10px; }
+  .img-caption {
+    color: #64748b;
+    font-size: 11px;
+    margin-top: 8px;
+  }
+  .pregunta-num {
+    color: #a78bfa;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Imágenes anatómicas (Wikipedia Commons) ─────────────────
+# ── Imágenes por tema ─────────────────────────────────────────
+# Todas de Wikipedia Commons (licencia libre)
 IMAGENES = {
-    "plexo_braquial": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/"
-        "Brachial_plexus_color.svg/800px-Brachial_plexus_color.svg.png",
-        "Plexo braquial — Wikipedia Commons"
-    ),
-    "huesos_ms": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/"
-        "Arm_bones.jpg/400px-Arm_bones.jpg",
-        "Huesos del miembro superior"
-    ),
-    "huesos_mi": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/"
-        "Leg_bones.jpg/400px-Leg_bones.jpg",
-        "Huesos del miembro inferior"
-    ),
-    "rodilla": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/"
-        "Knee_diagram.svg/600px-Knee_diagram.svg.png",
-        "Articulación de la rodilla — ligamentos"
-    ),
-    "manguito_rotador": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/"
-        "Shoulder_joint.svg/600px-Shoulder_joint.svg.png",
-        "Articulación del hombro"
-    ),
-    "huesos_craneo": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/"
-        "Head_skull.jpg/600px-Head_skull.jpg",
-        "Cráneo — vista lateral"
-    ),
-    "craneo_foramenes": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/"
-        "Cranial_bones_en.svg/800px-Cranial_bones_en.svg.png",
-        "Base del cráneo — forámenes"
-    ),
-    "nervios_craneales": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/"
-        "Cranial_nerve_components_english.svg/800px-Cranial_nerve_components_english.svg.png",
-        "Nervios craneales"
-    ),
-    "columna": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/"
-        "Human_vertebral_column.svg/300px-Human_vertebral_column.svg.png",
-        "Columna vertebral — regiones y curvaturas"
-    ),
-    "carpo_tarso": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/"
-        "Carpus.svg/400px-Carpus.svg.png",
-        "Huesos del carpo"
-    ),
-    "nervios_mmii": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/"
-        "Nerves_of_the_right_lower_extremity.jpg/400px-Nerves_of_the_right_lower_extremity.jpg",
-        "Nervios del miembro inferior"
-    ),
-    "atlas_axis": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/"
-        "Atlas_%28C1%29_from_above_-_animation.gif/300px-Atlas_%28C1%29_from_above_-_animation.gif",
-        "Atlas (C1) visto desde arriba"
-    ),
+    "manguito_rotador": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gray412.png/500px-Gray412.png",
+        "titulo": "🦴 Manguito rotador — Gray's Anatomy",
+        "caption": "Vista posterior del hombro. Identifica los 4 músculos del SITS."
+    },
+    "plexo_braquial": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Brachial_plexus_color.svg/700px-Brachial_plexus_color.svg.png",
+        "titulo": "🧠 Plexo braquial (C5–T1)",
+        "caption": "Raíces → Troncos → Divisiones → Fascículos → Nervios terminales"
+    },
+    "huesos_ms": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Arm_bones.jpg/350px-Arm_bones.jpg",
+        "titulo": "🦴 Huesos del miembro superior",
+        "caption": "Clavícula, escápula, húmero, radio, cúbito y carpo"
+    },
+    "huesos_mi": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Leg_anterior_labeled.jpg/300px-Leg_anterior_labeled.jpg",
+        "titulo": "🦴 Huesos del miembro inferior",
+        "caption": "Coxal, fémur, rótula, tibia, peroné y tarso"
+    },
+    "rodilla": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Knee_diagram.svg/500px-Knee_diagram.svg.png",
+        "titulo": "🦵 Articulación de la rodilla",
+        "caption": "LCA, LCP, LCM, LCL y meniscos medial y lateral"
+    },
+    "huesos_craneo": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Human_skull_side_simplified_%28bones%29.svg/600px-Human_skull_side_simplified_%28bones%29.svg.png",
+        "titulo": "💀 Huesos del cráneo — vista lateral",
+        "caption": "Neurocráneo (8 huesos): frontal, parietales, occipital, temporales, esfenoides, etmoides"
+    },
+    "craneo_foramenes": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Cranial_bones_en.svg/700px-Cranial_bones_en.svg.png",
+        "titulo": "💀 Base del cráneo — forámenes",
+        "caption": "Fosa anterior, media y posterior con sus forámenes"
+    },
+    "nervios_craneales": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Cranial_nerve_components_english.svg/700px-Cranial_nerve_components_english.svg.png",
+        "titulo": "🧠 Los 12 nervios craneales",
+        "caption": "Origen y función de cada par craneal"
+    },
+    "columna": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Human_vertebral_column.svg/280px-Human_vertebral_column.svg.png",
+        "titulo": "🦴 Columna vertebral",
+        "caption": "Regiones cervical (7), torácica (12), lumbar (5), sacra y coccígea"
+    },
+    "atlas_axis": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Gray86.png/400px-Gray86.png",
+        "titulo": "🦴 Atlas (C1) y Axis (C2)",
+        "caption": "C1 = flexoextensión (decir SÍ) · C2 = rotación (decir NO)"
+    },
+    "carpo_tarso": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Carpus.svg/450px-Carpus.svg.png",
+        "titulo": "🦴 Huesos del carpo",
+        "caption": "Fila proximal: E-S-P-P / Fila distal: T-T-G-G"
+    },
+    "nervios_mmii": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Nerves_of_the_right_lower_extremity.jpg/350px-Nerves_of_the_right_lower_extremity.jpg",
+        "titulo": "🧠 Nervios del miembro inferior",
+        "caption": "Plexo lumbar (femoral, obturador) y plexo sacro (ciático, tibial, peroneo)"
+    },
+    "articulacion_hombro": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Shoulder_joint.svg/500px-Shoulder_joint.svg.png",
+        "titulo": "🦴 Articulación glenohumeral",
+        "caption": "Cabeza del húmero, cavidad glenoidea, labrum y ligamentos"
+    },
+    "musculos_ms": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Arm_muscles_front.png/350px-Arm_muscles_front.png",
+        "titulo": "💪 Músculos del miembro superior",
+        "caption": "Compartimentos anterior (flexores) y posterior (extensores)"
+    },
+    "musculos_mi": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Anterior_Hip_Muscles_2.PNG/350px-Anterior_Hip_Muscles_2.PNG",
+        "titulo": "🦵 Músculos del miembro inferior",
+        "caption": "Glúteos, cuádriceps, isquiotibiales, aductores y músculos de la pierna"
+    },
+    "arterias_ms_mi": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Blausen_0609_LegArteries.png/350px-Blausen_0609_LegArteries.png",
+        "titulo": "🩸 Arterias del miembro inferior",
+        "caption": "Ilíaca → Femoral → Poplítea → Tibial anterior y posterior"
+    },
+    "ligamentos_columna": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Spinal_ligaments.jpg/400px-Spinal_ligaments.jpg",
+        "titulo": "🦴 Ligamentos de la columna vertebral",
+        "caption": "LLA, LLP, ligamento amarillo, interespinosos y supraespinoso"
+    },
+    "disco_intervertebral": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Cervical_vertebra_english.png/500px-Cervical_vertebra_english.png",
+        "titulo": "🦴 Disco intervertebral y vértebra",
+        "caption": "Núcleo pulposo y anillo fibroso. Hernia posterolateral."
+    },
 }
 
 # ── Session state ────────────────────────────────────────────
@@ -167,79 +202,87 @@ def stream_respuesta(messages):
     ) as stream:
         yield from stream.text_stream
 
-# ── Helpers ──────────────────────────────────────────────────
+# ── Helpers visuales ─────────────────────────────────────────
 def badge_nivel(n):
-    etiquetas = {1: "⭐⭐⭐ Muy importante", 2: "⭐⭐ Importante", 3: "⭐ Poco preguntado"}
-    return f'<span class="nivel-badge nivel-{n}">{etiquetas[n]}</span>'
+    labels = {1: "⭐⭐⭐ Muy importante", 2: "⭐⭐ Importante", 3: "⭐ Poco preguntado"}
+    return f'<span class="nivel-badge nivel-{n}">{labels[n]}</span>'
 
-def mostrar_esquema_card(clave):
+def mostrar_imagen(clave):
+    """Muestra la imagen anatómica real del tema si existe."""
+    if clave not in IMAGENES:
+        return
+    img = IMAGENES[clave]
+    st.markdown(f'<div class="img-title">{img["titulo"]}</div>', unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="img-box">', unsafe_allow_html=True)
+        try:
+            col1, col2, col3 = st.columns([1, 4, 1])
+            with col2:
+                st.image(img["url"], use_container_width=True)
+            st.markdown(f'<p class="img-caption">📖 {img["caption"]}</p>',
+                        unsafe_allow_html=True)
+        except Exception:
+            st.warning("⚠️ Imagen no disponible en este momento.")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+def mostrar_esquema_texto(clave):
+    """Muestra el esquema ASCII con estilo."""
     e = ESQUEMAS[clave]
     st.markdown(badge_nivel(e["nivel"]), unsafe_allow_html=True)
-    st.markdown(f'<div class="schema-card">{e["esquema"]}</div>', unsafe_allow_html=True)
-    if clave in IMAGENES:
-        url, caption = IMAGENES[clave]
-        st.markdown("<br>", unsafe_allow_html=True)
-        col1, col2, col3 = st.columns([1, 3, 1])
-        with col2:
-            try:
-                st.image(url, use_container_width=True)
-                st.markdown(f'<p class="img-caption">{caption}</p>', unsafe_allow_html=True)
-            except Exception:
-                pass
-
-def mostrar_pregunta_activa(p, idx, total, prefix):
-    st.markdown(f'<div class="pregunta-card">Pregunta {idx+1} de {total}<br><br>{p["enunciado"]}</div>',
+    st.markdown(f'<div class="schema-card">{e["esquema"]}</div>',
                 unsafe_allow_html=True)
-    opciones_lista = [f"{k})  {v}" for k, v in p["opciones"].items()]
-    return st.radio("", opciones_lista, index=None, key=f"{prefix}_q_{idx}")
 
-def mostrar_resultado_pregunta(p, letra):
+def mostrar_pregunta(p, idx, total, key_prefix):
+    """Renderiza una pregunta con radio buttons."""
+    st.markdown(f'<p class="pregunta-num">Pregunta {idx+1} de {total}</p>',
+                unsafe_allow_html=True)
+    st.markdown(f"**{p['enunciado']}**")
+    opciones = [f"{k})  {v}" for k, v in p["opciones"].items()]
+    return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
+
+def feedback_respuesta(p, letra):
+    """Muestra si la respuesta es correcta o no."""
     if letra == p["correcta"]:
         st.success(f"✅  ¡Correcto!")
     else:
-        resp_ok = p["opciones"][p["correcta"]]
-        st.error(f"❌  Incorrecto — era  **{p['correcta']})** {resp_ok}")
+        st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
     st.info(f"💬  {p['exp']}")
 
-def pantalla_resultados(results, prefix):
+def pantalla_final(results):
     c = sum(results)
     t = len(results)
     pct = int(c / t * 100) if t > 0 else 0
     if pct >= 80:
         st.balloons()
-        st.success(f"🎉  {c}/{t} correctas — {pct}%")
+        st.success(f"🎉  {c}/{t} correctas — {pct}%  ¡Excelente!")
     elif pct >= 60:
-        st.warning(f"👍  {c}/{t} correctas — {pct}%")
+        st.warning(f"👍  {c}/{t} correctas — {pct}%  Bien, sigue practicando")
     else:
-        st.error(f"📚  {c}/{t} correctas — {pct}%  · ¡A repasar!")
+        st.error(f"📚  {c}/{t} correctas — {pct}%  A repasar este tema")
     st.progress(pct / 100)
-    return pct
 
 # ════════════════════════════════════════════════════════════
 #  CABECERA
 # ════════════════════════════════════════════════════════════
-st.markdown("## 🧠 Anatomía UCV")
-st.caption("1º Medicina · Miembro Superior · Miembro Inferior · Cráneo · Vértebras")
-st.divider()
+st.markdown("## 🧠 Anatomía UCV — 1º Medicina")
+st.caption("MS · MI · Cráneo · Vértebras")
 
 # ════════════════════════════════════════════════════════════
-#  TABS — NAVEGACIÓN PRINCIPAL (visible en iPad)
+#  TABS
 # ════════════════════════════════════════════════════════════
 tab_esq, tab_test, tab_repaso, tab_chat = st.tabs(
-    ["📋  Esquemas", "✏️  Test", "🔀  Repaso", "💬  Chat IA"]
+    ["📋 Esquemas", "✏️ Test", "🔀 Repaso", "💬 Chat IA"]
 )
 
 # ────────────────────────────────────────────────────────────
 #  TAB 1 — ESQUEMAS
 # ────────────────────────────────────────────────────────────
 with tab_esq:
-    st.subheader("Esquemas anatómicos")
-
     nivel_fil = st.radio(
-        "Filtrar:",
+        "Filtrar por nivel:",
         ["Todos", "⭐⭐⭐ Nivel 1", "⭐⭐ Nivel 2", "⭐ Nivel 3"],
         horizontal=True,
-        key="fil_nivel",
+        key="esq_fil",
     )
     if "1" in nivel_fil:
         claves_fil = NIVELES[1]["claves"]
@@ -250,45 +293,45 @@ with tab_esq:
     else:
         claves_fil = list(ESQUEMAS.keys())
 
-    opciones_map = {
-        f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k
-        for k in claves_fil
-    }
-    sel = st.selectbox("Elige un tema:", list(opciones_map.keys()), key="esq_sel")
-    clave_esq = opciones_map[sel]
+    mapa = {f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k for k in claves_fil}
+    sel = st.selectbox("Elige un tema:", list(mapa.keys()), key="esq_sel")
+    clave_esq = mapa[sel]
 
-    mostrar_esquema_card(clave_esq)
+    # Imagen anatómica real primero
+    mostrar_imagen(clave_esq)
 
-    st.divider()
-    n_pregs = len(ESQUEMAS[clave_esq]["preguntas"])
-    st.caption(f"Este tema tiene **{n_pregs} preguntas** en el test.")
+    # Luego el esquema ASCII como resumen
+    with st.expander("📝 Ver esquema de texto"):
+        mostrar_esquema_texto(clave_esq)
 
 # ────────────────────────────────────────────────────────────
-#  TAB 2 — TEST
+#  TAB 2 — TEST (imagen + preguntas)
 # ────────────────────────────────────────────────────────────
 with tab_test:
-    st.subheader("Test por tema")
+    mapa_t = {f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k for k in ESQUEMAS}
+    sel_t = st.selectbox("Elige un tema:", list(mapa_t.keys()), key="test_sel")
+    clave_t = mapa_t[sel_t]
 
-    opciones_map_t = {
-        f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k
-        for k in ESQUEMAS
-    }
-    sel_t = st.selectbox("Elige un tema:", list(opciones_map_t.keys()), key="test_sel")
-    clave_sel_t = opciones_map_t[sel_t]
-
-    if st.session_state.test_clave != clave_sel_t:
+    # Resetear si cambia el tema
+    if st.session_state.test_clave != clave_t:
         st.session_state.test_active = False
-        st.session_state.test_clave = clave_sel_t
+        st.session_state.test_clave = clave_t
         st.session_state.test_idx = 0
         st.session_state.test_results = []
         st.session_state.test_answered = False
 
-    with st.expander("👁️  Ver esquema del tema"):
-        mostrar_esquema_card(clave_sel_t)
+    # ── Imagen anatómica siempre visible ──
+    mostrar_imagen(clave_t)
+
+    # ── Esquema ASCII colapsable ──
+    with st.expander("📝 Ver esquema de texto"):
+        mostrar_esquema_texto(clave_t)
+
+    st.divider()
 
     if not st.session_state.test_active:
-        n = len(ESQUEMAS[clave_sel_t]["preguntas"])
-        st.info(f"**{n} preguntas** sobre este tema.")
+        n = len(ESQUEMAS[clave_t]["preguntas"])
+        st.info(f"**{n} preguntas** sobre este tema. Estudia la imagen de arriba antes de empezar.")
         if st.button("▶️  Empezar test", type="primary", use_container_width=True):
             st.session_state.test_active = True
             st.session_state.test_idx = 0
@@ -300,14 +343,14 @@ with tab_test:
         idx = st.session_state.test_idx
 
         if idx < len(pregs):
-            st.progress(idx / len(pregs), text=f"{idx}/{len(pregs)} preguntas")
+            st.progress(idx / len(pregs), text=f"Progreso: {idx}/{len(pregs)}")
             p = pregs[idx]
 
             if not st.session_state.test_answered:
-                resp = mostrar_pregunta_activa(p, idx, len(pregs), "test")
+                resp = mostrar_pregunta(p, idx, len(pregs), "test")
                 col1, col2 = st.columns(2)
                 with col1:
-                    if st.button("✔  Confirmar", type="primary",
+                    if st.button("✔ Confirmar", type="primary",
                                  disabled=resp is None, use_container_width=True):
                         letra = resp[0]
                         st.session_state.test_answered = True
@@ -315,26 +358,26 @@ with tab_test:
                         st.session_state.test_results.append(letra == p["correcta"])
                         st.rerun()
                 with col2:
-                    if st.button("⏭  Saltar", use_container_width=True):
+                    if st.button("⏭ Saltar", use_container_width=True):
                         st.session_state.test_idx += 1
                         st.rerun()
             else:
-                mostrar_resultado_pregunta(p, st.session_state.test_last_letra)
+                feedback_respuesta(p, st.session_state.test_last_letra)
                 if st.button("Siguiente →", type="primary", use_container_width=True):
                     st.session_state.test_idx += 1
                     st.session_state.test_answered = False
                     st.rerun()
         else:
-            pantalla_resultados(st.session_state.test_results, "test")
+            pantalla_final(st.session_state.test_results)
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("🔁  Repetir", use_container_width=True):
+                if st.button("🔁 Repetir", use_container_width=True):
                     st.session_state.test_idx = 0
                     st.session_state.test_results = []
                     st.session_state.test_answered = False
                     st.rerun()
             with col2:
-                if st.button("📋  Volver", use_container_width=True):
+                if st.button("← Elegir otro tema", use_container_width=True):
                     st.session_state.test_active = False
                     st.rerun()
 
@@ -342,8 +385,6 @@ with tab_test:
 #  TAB 3 — REPASO ALEATORIO
 # ────────────────────────────────────────────────────────────
 with tab_repaso:
-    st.subheader("Repaso aleatorio")
-
     if not st.session_state.repaso_active:
         col1, col2 = st.columns(2)
         with col1:
@@ -355,7 +396,7 @@ with tab_repaso:
         with col2:
             n_rep = st.slider("Preguntas:", 5, 25, 12, key="rep_n")
 
-        if st.button("▶️  Empezar repaso", type="primary", use_container_width=True):
+        if st.button("▶️ Empezar repaso", type="primary", use_container_width=True):
             if "1" in nivel_rep:
                 claves_r = NIVELES[1]["claves"]
             elif "2" in nivel_rep:
@@ -374,39 +415,44 @@ with tab_repaso:
             st.session_state.repaso_answered = False
             st.rerun()
     else:
-        pregs = st.session_state.repaso_pregs
-        idx = st.session_state.repaso_idx
+        pregs_r = st.session_state.repaso_pregs
+        idx_r = st.session_state.repaso_idx
 
-        if idx < len(pregs):
-            st.progress(idx / len(pregs), text=f"{idx}/{len(pregs)} preguntas")
-            clave_r, p = pregs[idx]
+        if idx_r < len(pregs_r):
+            st.progress(idx_r / len(pregs_r), text=f"{idx_r}/{len(pregs_r)}")
+            clave_r, p_r = pregs_r[idx_r]
+
+            # Imagen del tema actual en el repaso
+            mostrar_imagen(clave_r)
+
             st.caption(f"📌  {ESQUEMAS[clave_r]['nombre']}")
 
             if not st.session_state.repaso_answered:
-                resp = mostrar_pregunta_activa(p, idx, len(pregs), "rep")
+                resp_r = mostrar_pregunta(p_r, idx_r, len(pregs_r), "rep")
                 col1, col2 = st.columns(2)
                 with col1:
-                    if st.button("✔  Confirmar", type="primary",
-                                 disabled=resp is None, use_container_width=True, key="conf_r"):
-                        letra = resp[0]
+                    if st.button("✔ Confirmar", type="primary",
+                                 disabled=resp_r is None,
+                                 use_container_width=True, key="conf_r"):
+                        letra_r = resp_r[0]
                         st.session_state.repaso_answered = True
-                        st.session_state.repaso_last_letra = letra
-                        st.session_state.repaso_results.append(letra == p["correcta"])
+                        st.session_state.repaso_last_letra = letra_r
+                        st.session_state.repaso_results.append(letra_r == p_r["correcta"])
                         st.rerun()
                 with col2:
-                    if st.button("⏭  Saltar", use_container_width=True, key="skip_r"):
+                    if st.button("⏭ Saltar", use_container_width=True, key="skip_r"):
                         st.session_state.repaso_idx += 1
                         st.rerun()
             else:
-                mostrar_resultado_pregunta(p, st.session_state.repaso_last_letra)
+                feedback_respuesta(p_r, st.session_state.repaso_last_letra)
                 if st.button("Siguiente →", type="primary",
                              use_container_width=True, key="next_r"):
                     st.session_state.repaso_idx += 1
                     st.session_state.repaso_answered = False
                     st.rerun()
         else:
-            pantalla_resultados(st.session_state.repaso_results, "rep")
-            if st.button("🔁  Nuevo repaso", type="primary", use_container_width=True):
+            pantalla_final(st.session_state.repaso_results)
+            if st.button("🔁 Nuevo repaso", type="primary", use_container_width=True):
                 st.session_state.repaso_active = False
                 st.rerun()
 
@@ -414,14 +460,13 @@ with tab_repaso:
 #  TAB 4 — CHAT CON IA
 # ────────────────────────────────────────────────────────────
 with tab_chat:
-    st.subheader("Chat con el profesor")
-    st.caption("Pregunta cualquier duda sobre el temario")
+    st.caption("Pregunta cualquier duda sobre el temario de anatomía")
 
     for msg in st.session_state.chat_history:
         with st.chat_message(msg["role"]):
             st.write(msg["content"])
 
-    if pregunta := st.chat_input("Escribe tu pregunta de anatomía..."):
+    if pregunta := st.chat_input("Escribe tu duda de anatomía..."):
         with st.chat_message("user"):
             st.write(pregunta)
         st.session_state.chat_history.append({"role": "user", "content": pregunta})
@@ -435,6 +480,6 @@ with tab_chat:
         st.session_state.chat_history.append({"role": "assistant", "content": respuesta})
 
     if st.session_state.chat_history:
-        if st.button("🗑️  Limpiar conversación", use_container_width=True):
+        if st.button("🗑️ Limpiar conversación", use_container_width=True):
             st.session_state.chat_history = []
             st.rerun()
