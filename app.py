@@ -178,27 +178,13 @@ def mostrar_pregunta(p, idx, total, key_prefix):
     opciones = [f"{k})  {v}" for k, v in p["opciones"].items()]
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
-def feedback_breve(p, letra):
-    """Solo muestra correcto/incorrecto durante el test, sin explicación."""
+def feedback(p, letra):
+    """Muestra correcto/incorrecto + explicación breve tras cada pregunta."""
     if letra == p["correcta"]:
         st.success("✅  ¡Correcto!")
     else:
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
-
-def mostrar_revision(errores: list):
-    """Muestra la revisión completa de errores en sección separada."""
-    if not errores:
-        st.success("🎉 ¡No cometiste ningún error en este test!")
-        return
-    st.markdown(f"### 📝 Revisión de errores — {len(errores)} pregunta(s)")
-    for i, e in enumerate(errores, 1):
-        with st.expander(f"❌ {i}. {e['p']['enunciado'][:70]}...", expanded=True):
-            st.markdown(f"**{e['p']['enunciado']}**")
-            st.markdown(f"🔴 Tu respuesta: **{e['letra']})** {e['p']['opciones'][e['letra']]}")
-            st.markdown(f"🟢 Respuesta correcta: **{e['p']['correcta']})** {e['p']['opciones'][e['p']['correcta']]}")
-            st.info(f"💬 {e['p']['exp']}")
-            if e.get("tema"):
-                st.caption(f"📚 Tema: {BANCO.get(e['tema'], {}).get('nombre', '')}  |  🔑 {e['p'].get('concepto','')}")
+    st.info(f"💬  {p['exp']}")
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
@@ -260,7 +246,7 @@ Responde SOLO con JSON válido en este formato exacto:
 # ════════════════════════════════════════════════════════════════
 portada = Path(__file__).parent / "portada.jpg"
 if portada.exists():
-    st.image(str(portada), use_container_width=True)
+    st.image(portada.read_bytes(), use_container_width=True)
 
 st.markdown("## 🧠 Anatomía UCV — Banco de Preguntas")
 st.caption("MS · MI · Cráneo · Vértebras  |  1º Medicina")
@@ -279,8 +265,8 @@ with col_c:
 # ════════════════════════════════════════════════════════════════
 #  TABS
 # ════════════════════════════════════════════════════════════════
-tab_test, tab_fallos, tab_flash, tab_tfallo, tab_chat = st.tabs([
-    "📚 Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "💬 Chat IA"
+tab_test, tab_revision, tab_fallos, tab_flash, tab_tfallo, tab_chat = st.tabs([
+    "📚 Test", "📝 Revisión Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "💬 Chat IA"
 ])
 
 # ────────────────────────────────────────────────────────────────
@@ -332,19 +318,8 @@ with tab_test:
         pregs = st.session_state.test_pregs
         idx = st.session_state.test_idx
 
-        # ── Pantalla de revisión (tras terminar el test) ──
-        if st.session_state.test_revision:
-            pantalla_final(st.session_state.test_results, st.session_state.get("test_n_fallos", 0))
-            st.divider()
-            mostrar_revision(st.session_state.test_errores)
-            st.divider()
-            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
-                st.session_state.test_active = False
-                st.session_state.test_revision = False
-                st.rerun()
-
         # ── Preguntas del test ──
-        elif idx < len(pregs):
+        if idx < len(pregs):
             tema_k, p = pregs[idx]
             st.progress(idx / len(pregs), text=f"Progreso: {idx}/{len(pregs)}")
             st.markdown(f"**Tema:** {BANCO[tema_k]['nombre']}  |  **Categoría:** {BANCO[tema_k]['categoria']}")
@@ -375,32 +350,47 @@ with tab_test:
                     st.session_state.test_answered = False
                     st.rerun()
 
-        # ── Test terminado → ir a revisión ──
+        # ── Test terminado ──
         else:
-            c = sum(st.session_state.test_results)
-            t = len(st.session_state.test_results)
-            pct = int(c / t * 100) if t else 0
-            if pct >= 80:
-                st.balloons()
-                st.success(f"🎉  {c}/{t} — {pct}%  ¡Excelente!")
-            elif pct >= 60:
-                st.warning(f"👍  {c}/{t} — {pct}%  Sigue practicando")
-            else:
-                st.error(f"📚  {c}/{t} — {pct}%  A repasar")
-            st.progress(pct / 100)
+            pantalla_final(st.session_state.test_results, st.session_state.get("test_n_fallos", 0))
             n_err = len(st.session_state.test_errores)
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button(f"📝 Ver revisión de errores ({n_err})", type="primary", use_container_width=True):
-                    st.session_state.test_revision = True
-                    st.rerun()
-            with col2:
-                if st.button("🔁 Nuevo test", use_container_width=True):
-                    st.session_state.test_active = False
-                    st.rerun()
+            if n_err:
+                st.info(f"💡 Ve a la pestaña **📝 Revisión Test** para ver los {n_err} errores con explicación.")
+            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
+                st.session_state.test_active = False
+                st.rerun()
 
 # ────────────────────────────────────────────────────────────────
-#  TAB 2 — MIS FALLOS
+#  TAB 2 — REVISIÓN TEST
+# ────────────────────────────────────────────────────────────────
+with tab_revision:
+    errores_rev = st.session_state.get("test_errores", []) + st.session_state.get("ft_errores", [])
+    if not errores_rev:
+        st.info("Aquí aparecerán los errores del último test realizado. ¡Haz un test primero!")
+    else:
+        st.markdown(f"### Errores del último test — {len(errores_rev)} pregunta(s) fallada(s)")
+        st.caption("Repasa cada error con su explicación antes de continuar estudiando.")
+        st.divider()
+        for i, e in enumerate(errores_rev, 1):
+            tema_nombre = BANCO.get(e.get("tema",""), {}).get("nombre", "")
+            concepto = e["p"].get("concepto", "")
+            with st.expander(f"❌ {i}.  {e['p']['enunciado'][:80]}{'...' if len(e['p']['enunciado'])>80 else ''}", expanded=True):
+                st.markdown(f"**{e['p']['enunciado']}**")
+                st.markdown("")
+                for letra, texto in e["p"]["opciones"].items():
+                    if letra == e["letra"]:
+                        st.markdown(f"🔴 **{letra})** {texto}  ← *tu respuesta*")
+                    elif letra == e["p"]["correcta"]:
+                        st.markdown(f"🟢 **{letra})** {texto}  ← *correcta*")
+                    else:
+                        st.markdown(f"&nbsp;&nbsp;&nbsp;{letra}) {texto}")
+                st.divider()
+                st.info(f"💬 {e['p']['exp']}")
+                if tema_nombre or concepto:
+                    st.caption(f"📚 {tema_nombre}  |  🔑 {concepto}")
+
+# ────────────────────────────────────────────────────────────────
+#  TAB 3 — MIS FALLOS
 # ────────────────────────────────────────────────────────────────
 with tab_fallos:
     fallos = [f for f in st.session_state.fallos if not f.get("aprendida")]
@@ -603,18 +593,7 @@ with tab_tfallo:
         pregs_ft = st.session_state.ft_pregs
         idx_ft = st.session_state.ft_idx
 
-        # ── Revisión separada ──
-        if st.session_state.ft_revision:
-            pantalla_final(st.session_state.ft_results, st.session_state.get("ft_n_nuevos", 0))
-            st.divider()
-            mostrar_revision(st.session_state.ft_errores)
-            st.divider()
-            if st.button("🔁 Nuevo test de fallos", type="primary", use_container_width=True):
-                st.session_state.ft_active = False
-                st.session_state.ft_revision = False
-                st.rerun()
-
-        elif idx_ft < len(pregs_ft):
+        if idx_ft < len(pregs_ft):
             f_act = pregs_ft[idx_ft]
             p_ft = {
                 "id": f_act["pregunta_id"],
@@ -652,7 +631,7 @@ with tab_tfallo:
                         st.session_state.ft_idx += 1
                         st.rerun()
             else:
-                feedback_breve(p_ft, st.session_state.ft_last_letra)
+                feedback(p_ft, st.session_state.ft_last_letra)
                 if st.button("Siguiente →", type="primary", use_container_width=True, key="next_ft"):
                     st.session_state.ft_idx += 1
                     st.session_state.ft_answered = False
@@ -671,15 +650,11 @@ with tab_tfallo:
                 st.error(f"📚  {c}/{t} — {pct}%  A repasar")
             st.progress(pct / 100)
             n_err_ft = len(st.session_state.ft_errores)
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button(f"📝 Ver revisión de errores ({n_err_ft})", type="primary", use_container_width=True):
-                    st.session_state.ft_revision = True
-                    st.rerun()
-            with col2:
-                if st.button("🔁 Nuevo test", use_container_width=True):
-                    st.session_state.ft_active = False
-                    st.rerun()
+            if n_err_ft:
+                st.info(f"💡 Ve a la pestaña **📝 Revisión Test** para ver los {n_err_ft} errores con explicación.")
+            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
+                st.session_state.ft_active = False
+                st.rerun()
 
 # ────────────────────────────────────────────────────────────────
 #  TAB 5 — CHAT IA
