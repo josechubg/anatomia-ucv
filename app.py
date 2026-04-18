@@ -3,6 +3,7 @@ import anthropic
 import random
 import json
 import uuid
+import base64
 from datetime import datetime
 from pathlib import Path
 
@@ -246,7 +247,12 @@ Responde SOLO con JSON válido en este formato exacto:
 # ════════════════════════════════════════════════════════════════
 portada = Path(__file__).parent / "portada.jpg"
 if portada.exists():
-    st.image(portada.read_bytes(), use_container_width=True)
+    b64 = base64.b64encode(portada.read_bytes()).decode()
+    st.markdown(
+        f'<img src="data:image/jpeg;base64,{b64}" '
+        f'style="width:100%;border-radius:16px;margin-bottom:20px;display:block;">',
+        unsafe_allow_html=True
+    )
 
 st.markdown("## 🧠 Anatomía UCV — Banco de Preguntas")
 st.caption("MS · MI · Cráneo · Vértebras  |  1º Medicina")
