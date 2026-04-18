@@ -10,7 +10,7 @@ from pathlib import Path
 from banco_preguntas import BANCO, NIVELES, CATEGORIAS
 
 st.set_page_config(
-    page_title="Anatomía UCV — Banco de Preguntas",
+    page_title="CarloTest — Anatomía UCV",
     page_icon="🧠",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -90,10 +90,23 @@ st.markdown("""
     box-shadow: 0 16px 48px rgba(124,58,237,0.35);
     display: block;
   }
-  @media (max-width: 600px) {
-    .hero { flex-direction: column-reverse; padding: 22px 18px; }
-    .hero-img-wrap { flex: none; width: 140px; align-self: center; }
-    .hero-title { font-size: 26px; }
+  @media (max-width: 640px) {
+    .block-container { padding: 0.5rem 0.75rem !important; }
+    .hero { flex-direction: column-reverse; padding: 20px 18px; gap: 16px; border-radius: 18px; }
+    .hero-img-wrap { flex: none; width: 110px; align-self: center; }
+    .hero-img-wrap img { border-radius: 14px; }
+    .hero-title { font-size: 24px; }
+    .hero-sub { font-size: 11px; margin-bottom: 14px; }
+    .hero-badge { font-size: 10px; padding: 3px 10px; }
+    .stat-pill { padding: 8px 12px; min-width: 60px; }
+    .stat-num { font-size: 18px; }
+    .stTabs [data-baseweb="tab"] { font-size: 11px !important; padding: 7px 8px !important; }
+    .stButton > button { font-size: 14px !important; padding: 10px 8px !important; min-height: 46px !important; }
+    .stRadio [data-testid="stMarkdownContainer"] p { font-size: 14px !important; }
+    div[data-testid="stRadio"] label { font-size: 14px !important; min-height: 44px !important; display: flex !important; align-items: center !important; }
+    .fallo-card { padding: 12px 14px; }
+    .flashcard-front { padding: 24px 16px; }
+    .flashcard-back { padding: 18px 16px; }
   }
 
   /* ── NIVELES ── */
@@ -382,8 +395,8 @@ st.markdown(f"""
 <div class="hero">
   <div class="hero-text">
     <span class="hero-badge">🎓 Universidad Católica de Valencia</span>
-    <h1 class="hero-title">Anatomía UCV</h1>
-    <p class="hero-sub">1º Medicina &nbsp;·&nbsp; Miembro Superior &nbsp;·&nbsp; Miembro Inferior &nbsp;·&nbsp; Cráneo &nbsp;·&nbsp; Vértebras</p>
+    <h1 class="hero-title">Carlo<span style="color:#a78bfa;">Test</span></h1>
+    <p class="hero-sub">Anatomía · 1º Medicina &nbsp;·&nbsp; MS · MI · Cráneo · Vértebras</p>
     <div class="hero-stats">
       <div class="stat-pill sp-purple">
         <span class="stat-num">{total_q}</span>
