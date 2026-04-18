@@ -285,7 +285,6 @@ with tab_test:
         if modo_sel == "Por tema":
             temas_disp = {f"{'⭐'*BANCO[k]['nivel']}  {BANCO[k]['nombre']}": k for k in BANCO}
             sel = st.selectbox("Tema:", list(temas_disp.keys()), key="sel_tema")
-            pool = [(sel_key := temas_disp[sel], p) for p in BANCO[temas_disp[sel]]["preguntas"]]
             pool = [(temas_disp[sel], p) for p in BANCO[temas_disp[sel]]["preguntas"]]
         elif modo_sel == "Por categoría":
             cat_sel = st.selectbox("Categoría:", list(CATEGORIAS.keys()), key="sel_cat")
@@ -344,7 +343,7 @@ with tab_test:
                         st.session_state.test_idx += 1
                         st.rerun()
             else:
-                feedback_breve(p, st.session_state.test_last_letra)
+                feedback(p, st.session_state.test_last_letra)
                 if st.button("Siguiente →", type="primary", use_container_width=True, key="next_test"):
                     st.session_state.test_idx += 1
                     st.session_state.test_answered = False
