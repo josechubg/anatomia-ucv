@@ -21,66 +21,189 @@ FALLOS_PATH = Path(__file__).parent / "fallos.json"
 # ── CSS ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  .stApp { background: #0f1117; }
-  .pregunta-card {
-    background: #1a1d2e;
-    border: 1px solid #3a3f5c;
-    border-radius: 12px;
-    padding: 18px 22px;
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  html, body, [class*="css"], .stApp {
+    font-family: 'Inter', sans-serif !important;
+    background: #07090f !important;
+  }
+  .block-container { padding-top: 1.5rem !important; max-width: 860px !important; }
+
+  /* ── HERO ── */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background: linear-gradient(135deg, #10142a 0%, #0c0f1e 100%);
+    border: 1px solid #1e2540;
+    border-radius: 24px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    box-shadow: 0 24px 60px rgba(124,58,237,0.12);
+  }
+  .hero-text { flex: 1; min-width: 0; }
+  .hero-badge {
+    display: inline-block;
+    background: #7c3aed18;
+    color: #a78bfa;
+    border: 1px solid #7c3aed44;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     margin-bottom: 14px;
   }
-  .nivel-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-right: 8px;
+  .hero-title {
+    font-size: 34px;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0 0 6px 0;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
   }
-  .n1 { background:#7c3aed22; color:#a78bfa; border:1px solid #7c3aed55; }
-  .n2 { background:#1d4ed822; color:#60a5fa; border:1px solid #1d4ed855; }
-  .n3 { background:#05966922; color:#34d399; border:1px solid #05966955; }
-  .concepto-tag {
-    display: inline-block;
-    background: #1e293b;
-    color: #94a3b8;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 11px;
+  .hero-sub {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 22px 0;
   }
-  .fallo-card {
-    background: #1a1218;
-    border: 1px solid #7f1d1d44;
-    border-left: 4px solid #ef4444;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
-  }
-  .flashcard-front {
-    background: #1a1d2e;
-    border: 2px solid #7c3aed;
-    border-radius: 16px;
-    padding: 30px 24px;
+  .hero-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .stat-pill {
+    border-radius: 12px;
+    padding: 10px 18px;
     text-align: center;
-    min-height: 140px;
+    min-width: 72px;
+  }
+  .sp-purple { background:#7c3aed18; border:1px solid #7c3aed44; }
+  .sp-blue   { background:#1d4ed818; border:1px solid #1d4ed844; }
+  .sp-red    { background:#ef444418; border:1px solid #ef444444; }
+  .stat-num  { display:block; font-size:22px; font-weight:800; line-height:1; margin-bottom:2px; }
+  .sp-purple .stat-num { color:#a78bfa; }
+  .sp-blue   .stat-num { color:#60a5fa; }
+  .sp-red    .stat-num { color:#f87171; }
+  .stat-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#475569; }
+  .hero-img-wrap { flex: 0 0 190px; }
+  .hero-img-wrap img {
+    width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(124,58,237,0.35);
+    display: block;
+  }
+  @media (max-width: 600px) {
+    .hero { flex-direction: column-reverse; padding: 22px 18px; }
+    .hero-img-wrap { flex: none; width: 140px; align-self: center; }
+    .hero-title { font-size: 26px; }
+  }
+
+  /* ── NIVELES ── */
+  .nivel-badge {
+    display: inline-block; padding: 3px 11px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; margin-right: 6px; letter-spacing: 0.2px;
+  }
+  .n1 { background:#7c3aed1a; color:#a78bfa; border:1px solid #7c3aed55; }
+  .n2 { background:#1d4ed81a; color:#60a5fa; border:1px solid #1d4ed855; }
+  .n3 { background:#0596691a; color:#34d399; border:1px solid #05966955; }
+
+  /* ── CONCEPTO TAG ── */
+  .concepto-tag {
+    display: inline-block; background: #1a2035; color: #94a3b8;
+    border: 1px solid #2a3050; border-radius: 6px;
+    padding: 2px 9px; font-size: 11px; font-weight: 500;
+  }
+
+  /* ── PREGUNTA ── */
+  .pregunta-num { color:#a78bfa; font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+
+  /* ── FALLO CARD ── */
+  .fallo-card {
+    background: #100d14;
+    border: 1px solid #2a1a1a;
+    border-left: 4px solid #ef4444;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  /* ── FLASHCARD ── */
+  .flashcard-front {
+    background: linear-gradient(135deg, #13182e, #0f1220);
+    border: 2px solid #7c3aed66;
+    border-radius: 20px; padding: 36px 28px;
+    text-align: center; min-height: 160px;
+    box-shadow: 0 8px 32px rgba(124,58,237,0.15);
   }
   .flashcard-back {
-    background: #0f1a12;
-    border: 2px solid #10b981;
-    border-radius: 16px;
-    padding: 24px;
+    background: linear-gradient(135deg, #0d1a14, #0a1510);
+    border: 2px solid #10b98166;
+    border-radius: 20px; padding: 28px;
     min-height: 140px;
+    box-shadow: 0 8px 32px rgba(16,185,129,0.10);
+    margin-top: 12px;
   }
-  .stat-box {
-    background: #1a1d2e;
-    border: 1px solid #3a3f5c;
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
+
+  /* ── REVISIÓN ── */
+  .rev-card {
+    background: #0e1120;
+    border: 1px solid #1e2540;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
   }
-  .pregunta-num { color:#a78bfa; font-size:13px; font-weight:600; }
-  div[data-testid="stProgress"] > div { background: #7c3aed44; }
+  .rev-wrong { color: #f87171; font-size: 13px; font-weight: 600; }
+  .rev-right { color: #34d399; font-size: 13px; font-weight: 600; }
+  .rev-neutral { color: #475569; font-size: 13px; }
+
+  /* ── BUTTONS ── */
+  .stButton > button {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition: all 0.15s ease !important;
+  }
+  .stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(124,58,237,0.35) !important;
+  }
+  .stButton > button[kind="primary"]:hover {
+    box-shadow: 0 6px 20px rgba(124,58,237,0.5) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* ── PROGRESS ── */
+  div[data-testid="stProgressBar"] > div { background: #1e2540 !important; border-radius: 99px; }
+  div[data-testid="stProgressBar"] > div > div { background: linear-gradient(90deg, #7c3aed, #a78bfa) !important; border-radius: 99px; }
+
+  /* ── TABS ── */
+  .stTabs [data-baseweb="tab-list"] {
+    background: #0c0f1e !important;
+    border-radius: 12px !important;
+    padding: 4px !important;
+    gap: 2px !important;
+    border: 1px solid #1e2540 !important;
+  }
+  .stTabs [data-baseweb="tab"] {
+    border-radius: 8px !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+  .stTabs [aria-selected="true"] {
+    background: #7c3aed22 !important;
+    color: #a78bfa !important;
+    border: 1px solid #7c3aed44 !important;
+  }
+  .stTabs [data-baseweb="tab-panel"] { padding-top: 20px !important; }
+
+  /* ── INPUTS ── */
+  .stRadio > label { color: #94a3b8 !important; font-size: 13px !important; }
+  .stSelectbox > label, .stSlider > label { color: #94a3b8 !important; font-size: 13px !important; }
+  div[data-testid="stMarkdownContainer"] p { color: #cbd5e1; }
+
+  /* ── DIVIDER ── */
+  hr { border-color: #1e2540 !important; margin: 16px 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -243,30 +366,42 @@ Responde SOLO con JSON válido en este formato exacto:
     return None
 
 # ════════════════════════════════════════════════════════════════
-#  CABECERA
+#  HERO
 # ════════════════════════════════════════════════════════════════
 portada = Path(__file__).parent / "portada.jpg"
+img_html = ""
 if portada.exists():
     b64 = base64.b64encode(portada.read_bytes()).decode()
-    st.markdown(
-        f'<img src="data:image/jpeg;base64,{b64}" '
-        f'style="width:100%;border-radius:16px;margin-bottom:20px;display:block;">',
-        unsafe_allow_html=True
-    )
+    img_html = f'<img src="data:image/jpeg;base64,{b64}" alt="Anatomía UCV">'
 
-st.markdown("## 🧠 Anatomía UCV — Banco de Preguntas")
-st.caption("MS · MI · Cráneo · Vértebras  |  1º Medicina")
+total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
+n_fallos  = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
+n_temas   = len(BANCO)
 
-n_fallos_activos = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
-col_a, col_b, col_c = st.columns(3)
-with col_a:
-    total_q = sum(len(v["preguntas"]) for v in BANCO.values())
-    st.metric("Total preguntas", total_q)
-with col_b:
-    st.metric("Preguntas falladas", n_fallos_activos)
-with col_c:
-    temas_fallados = len({f["tema"] for f in st.session_state.fallos if not f.get("aprendida")})
-    st.metric("Temas con fallos", temas_fallados)
+st.markdown(f"""
+<div class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">🎓 Universidad Católica de Valencia</span>
+    <h1 class="hero-title">Anatomía UCV</h1>
+    <p class="hero-sub">1º Medicina &nbsp;·&nbsp; Miembro Superior &nbsp;·&nbsp; Miembro Inferior &nbsp;·&nbsp; Cráneo &nbsp;·&nbsp; Vértebras</p>
+    <div class="hero-stats">
+      <div class="stat-pill sp-purple">
+        <span class="stat-num">{total_q}</span>
+        <span class="stat-label">preguntas</span>
+      </div>
+      <div class="stat-pill sp-blue">
+        <span class="stat-num">{n_temas}</span>
+        <span class="stat-label">temas</span>
+      </div>
+      <div class="stat-pill sp-red">
+        <span class="stat-num">{n_fallos}</span>
+        <span class="stat-label">errores</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-img-wrap">{img_html}</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════════════
 #  TABS
