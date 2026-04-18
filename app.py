@@ -1,32 +1,32 @@
 import streamlit as st
 import anthropic
 import random
+import json
+import uuid
+from datetime import datetime
+from pathlib import Path
 
-from agente_anatomia import ESQUEMAS, NIVELES, SYSTEM_PROMPT
+from banco_preguntas import BANCO, NIVELES, CATEGORIAS
 
 st.set_page_config(
-    page_title="Anatomía UCV",
+    page_title="Anatomía UCV — Banco de Preguntas",
     page_icon="🧠",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
 
-# ── CSS ──────────────────────────────────────────────────────
+FALLOS_PATH = Path(__file__).parent / "fallos.json"
+
+# ── CSS ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
   .stApp { background: #0f1117; }
-  .schema-card {
+  .pregunta-card {
     background: #1a1d2e;
     border: 1px solid #3a3f5c;
     border-radius: 12px;
-    padding: 18px 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    line-height: 1.5;
-    color: #e2e8f0;
-    white-space: pre;
-    overflow-x: auto;
-    margin-bottom: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
   }
   .nivel-badge {
     display: inline-block;
@@ -34,434 +34,581 @@ st.markdown("""
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-right: 8px;
   }
-  .nivel-1 { background:#7c3aed22; color:#a78bfa; border:1px solid #7c3aed55; }
-  .nivel-2 { background:#1d4ed822; color:#60a5fa; border:1px solid #1d4ed855; }
-  .nivel-3 { background:#05966922; color:#34d399; border:1px solid #05966955; }
-  .img-title {
-    background: #1a1d2e;
-    border-radius: 12px 12px 0 0;
-    padding: 10px 16px;
-    color: #a78bfa;
-    font-weight: 600;
-    font-size: 15px;
-    border: 1px solid #3a3f5c;
-    border-bottom: none;
-  }
-  .img-box {
-    background: #13152a;
-    border-radius: 0 0 12px 12px;
-    padding: 16px;
-    border: 1px solid #3a3f5c;
-    border-top: none;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .img-caption {
-    color: #64748b;
+  .n1 { background:#7c3aed22; color:#a78bfa; border:1px solid #7c3aed55; }
+  .n2 { background:#1d4ed822; color:#60a5fa; border:1px solid #1d4ed855; }
+  .n3 { background:#05966922; color:#34d399; border:1px solid #05966955; }
+  .concepto-tag {
+    display: inline-block;
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 2px 8px;
     font-size: 11px;
-    margin-top: 8px;
   }
-  .pregunta-num {
-    color: #a78bfa;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
+  .fallo-card {
+    background: #1a1218;
+    border: 1px solid #7f1d1d44;
+    border-left: 4px solid #ef4444;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
   }
+  .flashcard-front {
+    background: #1a1d2e;
+    border: 2px solid #7c3aed;
+    border-radius: 16px;
+    padding: 30px 24px;
+    text-align: center;
+    min-height: 140px;
+  }
+  .flashcard-back {
+    background: #0f1a12;
+    border: 2px solid #10b981;
+    border-radius: 16px;
+    padding: 24px;
+    min-height: 140px;
+  }
+  .stat-box {
+    background: #1a1d2e;
+    border: 1px solid #3a3f5c;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .pregunta-num { color:#a78bfa; font-size:13px; font-weight:600; }
+  div[data-testid="stProgress"] > div { background: #7c3aed44; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Imágenes por tema ─────────────────────────────────────────
-# Todas de Wikipedia Commons (licencia libre)
-_BASE = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/"
-IMAGENES = {
-    "manguito_rotador": {
-        "url": _BASE + "Shoulderjoint.PNG&width=600",
-        "titulo": "🦴 Manguito rotador — articulación del hombro",
-        "caption": "Vista anterior. Identifica los 4 músculos del SITS: Supraespinoso, Infraespinoso, Teres minor, Subescapular."
-    },
-    "plexo_braquial": {
-        "url": _BASE + "Brachial_plexus_color.svg&width=700",
-        "titulo": "🧠 Plexo braquial (C5–T1)",
-        "caption": "Raíces → Troncos → Divisiones → Fascículos → Nervios terminales"
-    },
-    "huesos_ms": {
-        "url": _BASE + "Gray207.png&width=500",
-        "titulo": "🦴 Húmero — hueso del miembro superior",
-        "caption": "Cabeza, cuello anatómico, troquíter, troquín, surco bicipital, epicóndilos"
-    },
-    "huesos_mi": {
-        "url": _BASE + "Gray243.png&width=500",
-        "titulo": "🦴 Fémur — hueso del miembro inferior",
-        "caption": "Cabeza, cuello, trocánteres, cóndilos medial y lateral"
-    },
-    "rodilla": {
-        "url": _BASE + "Knee_diagram.svg&width=600",
-        "titulo": "🦵 Articulación de la rodilla",
-        "caption": "LCA, LCP, LCM, LCL y meniscos medial y lateral"
-    },
-    "huesos_craneo": {
-        "url": _BASE + "Human_skull_side_simplified_%28bones%29.svg&width=650",
-        "titulo": "💀 Huesos del cráneo — vista lateral",
-        "caption": "Neurocráneo (8 huesos): frontal, parietales, occipital, temporales, esfenoides, etmoides"
-    },
-    "craneo_foramenes": {
-        "url": _BASE + "Gray193.png&width=650",
-        "titulo": "💀 Base del cráneo — forámenes",
-        "caption": "Fosa anterior, media y posterior con sus forámenes"
-    },
-    "nervios_craneales": {
-        "url": _BASE + "Cranial_nerve_components_english.svg&width=700",
-        "titulo": "🧠 Los 12 nervios craneales",
-        "caption": "Origen y función de cada par craneal"
-    },
-    "columna": {
-        "url": _BASE + "Human_vertebral_column.svg&width=400",
-        "titulo": "🦴 Columna vertebral",
-        "caption": "Regiones cervical (7), torácica (12), lumbar (5), sacra y coccígea"
-    },
-    "atlas_axis": {
-        "url": _BASE + "Gray86.png&width=500",
-        "titulo": "🦴 Atlas (C1) y Axis (C2)",
-        "caption": "C1 = flexoextensión (decir SÍ) · C2 = rotación (decir NO)"
-    },
-    "carpo_tarso": {
-        "url": _BASE + "Gray219.png&width=500",
-        "titulo": "🦴 Huesos del carpo",
-        "caption": "Fila proximal: E-S-P-P / Fila distal: T-T-G-G (Escafoides, Semilunar, Piramidal, Pisiforme)"
-    },
-    "nervios_mmii": {
-        "url": _BASE + "Gray826and831.PNG&width=550",
-        "titulo": "🧠 Nervios del miembro inferior",
-        "caption": "Plexo lumbar (femoral, obturador) y plexo sacro (ciático, tibial, peroneo)"
-    },
-    "articulacion_hombro": {
-        "url": _BASE + "Gray327.png&width=550",
-        "titulo": "🦴 Articulación glenohumeral",
-        "caption": "Cabeza del húmero, cavidad glenoidea, labrum y ligamentos"
-    },
-    "musculos_ms": {
-        "url": _BASE + "Gray413.png&width=500",
-        "titulo": "💪 Músculos del brazo — compartimento anterior",
-        "caption": "Bíceps braquial (cabeza larga y corta), braquial anterior, coracobraquial"
-    },
-    "musculos_mi": {
-        "url": _BASE + "Gray430.png&width=500",
-        "titulo": "🦵 Músculos del muslo — compartimento anterior",
-        "caption": "Cuádriceps femoral: recto femoral, vasto medial, lateral e intermedio"
-    },
-    "arterias_ms_mi": {
-        "url": _BASE + "Gray549.png&width=500",
-        "titulo": "🩸 Arterias del miembro inferior",
-        "caption": "Ilíaca externa → Femoral → Poplítea → Tibial anterior y posterior"
-    },
-    "ligamentos_columna": {
-        "url": _BASE + "Gray301.png&width=550",
-        "titulo": "🦴 Ligamentos de la columna vertebral",
-        "caption": "LLA, LLP, ligamento amarillo, interespinosos y supraespinoso"
-    },
-    "disco_intervertebral": {
-        "url": _BASE + "Gray_111_-_Vertebral_column.png&width=500",
-        "titulo": "🦴 Disco intervertebral y vértebra",
-        "caption": "Núcleo pulposo y anillo fibroso. Hernia posterolateral."
-    },
-}
+# ── Persistencia de fallos ───────────────────────────────────────
+def cargar_fallos() -> list:
+    if FALLOS_PATH.exists():
+        try:
+            return json.loads(FALLOS_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return []
+    return []
 
-# ── Session state ────────────────────────────────────────────
-for k, v in {
+def guardar_fallos(fallos: list):
+    try:
+        FALLOS_PATH.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+def registrar_fallo(pregunta: dict, tema: str, respuesta_dada: str, generada_ia: bool = False):
+    fallos = st.session_state.fallos
+    pid = pregunta["id"]
+    for f in fallos:
+        if f["pregunta_id"] == pid and not f.get("aprendida"):
+            f["veces_fallada"] += 1
+            f["ultima_fecha"] = datetime.now().strftime("%Y-%m-%d")
+            guardar_fallos(fallos)
+            return
+    fallos.append({
+        "uid": str(uuid.uuid4())[:8],
+        "pregunta_id": pid,
+        "tema": tema,
+        "tema_nombre": BANCO[tema]["nombre"],
+        "nivel": BANCO[tema]["nivel"],
+        "concepto": pregunta.get("concepto", ""),
+        "enunciado": pregunta["enunciado"],
+        "opciones": pregunta["opciones"],
+        "correcta": pregunta["correcta"],
+        "exp": pregunta["exp"],
+        "respuesta_dada": respuesta_dada,
+        "veces_fallada": 1,
+        "primera_fecha": datetime.now().strftime("%Y-%m-%d"),
+        "ultima_fecha": datetime.now().strftime("%Y-%m-%d"),
+        "aprendida": False,
+        "generada_ia": generada_ia,
+    })
+    guardar_fallos(fallos)
+
+# ── Session state ────────────────────────────────────────────────
+defaults = {
+    "fallos": cargar_fallos(),
     "chat_history": [],
     "test_active": False,
-    "test_clave": None,
+    "test_tema": None,
+    "test_pregs": [],
     "test_idx": 0,
     "test_results": [],
     "test_answered": False,
     "test_last_letra": None,
-    "repaso_active": False,
-    "repaso_pregs": [],
-    "repaso_idx": 0,
-    "repaso_results": [],
-    "repaso_answered": False,
-    "repaso_last_letra": None,
-}.items():
+    "ft_active": False,
+    "ft_pregs": [],
+    "ft_idx": 0,
+    "ft_results": [],
+    "ft_answered": False,
+    "ft_last_letra": None,
+    "flash_idx": 0,
+    "flash_revealed": False,
+    "gen_loading": False,
+}
+for k, v in defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
-# ── Cliente Anthropic ────────────────────────────────────────
+# ── Cliente Anthropic ────────────────────────────────────────────
 @st.cache_resource
 def get_client():
     return anthropic.Anthropic()
 
-def stream_respuesta(messages):
-    client = get_client()
-    with client.messages.stream(
-        model="claude-opus-4-7",
-        max_tokens=600,
-        system=[{"type": "text", "text": SYSTEM_PROMPT,
-                 "cache_control": {"type": "ephemeral"}}],
-        messages=messages,
-    ) as stream:
-        yield from stream.text_stream
-
-# ── Helpers visuales ─────────────────────────────────────────
-def badge_nivel(n):
-    labels = {1: "⭐⭐⭐ Muy importante", 2: "⭐⭐ Importante", 3: "⭐ Poco preguntado"}
-    return f'<span class="nivel-badge nivel-{n}">{labels[n]}</span>'
-
-def mostrar_imagen(clave):
-    """Muestra la imagen anatómica real del tema si existe."""
-    if clave not in IMAGENES:
-        return
-    img = IMAGENES[clave]
-    st.markdown(f'<div class="img-title">{img["titulo"]}</div>', unsafe_allow_html=True)
-    with st.container():
-        st.markdown('<div class="img-box">', unsafe_allow_html=True)
-        try:
-            col1, col2, col3 = st.columns([1, 4, 1])
-            with col2:
-                st.image(img["url"], use_container_width=True)
-            st.markdown(f'<p class="img-caption">📖 {img["caption"]}</p>',
-                        unsafe_allow_html=True)
-        except Exception:
-            st.warning("⚠️ Imagen no disponible en este momento.")
-        st.markdown('</div>', unsafe_allow_html=True)
-
-def mostrar_esquema_texto(clave):
-    """Muestra el esquema ASCII con estilo."""
-    e = ESQUEMAS[clave]
-    st.markdown(badge_nivel(e["nivel"]), unsafe_allow_html=True)
-    st.markdown(f'<div class="schema-card">{e["esquema"]}</div>',
-                unsafe_allow_html=True)
+# ── Helpers ──────────────────────────────────────────────────────
+def badge(nivel):
+    etiq = {1: "⭐⭐⭐ Nivel 1", 2: "⭐⭐ Nivel 2", 3: "⭐ Nivel 3"}
+    return f'<span class="nivel-badge n{nivel}">{etiq[nivel]}</span>'
 
 def mostrar_pregunta(p, idx, total, key_prefix):
-    """Renderiza una pregunta con radio buttons."""
-    st.markdown(f'<p class="pregunta-num">Pregunta {idx+1} de {total}</p>',
-                unsafe_allow_html=True)
+    st.markdown(f'<p class="pregunta-num">Pregunta {idx+1} / {total}</p>', unsafe_allow_html=True)
+    tema_key = key_prefix.split("_")[0] if "_" in key_prefix else None
+    nivel_n = BANCO.get(tema_key, {}).get("nivel", 1) if tema_key else 1
+    st.markdown(
+        f'{badge(nivel_n)} <span class="concepto-tag">🔑 {p.get("concepto","")}</span>',
+        unsafe_allow_html=True
+    )
     st.markdown(f"**{p['enunciado']}**")
     opciones = [f"{k})  {v}" for k, v in p["opciones"].items()]
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
-def feedback_respuesta(p, letra):
-    """Muestra si la respuesta es correcta o no."""
+def feedback(p, letra):
     if letra == p["correcta"]:
         st.success(f"✅  ¡Correcto!")
     else:
-        st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
+        st.error(f"❌  Incorrecto — la respuesta era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
     st.info(f"💬  {p['exp']}")
 
-def pantalla_final(results):
+def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
     t = len(results)
-    pct = int(c / t * 100) if t > 0 else 0
+    pct = int(c / t * 100) if t else 0
     if pct >= 80:
         st.balloons()
-        st.success(f"🎉  {c}/{t} correctas — {pct}%  ¡Excelente!")
+        st.success(f"🎉  {c}/{t} — {pct}%  ¡Excelente!")
     elif pct >= 60:
-        st.warning(f"👍  {c}/{t} correctas — {pct}%  Bien, sigue practicando")
+        st.warning(f"👍  {c}/{t} — {pct}%  Sigue practicando")
     else:
-        st.error(f"📚  {c}/{t} correctas — {pct}%  A repasar este tema")
+        st.error(f"📚  {c}/{t} — {pct}%  A repasar")
     st.progress(pct / 100)
+    if n_fallos_nuevos:
+        st.caption(f"⚠️ {n_fallos_nuevos} preguntas guardadas en 'Mis Fallos'")
 
-# ════════════════════════════════════════════════════════════
+def generar_pregunta_ia(pregunta_original: dict, tema: str) -> dict | None:
+    client = get_client()
+    prompt = f"""Genera UNA sola pregunta tipo test de anatomía humana (4 opciones A/B/C/D) sobre el mismo concepto que esta:
+
+CONCEPTO: {pregunta_original.get('concepto','')}
+PREGUNTA ORIGINAL: {pregunta_original['enunciado']}
+RESPUESTA CORRECTA: {pregunta_original['correcta']}) {pregunta_original['opciones'][pregunta_original['correcta']]}
+
+La nueva pregunta debe:
+- Ser diferente pero evaluar el mismo concepto anatómico
+- Tener dificultad similar
+- Incluir una explicación clínica breve
+
+Responde SOLO con JSON válido en este formato exacto:
+{{
+  "id": "ia_{tema}_001",
+  "concepto": "{pregunta_original.get('concepto','')}",
+  "enunciado": "...",
+  "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
+  "correcta": "A",
+  "exp": "..."
+}}"""
+
+    try:
+        resp = client.messages.create(
+            model="claude-opus-4-7",
+            max_tokens=600,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        text = resp.content[0].text.strip()
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start >= 0 and end > start:
+            data = json.loads(text[start:end])
+            data["id"] = f"ia_{tema}_{str(uuid.uuid4())[:6]}"
+            return data
+    except Exception:
+        pass
+    return None
+
+# ════════════════════════════════════════════════════════════════
 #  CABECERA
-# ════════════════════════════════════════════════════════════
-st.markdown("## 🧠 Anatomía UCV — 1º Medicina")
-st.caption("MS · MI · Cráneo · Vértebras")
+# ════════════════════════════════════════════════════════════════
+st.markdown("## 🧠 Anatomía UCV — Banco de Preguntas")
+st.caption("MS · MI · Cráneo · Vértebras  |  1º Medicina")
 
-# ════════════════════════════════════════════════════════════
+n_fallos_activos = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
+col_a, col_b, col_c = st.columns(3)
+with col_a:
+    total_q = sum(len(v["preguntas"]) for v in BANCO.values())
+    st.metric("Total preguntas", total_q)
+with col_b:
+    st.metric("Preguntas falladas", n_fallos_activos)
+with col_c:
+    temas_fallados = len({f["tema"] for f in st.session_state.fallos if not f.get("aprendida")})
+    st.metric("Temas con fallos", temas_fallados)
+
+# ════════════════════════════════════════════════════════════════
 #  TABS
-# ════════════════════════════════════════════════════════════
-tab_esq, tab_test, tab_repaso, tab_chat = st.tabs(
-    ["📋 Esquemas", "✏️ Test", "🔀 Repaso", "💬 Chat IA"]
-)
+# ════════════════════════════════════════════════════════════════
+tab_test, tab_fallos, tab_flash, tab_tfallo, tab_chat = st.tabs([
+    "📚 Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "💬 Chat IA"
+])
 
-# ────────────────────────────────────────────────────────────
-#  TAB 1 — ESQUEMAS
-# ────────────────────────────────────────────────────────────
-with tab_esq:
-    nivel_fil = st.radio(
-        "Filtrar por nivel:",
-        ["Todos", "⭐⭐⭐ Nivel 1", "⭐⭐ Nivel 2", "⭐ Nivel 3"],
-        horizontal=True,
-        key="esq_fil",
-    )
-    if "1" in nivel_fil:
-        claves_fil = NIVELES[1]["claves"]
-    elif "2" in nivel_fil:
-        claves_fil = NIVELES[2]["claves"]
-    elif "3" in nivel_fil:
-        claves_fil = NIVELES[3]["claves"]
-    else:
-        claves_fil = list(ESQUEMAS.keys())
-
-    mapa = {f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k for k in claves_fil}
-    sel = st.selectbox("Elige un tema:", list(mapa.keys()), key="esq_sel")
-    clave_esq = mapa[sel]
-
-    # Imagen anatómica real primero
-    mostrar_imagen(clave_esq)
-
-    # Luego el esquema ASCII como resumen
-    with st.expander("📝 Ver esquema de texto"):
-        mostrar_esquema_texto(clave_esq)
-
-# ────────────────────────────────────────────────────────────
-#  TAB 2 — TEST (imagen + preguntas)
-# ────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────────
+#  TAB 1 — TEST
+# ────────────────────────────────────────────────────────────────
 with tab_test:
-    mapa_t = {f"{'⭐'*ESQUEMAS[k]['nivel']}  {ESQUEMAS[k]['nombre']}": k for k in ESQUEMAS}
-    sel_t = st.selectbox("Elige un tema:", list(mapa_t.keys()), key="test_sel")
-    clave_t = mapa_t[sel_t]
-
-    # Resetear si cambia el tema
-    if st.session_state.test_clave != clave_t:
-        st.session_state.test_active = False
-        st.session_state.test_clave = clave_t
-        st.session_state.test_idx = 0
-        st.session_state.test_results = []
-        st.session_state.test_answered = False
-
-    # ── Imagen anatómica siempre visible ──
-    mostrar_imagen(clave_t)
-
-    # ── Esquema ASCII colapsable ──
-    with st.expander("📝 Ver esquema de texto"):
-        mostrar_esquema_texto(clave_t)
-
-    st.divider()
-
     if not st.session_state.test_active:
-        n = len(ESQUEMAS[clave_t]["preguntas"])
-        st.info(f"**{n} preguntas** sobre este tema. Estudia la imagen de arriba antes de empezar.")
+        st.markdown("### Configurar test")
+
+        c1, c2 = st.columns(2)
+        with c1:
+            modo_sel = st.radio("Modo:", ["Por tema", "Por categoría", "Por nivel"], key="modo_sel")
+        with c2:
+            n_pregs = st.slider("Preguntas:", 5, 20, 10, key="n_pregs_test")
+
+        if modo_sel == "Por tema":
+            temas_disp = {f"{'⭐'*BANCO[k]['nivel']}  {BANCO[k]['nombre']}": k for k in BANCO}
+            sel = st.selectbox("Tema:", list(temas_disp.keys()), key="sel_tema")
+            pool = [(sel_key := temas_disp[sel], p) for p in BANCO[temas_disp[sel]]["preguntas"]]
+            pool = [(temas_disp[sel], p) for p in BANCO[temas_disp[sel]]["preguntas"]]
+        elif modo_sel == "Por categoría":
+            cat_sel = st.selectbox("Categoría:", list(CATEGORIAS.keys()), key="sel_cat")
+            pool = [(k, p) for k in CATEGORIAS[cat_sel] for p in BANCO[k]["preguntas"]]
+        else:
+            nivel_sel = st.radio("Nivel:", ["⭐⭐⭐ 1", "⭐⭐ 2", "⭐ 3", "Todos"], horizontal=True, key="nivel_test")
+            if "1" in nivel_sel:
+                keys = NIVELES[1]
+            elif "2" in nivel_sel:
+                keys = NIVELES[2]
+            elif "3" in nivel_sel:
+                keys = NIVELES[3]
+            else:
+                keys = list(BANCO.keys())
+            pool = [(k, p) for k in keys for p in BANCO[k]["preguntas"]]
+
         if st.button("▶️  Empezar test", type="primary", use_container_width=True):
+            muestra = random.sample(pool, min(n_pregs, len(pool)))
             st.session_state.test_active = True
+            st.session_state.test_pregs = muestra
             st.session_state.test_idx = 0
             st.session_state.test_results = []
             st.session_state.test_answered = False
+            st.session_state.test_last_letra = None
+            st.session_state.test_n_fallos = 0
             st.rerun()
     else:
-        pregs = ESQUEMAS[st.session_state.test_clave]["preguntas"]
+        pregs = st.session_state.test_pregs
         idx = st.session_state.test_idx
 
         if idx < len(pregs):
+            tema_k, p = pregs[idx]
             st.progress(idx / len(pregs), text=f"Progreso: {idx}/{len(pregs)}")
-            p = pregs[idx]
+
+            st.markdown(f"**Tema:** {BANCO[tema_k]['nombre']}  |  **Categoría:** {BANCO[tema_k]['categoria']}")
 
             if not st.session_state.test_answered:
-                resp = mostrar_pregunta(p, idx, len(pregs), "test")
+                resp = mostrar_pregunta(p, idx, len(pregs), f"{tema_k}_test")
                 col1, col2 = st.columns(2)
                 with col1:
-                    if st.button("✔ Confirmar", type="primary",
-                                 disabled=resp is None, use_container_width=True):
+                    if st.button("✔ Confirmar", type="primary", disabled=resp is None, use_container_width=True, key="conf_test"):
                         letra = resp[0]
+                        correcto = letra == p["correcta"]
+                        st.session_state.test_results.append(correcto)
                         st.session_state.test_answered = True
                         st.session_state.test_last_letra = letra
-                        st.session_state.test_results.append(letra == p["correcta"])
+                        if not correcto:
+                            registrar_fallo(p, tema_k, letra)
+                            st.session_state.test_n_fallos = st.session_state.get("test_n_fallos", 0) + 1
                         st.rerun()
                 with col2:
-                    if st.button("⏭ Saltar", use_container_width=True):
+                    if st.button("⏭ Saltar", use_container_width=True, key="skip_test"):
                         st.session_state.test_idx += 1
                         st.rerun()
             else:
-                feedback_respuesta(p, st.session_state.test_last_letra)
-                if st.button("Siguiente →", type="primary", use_container_width=True):
+                feedback(p, st.session_state.test_last_letra)
+                if st.button("Siguiente →", type="primary", use_container_width=True, key="next_test"):
                     st.session_state.test_idx += 1
                     st.session_state.test_answered = False
                     st.rerun()
         else:
-            pantalla_final(st.session_state.test_results)
+            pantalla_final(st.session_state.test_results, st.session_state.get("test_n_fallos", 0))
+            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
+                st.session_state.test_active = False
+                st.rerun()
+
+# ────────────────────────────────────────────────────────────────
+#  TAB 2 — MIS FALLOS
+# ────────────────────────────────────────────────────────────────
+with tab_fallos:
+    fallos = [f for f in st.session_state.fallos if not f.get("aprendida")]
+
+    if not fallos:
+        st.info("🎉 ¡Sin fallos registrados! Haz un test para comenzar.")
+    else:
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            temas_con_fallos = sorted({f["tema"] for f in fallos})
+            opciones_tema = ["Todos los temas"] + [BANCO[t]["nombre"] for t in temas_con_fallos]
+            filtro = st.selectbox("Filtrar por tema:", opciones_tema, key="fallos_filtro")
+        with col2:
+            ordenar = st.selectbox("Ordenar:", ["Más falladas", "Recientes", "Tema"], key="fallos_orden")
+
+        if filtro != "Todos los temas":
+            tema_fil = next(k for k in temas_con_fallos if BANCO[k]["nombre"] == filtro)
+            fallos_vis = [f for f in fallos if f["tema"] == tema_fil]
+        else:
+            fallos_vis = fallos
+
+        if ordenar == "Más falladas":
+            fallos_vis = sorted(fallos_vis, key=lambda x: x["veces_fallada"], reverse=True)
+        elif ordenar == "Recientes":
+            fallos_vis = sorted(fallos_vis, key=lambda x: x["ultima_fecha"], reverse=True)
+        else:
+            fallos_vis = sorted(fallos_vis, key=lambda x: x["tema"])
+
+        st.markdown(f"**{len(fallos_vis)} pregunta(s)** {'en este tema' if filtro != 'Todos los temas' else 'en total'}")
+        st.divider()
+
+        for i, f in enumerate(fallos_vis):
+            with st.container():
+                st.markdown(
+                    f'<div class="fallo-card">'
+                    f'{badge(f["nivel"])} <span class="concepto-tag">🔑 {f["concepto"]}</span>'
+                    f'<span style="color:#64748b;font-size:11px;margin-left:8px;">📚 {f["tema_nombre"]}</span>'
+                    f'<br><br><b>{f["enunciado"]}</b>'
+                    f'<br><span style="color:#ef4444;font-size:12px;">Tu respuesta: {f["respuesta_dada"]}) {f["opciones"][f["respuesta_dada"]]}</span>'
+                    f'<br><span style="color:#10b981;font-size:12px;">Correcta: {f["correcta"]}) {f["opciones"][f["correcta"]]}</span>'
+                    f'<br><span style="color:#64748b;font-size:11px;margin-top:4px;display:block;">💬 {f["exp"]}</span>'
+                    f'<br><span style="color:#94a3b8;font-size:10px;">Fallada {f["veces_fallada"]}x · última vez {f["ultima_fecha"]}'
+                    + (' · 🤖 IA' if f.get("generada_ia") else '') +
+                    '</span></div>',
+                    unsafe_allow_html=True
+                )
+                btn_col1, btn_col2, btn_col3 = st.columns([2, 2, 1])
+                with btn_col1:
+                    if st.button("✅ Marcar como aprendida", key=f"apr_{f['uid']}_{i}", use_container_width=True):
+                        for ff in st.session_state.fallos:
+                            if ff["uid"] == f["uid"]:
+                                ff["aprendida"] = True
+                        guardar_fallos(st.session_state.fallos)
+                        st.rerun()
+                with btn_col2:
+                    if st.button("🤖 Generar pregunta similar", key=f"gen_{f['uid']}_{i}", use_container_width=True):
+                        with st.spinner("Generando pregunta con IA..."):
+                            nueva = generar_pregunta_ia(f, f["tema"])
+                        if nueva:
+                            if f["tema"] not in BANCO:
+                                pass
+                            else:
+                                BANCO[f["tema"]]["preguntas"].append(nueva)
+                            st.success("✅ Pregunta generada añadida al banco de test")
+                        else:
+                            st.error("No se pudo generar la pregunta. Inténtalo de nuevo.")
+
+        st.divider()
+        col_d1, col_d2 = st.columns(2)
+        with col_d1:
+            datos_json = json.dumps(st.session_state.fallos, ensure_ascii=False, indent=2)
+            st.download_button("⬇️ Exportar fallos (JSON)", datos_json, "fallos_anatomia.json", "application/json", use_container_width=True)
+        with col_d2:
+            uploaded = st.file_uploader("⬆️ Importar fallos", type="json", key="import_fallos", label_visibility="collapsed")
+            if uploaded:
+                try:
+                    datos = json.load(uploaded)
+                    st.session_state.fallos = datos
+                    guardar_fallos(datos)
+                    st.success("Fallos importados correctamente")
+                    st.rerun()
+                except Exception:
+                    st.error("Archivo inválido")
+
+# ────────────────────────────────────────────────────────────────
+#  TAB 3 — FLASHCARDS
+# ────────────────────────────────────────────────────────────────
+with tab_flash:
+    fallos_flash = [f for f in st.session_state.fallos if not f.get("aprendida")]
+
+    if not fallos_flash:
+        st.info("No hay fallos registrados para las flashcards.")
+    else:
+        temas_flash = sorted({f["tema"] for f in fallos_flash})
+        filtro_flash = st.selectbox("Tema:", ["Todos"] + [BANCO[t]["nombre"] for t in temas_flash], key="flash_filtro")
+
+        if filtro_flash != "Todos":
+            tema_fl = next(k for k in temas_flash if BANCO[k]["nombre"] == filtro_flash)
+            pool_flash = [f for f in fallos_flash if f["tema"] == tema_fl]
+        else:
+            pool_flash = fallos_flash
+
+        conceptos_unicos = {}
+        for f in pool_flash:
+            if f["concepto"] not in conceptos_unicos:
+                conceptos_unicos[f["concepto"]] = f
+
+        lista_conceptos = list(conceptos_unicos.values())
+        if not lista_conceptos:
+            st.info("Sin conceptos para mostrar.")
+        else:
+            idx_flash = st.session_state.flash_idx % len(lista_conceptos)
+            concepto_act = lista_conceptos[idx_flash]
+
+            st.markdown(f"**Flashcard {idx_flash + 1} / {len(lista_conceptos)}** — {BANCO.get(concepto_act['tema'], {}).get('nombre', '')}")
+            st.progress((idx_flash + 1) / len(lista_conceptos))
+
+            st.markdown(
+                f'<div class="flashcard-front">'
+                f'<p style="color:#a78bfa;font-size:13px;margin-bottom:8px;">🔑 CONCEPTO</p>'
+                f'<h3 style="color:#e2e8f0;margin:0;">{concepto_act["concepto"].upper()}</h3>'
+                f'<p style="color:#64748b;font-size:12px;margin-top:12px;">{BANCO.get(concepto_act["tema"],{}).get("nombre","")}</p>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
+
+            if st.session_state.flash_revealed:
+                st.markdown(
+                    f'<div class="flashcard-back">'
+                    f'<p style="color:#10b981;font-size:12px;margin-bottom:8px;">✅ EXPLICACIÓN</p>'
+                    f'<p style="color:#e2e8f0;">{concepto_act["exp"]}</p>'
+                    f'<p style="color:#64748b;font-size:12px;margin-top:12px;">📝 <b>{concepto_act["correcta"]})</b> {concepto_act["opciones"][concepto_act["correcta"]]}</p>'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                if st.button("👁️ Ver respuesta" if not st.session_state.flash_revealed else "🙈 Ocultar", use_container_width=True, key="reveal_flash"):
+                    st.session_state.flash_revealed = not st.session_state.flash_revealed
+                    st.rerun()
+            with col2:
+                if st.button("← Anterior", use_container_width=True, key="prev_flash"):
+                    st.session_state.flash_idx = (st.session_state.flash_idx - 1) % len(lista_conceptos)
+                    st.session_state.flash_revealed = False
+                    st.rerun()
+            with col3:
+                if st.button("Siguiente →", use_container_width=True, key="next_flash", type="primary"):
+                    st.session_state.flash_idx = (st.session_state.flash_idx + 1) % len(lista_conceptos)
+                    st.session_state.flash_revealed = False
+                    st.rerun()
+
+# ────────────────────────────────────────────────────────────────
+#  TAB 4 — TEST DE FALLOS
+# ────────────────────────────────────────────────────────────────
+with tab_tfallo:
+    fallos_test = [f for f in st.session_state.fallos if not f.get("aprendida")]
+
+    if not fallos_test:
+        st.info("Sin fallos registrados. Haz tests primero para llenar este banco.")
+    elif not st.session_state.ft_active:
+        st.markdown("### Test solo con tus preguntas falladas")
+
+        temas_ft = sorted({f["tema"] for f in fallos_test})
+        c1, c2 = st.columns(2)
+        with c1:
+            opciones_ft = ["Todos los temas"] + [BANCO[t]["nombre"] for t in temas_ft]
+            filtro_ft = st.selectbox("Tema:", opciones_ft, key="ft_filtro")
+        with c2:
+            ordenar_ft = st.radio("Orden:", ["Aleatorio", "Más falladas primero"], key="ft_orden")
+
+        if filtro_ft != "Todos los temas":
+            tema_ft_k = next(k for k in temas_ft if BANCO[k]["nombre"] == filtro_ft)
+            pool_ft = [f for f in fallos_test if f["tema"] == tema_ft_k]
+        else:
+            pool_ft = fallos_test
+
+        n_ft = st.slider("Preguntas:", 3, min(20, len(pool_ft)), min(10, len(pool_ft)), key="n_ft")
+
+        if ordenar_ft == "Más falladas primero":
+            pool_ft_sorted = sorted(pool_ft, key=lambda x: x["veces_fallada"], reverse=True)
+            muestra_ft = pool_ft_sorted[:n_ft]
+        else:
+            muestra_ft = random.sample(pool_ft, n_ft)
+
+        st.info(f"**{len(pool_ft)} preguntas** en el banco de fallos para este filtro.")
+
+        if st.button("▶️ Empezar test de fallos", type="primary", use_container_width=True):
+            st.session_state.ft_active = True
+            st.session_state.ft_pregs = muestra_ft
+            st.session_state.ft_idx = 0
+            st.session_state.ft_results = []
+            st.session_state.ft_answered = False
+            st.session_state.ft_last_letra = None
+            st.session_state.ft_n_nuevos = 0
+            st.rerun()
+    else:
+        pregs_ft = st.session_state.ft_pregs
+        idx_ft = st.session_state.ft_idx
+
+        if idx_ft < len(pregs_ft):
+            f_act = pregs_ft[idx_ft]
+            p_ft = {
+                "id": f_act["pregunta_id"],
+                "concepto": f_act["concepto"],
+                "enunciado": f_act["enunciado"],
+                "opciones": f_act["opciones"],
+                "correcta": f_act["correcta"],
+                "exp": f_act["exp"],
+            }
+            st.progress(idx_ft / len(pregs_ft), text=f"Progreso: {idx_ft}/{len(pregs_ft)}")
+            st.markdown(f"**Tema:** {f_act['tema_nombre']}  |  Fallada **{f_act['veces_fallada']}x**")
+
+            if not st.session_state.ft_answered:
+                st.markdown(f'<p class="pregunta-num">Pregunta {idx_ft+1} / {len(pregs_ft)}</p>', unsafe_allow_html=True)
+                st.markdown(f'{badge(f_act["nivel"])} <span class="concepto-tag">🔑 {f_act["concepto"]}</span>', unsafe_allow_html=True)
+                st.markdown(f"**{p_ft['enunciado']}**")
+                opciones_ft2 = [f"{k})  {v}" for k, v in p_ft["opciones"].items()]
+                resp_ft = st.radio("", opciones_ft2, index=None, key=f"ft_{idx_ft}")
+
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("✔ Confirmar", type="primary", disabled=resp_ft is None, use_container_width=True, key="conf_ft"):
+                        letra_ft = resp_ft[0]
+                        correcto_ft = letra_ft == p_ft["correcta"]
+                        st.session_state.ft_results.append(correcto_ft)
+                        st.session_state.ft_answered = True
+                        st.session_state.ft_last_letra = letra_ft
+                        if not correcto_ft:
+                            registrar_fallo(p_ft, f_act["tema"], letra_ft)
+                            st.session_state.ft_n_nuevos = st.session_state.get("ft_n_nuevos", 0) + 1
+                        st.rerun()
+                with col2:
+                    if st.button("⏭ Saltar", use_container_width=True, key="skip_ft"):
+                        st.session_state.ft_idx += 1
+                        st.rerun()
+            else:
+                feedback(p_ft, st.session_state.ft_last_letra)
+                if st.button("Siguiente →", type="primary", use_container_width=True, key="next_ft"):
+                    st.session_state.ft_idx += 1
+                    st.session_state.ft_answered = False
+                    st.rerun()
+        else:
+            pantalla_final(st.session_state.ft_results, st.session_state.get("ft_n_nuevos", 0))
             col1, col2 = st.columns(2)
             with col1:
                 if st.button("🔁 Repetir", use_container_width=True):
-                    st.session_state.test_idx = 0
-                    st.session_state.test_results = []
-                    st.session_state.test_answered = False
+                    st.session_state.ft_active = False
                     st.rerun()
             with col2:
-                if st.button("← Elegir otro tema", use_container_width=True):
-                    st.session_state.test_active = False
+                if st.button("← Volver", use_container_width=True):
+                    st.session_state.ft_active = False
                     st.rerun()
 
-# ────────────────────────────────────────────────────────────
-#  TAB 3 — REPASO ALEATORIO
-# ────────────────────────────────────────────────────────────
-with tab_repaso:
-    if not st.session_state.repaso_active:
-        col1, col2 = st.columns(2)
-        with col1:
-            nivel_rep = st.radio(
-                "Nivel:",
-                ["Todos", "⭐⭐⭐ Nivel 1", "⭐⭐ Nivel 2", "⭐ Nivel 3"],
-                key="rep_nivel",
-            )
-        with col2:
-            n_rep = st.slider("Preguntas:", 5, 25, 12, key="rep_n")
-
-        if st.button("▶️ Empezar repaso", type="primary", use_container_width=True):
-            if "1" in nivel_rep:
-                claves_r = NIVELES[1]["claves"]
-            elif "2" in nivel_rep:
-                claves_r = NIVELES[2]["claves"]
-            elif "3" in nivel_rep:
-                claves_r = NIVELES[3]["claves"]
-            else:
-                claves_r = list(ESQUEMAS.keys())
-
-            pool = [(k, p) for k in claves_r for p in ESQUEMAS[k]["preguntas"]]
-            muestra = random.sample(pool, min(n_rep, len(pool)))
-            st.session_state.repaso_active = True
-            st.session_state.repaso_pregs = muestra
-            st.session_state.repaso_idx = 0
-            st.session_state.repaso_results = []
-            st.session_state.repaso_answered = False
-            st.rerun()
-    else:
-        pregs_r = st.session_state.repaso_pregs
-        idx_r = st.session_state.repaso_idx
-
-        if idx_r < len(pregs_r):
-            st.progress(idx_r / len(pregs_r), text=f"{idx_r}/{len(pregs_r)}")
-            clave_r, p_r = pregs_r[idx_r]
-
-            # Imagen del tema actual en el repaso
-            mostrar_imagen(clave_r)
-
-            st.caption(f"📌  {ESQUEMAS[clave_r]['nombre']}")
-
-            if not st.session_state.repaso_answered:
-                resp_r = mostrar_pregunta(p_r, idx_r, len(pregs_r), "rep")
-                col1, col2 = st.columns(2)
-                with col1:
-                    if st.button("✔ Confirmar", type="primary",
-                                 disabled=resp_r is None,
-                                 use_container_width=True, key="conf_r"):
-                        letra_r = resp_r[0]
-                        st.session_state.repaso_answered = True
-                        st.session_state.repaso_last_letra = letra_r
-                        st.session_state.repaso_results.append(letra_r == p_r["correcta"])
-                        st.rerun()
-                with col2:
-                    if st.button("⏭ Saltar", use_container_width=True, key="skip_r"):
-                        st.session_state.repaso_idx += 1
-                        st.rerun()
-            else:
-                feedback_respuesta(p_r, st.session_state.repaso_last_letra)
-                if st.button("Siguiente →", type="primary",
-                             use_container_width=True, key="next_r"):
-                    st.session_state.repaso_idx += 1
-                    st.session_state.repaso_answered = False
-                    st.rerun()
-        else:
-            pantalla_final(st.session_state.repaso_results)
-            if st.button("🔁 Nuevo repaso", type="primary", use_container_width=True):
-                st.session_state.repaso_active = False
-                st.rerun()
-
-# ────────────────────────────────────────────────────────────
-#  TAB 4 — CHAT CON IA
-# ────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────────
+#  TAB 5 — CHAT IA
+# ────────────────────────────────────────────────────────────────
 with tab_chat:
-    st.caption("Pregunta cualquier duda sobre el temario de anatomía")
+    st.caption("Pregunta cualquier duda sobre anatomía del temario")
+
+    SYSTEM_PROMPT = """Eres un profesor experto en anatomía humana para estudiantes de 1º de Medicina de la Universidad Católica de Valencia (UCV).
+El temario de examen cubre: Miembro Superior, Miembro Inferior, Cráneo y Vértebras.
+Los exámenes son tipo test de 60-80 preguntas. Responde en español, de forma clara y concisa.
+Usa nemotecnias cuando sea útil. Incluye perlas clínicas relevantes."""
 
     for msg in st.session_state.chat_history:
         with st.chat_message(msg["role"]):
@@ -472,12 +619,20 @@ with tab_chat:
             st.write(pregunta)
         st.session_state.chat_history.append({"role": "user", "content": pregunta})
 
-        mensajes_api = [
-            {"role": m["role"], "content": m["content"]}
-            for m in st.session_state.chat_history[-20:]
-        ]
+        mensajes_api = [{"role": m["role"], "content": m["content"]} for m in st.session_state.chat_history[-20:]]
+        client = get_client()
+
         with st.chat_message("assistant"):
-            respuesta = st.write_stream(stream_respuesta(mensajes_api))
+            def stream_gen():
+                with client.messages.stream(
+                    model="claude-opus-4-7",
+                    max_tokens=700,
+                    system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
+                    messages=mensajes_api,
+                ) as stream:
+                    yield from stream.text_stream
+
+            respuesta = st.write_stream(stream_gen())
         st.session_state.chat_history.append({"role": "assistant", "content": respuesta})
 
     if st.session_state.chat_history:
