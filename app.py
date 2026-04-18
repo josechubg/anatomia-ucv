@@ -138,12 +138,16 @@ defaults = {
     "test_results": [],
     "test_answered": False,
     "test_last_letra": None,
+    "test_errores": [],
+    "test_revision": False,
     "ft_active": False,
     "ft_pregs": [],
     "ft_idx": 0,
     "ft_results": [],
     "ft_answered": False,
     "ft_last_letra": None,
+    "ft_errores": [],
+    "ft_revision": False,
     "flash_idx": 0,
     "flash_revealed": False,
     "gen_loading": False,
@@ -174,12 +178,27 @@ def mostrar_pregunta(p, idx, total, key_prefix):
     opciones = [f"{k})  {v}" for k, v in p["opciones"].items()]
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
-def feedback(p, letra):
+def feedback_breve(p, letra):
+    """Solo muestra correcto/incorrecto durante el test, sin explicación."""
     if letra == p["correcta"]:
-        st.success(f"✅  ¡Correcto!")
+        st.success("✅  ¡Correcto!")
     else:
-        st.error(f"❌  Incorrecto — la respuesta era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
-    st.info(f"💬  {p['exp']}")
+        st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
+
+def mostrar_revision(errores: list):
+    """Muestra la revisión completa de errores en sección separada."""
+    if not errores:
+        st.success("🎉 ¡No cometiste ningún error en este test!")
+        return
+    st.markdown(f"### 📝 Revisión de errores — {len(errores)} pregunta(s)")
+    for i, e in enumerate(errores, 1):
+        with st.expander(f"❌ {i}. {e['p']['enunciado'][:70]}...", expanded=True):
+            st.markdown(f"**{e['p']['enunciado']}**")
+            st.markdown(f"🔴 Tu respuesta: **{e['letra']})** {e['p']['opciones'][e['letra']]}")
+            st.markdown(f"🟢 Respuesta correcta: **{e['p']['correcta']})** {e['p']['opciones'][e['p']['correcta']]}")
+            st.info(f"💬 {e['p']['exp']}")
+            if e.get("tema"):
+                st.caption(f"📚 Tema: {BANCO.get(e['tema'], {}).get('nombre', '')}  |  🔑 {e['p'].get('concepto','')}")
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
@@ -306,15 +325,28 @@ with tab_test:
             st.session_state.test_answered = False
             st.session_state.test_last_letra = None
             st.session_state.test_n_fallos = 0
+            st.session_state.test_errores = []
+            st.session_state.test_revision = False
             st.rerun()
     else:
         pregs = st.session_state.test_pregs
         idx = st.session_state.test_idx
 
-        if idx < len(pregs):
+        # ── Pantalla de revisión (tras terminar el test) ──
+        if st.session_state.test_revision:
+            pantalla_final(st.session_state.test_results, st.session_state.get("test_n_fallos", 0))
+            st.divider()
+            mostrar_revision(st.session_state.test_errores)
+            st.divider()
+            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
+                st.session_state.test_active = False
+                st.session_state.test_revision = False
+                st.rerun()
+
+        # ── Preguntas del test ──
+        elif idx < len(pregs):
             tema_k, p = pregs[idx]
             st.progress(idx / len(pregs), text=f"Progreso: {idx}/{len(pregs)}")
-
             st.markdown(f"**Tema:** {BANCO[tema_k]['nombre']}  |  **Categoría:** {BANCO[tema_k]['categoria']}")
 
             if not st.session_state.test_answered:
@@ -330,22 +362,42 @@ with tab_test:
                         if not correcto:
                             registrar_fallo(p, tema_k, letra)
                             st.session_state.test_n_fallos = st.session_state.get("test_n_fallos", 0) + 1
+                            st.session_state.test_errores.append({"p": p, "letra": letra, "tema": tema_k})
                         st.rerun()
                 with col2:
                     if st.button("⏭ Saltar", use_container_width=True, key="skip_test"):
                         st.session_state.test_idx += 1
                         st.rerun()
             else:
-                feedback(p, st.session_state.test_last_letra)
+                feedback_breve(p, st.session_state.test_last_letra)
                 if st.button("Siguiente →", type="primary", use_container_width=True, key="next_test"):
                     st.session_state.test_idx += 1
                     st.session_state.test_answered = False
                     st.rerun()
+
+        # ── Test terminado → ir a revisión ──
         else:
-            pantalla_final(st.session_state.test_results, st.session_state.get("test_n_fallos", 0))
-            if st.button("🔁 Nuevo test", type="primary", use_container_width=True):
-                st.session_state.test_active = False
-                st.rerun()
+            c = sum(st.session_state.test_results)
+            t = len(st.session_state.test_results)
+            pct = int(c / t * 100) if t else 0
+            if pct >= 80:
+                st.balloons()
+                st.success(f"🎉  {c}/{t} — {pct}%  ¡Excelente!")
+            elif pct >= 60:
+                st.warning(f"👍  {c}/{t} — {pct}%  Sigue practicando")
+            else:
+                st.error(f"📚  {c}/{t} — {pct}%  A repasar")
+            st.progress(pct / 100)
+            n_err = len(st.session_state.test_errores)
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button(f"📝 Ver revisión de errores ({n_err})", type="primary", use_container_width=True):
+                    st.session_state.test_revision = True
+                    st.rerun()
+            with col2:
+                if st.button("🔁 Nuevo test", use_container_width=True):
+                    st.session_state.test_active = False
+                    st.rerun()
 
 # ────────────────────────────────────────────────────────────────
 #  TAB 2 — MIS FALLOS
@@ -544,12 +596,25 @@ with tab_tfallo:
             st.session_state.ft_answered = False
             st.session_state.ft_last_letra = None
             st.session_state.ft_n_nuevos = 0
+            st.session_state.ft_errores = []
+            st.session_state.ft_revision = False
             st.rerun()
     else:
         pregs_ft = st.session_state.ft_pregs
         idx_ft = st.session_state.ft_idx
 
-        if idx_ft < len(pregs_ft):
+        # ── Revisión separada ──
+        if st.session_state.ft_revision:
+            pantalla_final(st.session_state.ft_results, st.session_state.get("ft_n_nuevos", 0))
+            st.divider()
+            mostrar_revision(st.session_state.ft_errores)
+            st.divider()
+            if st.button("🔁 Nuevo test de fallos", type="primary", use_container_width=True):
+                st.session_state.ft_active = False
+                st.session_state.ft_revision = False
+                st.rerun()
+
+        elif idx_ft < len(pregs_ft):
             f_act = pregs_ft[idx_ft]
             p_ft = {
                 "id": f_act["pregunta_id"],
@@ -580,26 +645,39 @@ with tab_tfallo:
                         if not correcto_ft:
                             registrar_fallo(p_ft, f_act["tema"], letra_ft)
                             st.session_state.ft_n_nuevos = st.session_state.get("ft_n_nuevos", 0) + 1
+                            st.session_state.ft_errores.append({"p": p_ft, "letra": letra_ft, "tema": f_act["tema"]})
                         st.rerun()
                 with col2:
                     if st.button("⏭ Saltar", use_container_width=True, key="skip_ft"):
                         st.session_state.ft_idx += 1
                         st.rerun()
             else:
-                feedback(p_ft, st.session_state.ft_last_letra)
+                feedback_breve(p_ft, st.session_state.ft_last_letra)
                 if st.button("Siguiente →", type="primary", use_container_width=True, key="next_ft"):
                     st.session_state.ft_idx += 1
                     st.session_state.ft_answered = False
                     st.rerun()
+
         else:
-            pantalla_final(st.session_state.ft_results, st.session_state.get("ft_n_nuevos", 0))
+            c = sum(st.session_state.ft_results)
+            t = len(st.session_state.ft_results)
+            pct = int(c / t * 100) if t else 0
+            if pct >= 80:
+                st.balloons()
+                st.success(f"🎉  {c}/{t} — {pct}%  ¡Excelente!")
+            elif pct >= 60:
+                st.warning(f"👍  {c}/{t} — {pct}%  Sigue practicando")
+            else:
+                st.error(f"📚  {c}/{t} — {pct}%  A repasar")
+            st.progress(pct / 100)
+            n_err_ft = len(st.session_state.ft_errores)
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("🔁 Repetir", use_container_width=True):
-                    st.session_state.ft_active = False
+                if st.button(f"📝 Ver revisión de errores ({n_err_ft})", type="primary", use_container_width=True):
+                    st.session_state.ft_revision = True
                     st.rerun()
             with col2:
-                if st.button("← Volver", use_container_width=True):
+                if st.button("🔁 Nuevo test", use_container_width=True):
                     st.session_state.ft_active = False
                     st.rerun()
 
