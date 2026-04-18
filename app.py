@@ -239,6 +239,10 @@ Responde SOLO con JSON válido en este formato exacto:
 # ════════════════════════════════════════════════════════════════
 #  CABECERA
 # ════════════════════════════════════════════════════════════════
+portada = Path(__file__).parent / "portada.jpg"
+if portada.exists():
+    st.image(str(portada), use_container_width=True)
+
 st.markdown("## 🧠 Anatomía UCV — Banco de Preguntas")
 st.caption("MS · MI · Cráneo · Vértebras  |  1º Medicina")
 
