@@ -83,6 +83,18 @@ st.markdown("""
   .sp-blue   .stat-num { color:#60a5fa; }
   .sp-red    .stat-num { color:#f87171; }
   .stat-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#475569; }
+  .update-badge {
+    display: inline-block;
+    margin-top: 12px;
+    background: #0f172a;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #38bdf8;
+    letter-spacing: 0.3px;
+  }
   .hero-img-wrap { flex: 0 0 190px; }
   .hero-img-wrap img {
     width: 100%;
@@ -432,6 +444,19 @@ total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
 n_fallos  = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
 n_temas   = len(BANCO)
 
+# Leer log de última actualización automática
+UPDATE_LOG_PATH = Path(__file__).parent / "update_log.json"
+update_info = {"fecha": "—", "nuevas": 0}
+if UPDATE_LOG_PATH.exists():
+    try:
+        update_info = json.loads(UPDATE_LOG_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+
+update_badge = ""
+if update_info.get("nuevas", 0) > 0:
+    update_badge = f'<div class="update-badge">🔄 {update_info["fecha"]} &nbsp;·&nbsp; +{update_info["nuevas"]} nuevas</div>'
+
 st.markdown(f"""
 <div class="hero">
   <div class="hero-text">
@@ -452,6 +477,7 @@ st.markdown(f"""
         <span class="stat-label">errores</span>
       </div>
     </div>
+    {update_badge}
   </div>
   <div class="hero-img-wrap">{img_html}</div>
 </div>
