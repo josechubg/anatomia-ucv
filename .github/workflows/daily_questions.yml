@@ -1,0 +1,35 @@
+name: Añadir preguntas diarias de anatomía
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  add-questions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install anthropic
+      - name: Generar preguntas
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/add_questions.py
+      - name: Commit cambios
+        run: |
+          git config user.name "CarloTest Bot"
+          git config user.email "bot@carlotest.app"
+          git add banco_preguntas.py
+          if git diff --staged --quiet; then
+            echo "Sin cambios"
+          else
+            git commit -m "🤖 Preguntas auto $(date +'%Y-%m-%d')"
+            git push
+          fi
