@@ -788,17 +788,19 @@ with tab_tfallo:
         else:
             pool_ft = fallos_test
 
-        _ft_max = max(1, min(20, len(pool_ft)))
-        _ft_min = min(1, _ft_max)
-        n_ft = st.slider("Preguntas:", _ft_min, _ft_max, min(_ft_max, 10), key="n_ft")
+        st.info(f"**{len(pool_ft)} preguntas** en el banco de fallos para este filtro.")
+
+        if len(pool_ft) > 2:
+            _ft_max = min(20, len(pool_ft))
+            n_ft = st.slider("Preguntas:", 2, _ft_max, min(_ft_max, 10), key="n_ft")
+        else:
+            n_ft = len(pool_ft)
 
         if ordenar_ft == "Más falladas primero":
             pool_ft_sorted = sorted(pool_ft, key=lambda x: x["veces_fallada"], reverse=True)
             muestra_ft = pool_ft_sorted[:n_ft]
         else:
             muestra_ft = random.sample(pool_ft, n_ft)
-
-        st.info(f"**{len(pool_ft)} preguntas** en el banco de fallos para este filtro.")
 
         if st.button("▶️ Empezar test de fallos", type="primary", use_container_width=True):
             st.session_state.ft_active = True
