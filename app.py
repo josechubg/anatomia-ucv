@@ -788,7 +788,9 @@ with tab_tfallo:
         else:
             pool_ft = fallos_test
 
-        n_ft = st.slider("Preguntas:", 3, min(20, len(pool_ft)), min(10, len(pool_ft)), key="n_ft")
+        _ft_max = max(1, min(20, len(pool_ft)))
+        _ft_min = min(1, _ft_max)
+        n_ft = st.slider("Preguntas:", _ft_min, _ft_max, min(_ft_max, 10), key="n_ft")
 
         if ordenar_ft == "Más falladas primero":
             pool_ft_sorted = sorted(pool_ft, key=lambda x: x["veces_fallada"], reverse=True)
