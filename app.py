@@ -316,12 +316,53 @@ def mostrar_pregunta(p, idx, total, key_prefix):
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
 def feedback(p, letra):
-    """Muestra correcto/incorrecto + explicación breve tras cada pregunta."""
-    if letra == p["correcta"]:
+    """Muestra correcto/incorrecto + explicación extendida con Claude."""
+    acertada = letra == p["correcta"]
+    if acertada:
         st.success("✅  ¡Correcto!")
     else:
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
-    st.info(f"💬  {p['exp']}")
+
+    opciones_texto = "\n".join(f"  {k}) {v}" for k, v in p["opciones"].items())
+    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina. Acaban de responder esta pregunta tipo test:
+
+PREGUNTA: {p['enunciado']}
+OPCIONES:
+{opciones_texto}
+RESPUESTA CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}
+RESPUESTA DEL ALUMNO: {letra}) {p['opciones'].get(letra, '—')}
+EXPLICACIÓN BASE: {p['exp']}
+
+Genera una explicación didáctica con este formato EXACTO (usa markdown, sé conciso pero completo):
+
+**✅ Por qué {p['correcta']}) es correcta**
+[1-2 frases explicando el mecanismo anatómico clave]
+
+**❌ Por qué las demás opciones son incorrectas**
+- {", ".join(k for k in p["opciones"] if k != p["correcta"])}: [una frase por cada opción errónea explicando el error]
+
+**🧠 Cómo memorizar**
+[truco mnemotécnico, analogía clínica o regla práctica — máx 2 frases]
+
+**📌 Otras preguntas posibles sobre este tema**
+[2-3 bullet points con otras formas en que puede aparecer este concepto en un examen]"""
+
+    client = get_client()
+    with st.expander("💬 Explicación detallada", expanded=True):
+        placeholder = st.empty()
+        texto = ""
+        try:
+            with client.messages.stream(
+                model="claude-opus-4-7",
+                max_tokens=600,
+                messages=[{"role": "user", "content": prompt}]
+            ) as stream:
+                for chunk in stream.text_stream:
+                    texto += chunk
+                    placeholder.markdown(texto + "▌")
+            placeholder.markdown(texto)
+        except Exception:
+            placeholder.info(f"💬 {p['exp']}")
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
