@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 from banco_preguntas import BANCO, NIVELES, CATEGORIAS
+from banco_ucv import BANCO_UCV, NIVELES_UCV, CATEGORIAS_UCV
 
 st.set_page_config(
     page_title="CarloTest — Anatomía UCV",
@@ -300,6 +301,15 @@ defaults = {
     "flash_idx": 0,
     "flash_revealed": False,
     "gen_loading": False,
+    # ── UCV ──
+    "ucv_active": False,
+    "ucv_pregs": [],
+    "ucv_idx": 0,
+    "ucv_results": [],
+    "ucv_answered": False,
+    "ucv_last_letra": None,
+    "ucv_errores": [],
+    "ucv_n_fallos": 0,
 }
 for k, v in defaults.items():
     if k not in st.session_state:
@@ -365,7 +375,7 @@ Genera una explicación didáctica con este formato EXACTO (usa markdown, sé co
         texto = ""
         try:
             with client.messages.stream(
-                model="claude-opus-4-7",
+                model="claude-sonnet-4-5",
                 max_tokens=600,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
@@ -416,7 +426,7 @@ Responde SOLO con JSON válido en este formato exacto:
 
     try:
         resp = client.messages.create(
-            model="claude-opus-4-7",
+            model="claude-sonnet-4-5",
             max_tokens=600,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -434,12 +444,6 @@ Responde SOLO con JSON válido en este formato exacto:
 # ════════════════════════════════════════════════════════════════
 #  HERO
 # ════════════════════════════════════════════════════════════════
-portada = Path(__file__).parent / "portada.jpg"
-img_html = ""
-if portada.exists():
-    b64 = base64.b64encode(portada.read_bytes()).decode()
-    img_html = f'<img src="data:image/jpeg;base64,{b64}" alt="Anatomía UCV">'
-
 total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
 n_fallos  = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
 n_temas   = len(BANCO)
@@ -456,6 +460,18 @@ if UPDATE_LOG_PATH.exists():
 update_badge = ""
 if update_info.get("nuevas", 0) > 0:
     update_badge = f'<div class="update-badge">🔄 {update_info["fecha"]} &nbsp;·&nbsp; +{update_info["nuevas"]} nuevas</div>'
+
+# ── Cargar imagen portada (compatible con Streamlit Cloud) ──
+portada = Path(__file__).parent / "portada.jpg"
+img_b64 = ""
+if portada.exists():
+    try:
+        img_b64 = base64.b64encode(portada.read_bytes()).decode()
+    except Exception:
+        img_b64 = ""
+
+img_html = f'<img src="data:image/jpeg;base64,{img_b64}" alt="Anatomía UCV">' if img_b64 else \
+           '<div style="width:100%;height:160px;background:linear-gradient(135deg,#1e1040,#0f0820);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:48px;">🧠</div>'
 
 st.markdown(f"""
 <div class="hero">
@@ -486,8 +502,8 @@ st.markdown(f"""
 # ════════════════════════════════════════════════════════════════
 #  TABS
 # ════════════════════════════════════════════════════════════════
-tab_test, tab_revision, tab_fallos, tab_flash, tab_tfallo, tab_chat = st.tabs([
-    "📚 Test", "📝 Revisión Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "💬 Chat IA"
+tab_test, tab_revision, tab_fallos, tab_flash, tab_tfallo, tab_ucv, tab_chat = st.tabs([
+    "📚 Test", "📝 Revisión Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "🎓 Preguntas UCV", "💬 Chat IA"
 ])
 
 # ────────────────────────────────────────────────────────────────
@@ -584,7 +600,11 @@ with tab_test:
 #  TAB 2 — REVISIÓN TEST
 # ────────────────────────────────────────────────────────────────
 with tab_revision:
-    errores_rev = st.session_state.get("test_errores", []) + st.session_state.get("ft_errores", [])
+    errores_rev = (
+        st.session_state.get("test_errores", []) +
+        st.session_state.get("ft_errores", []) +
+        st.session_state.get("ucv_errores", [])
+    )
     if not errores_rev:
         st.info("Aquí aparecerán los errores del último test realizado. ¡Haz un test primero!")
     else:
@@ -592,7 +612,8 @@ with tab_revision:
         st.caption("Repasa cada error con su explicación antes de continuar estudiando.")
         st.divider()
         for i, e in enumerate(errores_rev, 1):
-            tema_nombre = BANCO.get(e.get("tema",""), {}).get("nombre", "")
+            tema_e = e.get("tema", "")
+            tema_nombre = BANCO.get(tema_e, BANCO_UCV.get(tema_e, {})).get("nombre", "")
             concepto = e["p"].get("concepto", "")
             with st.expander(f"❌ {i}.  {e['p']['enunciado'][:80]}{'...' if len(e['p']['enunciado'])>80 else ''}", expanded=True):
                 st.markdown(f"**{e['p']['enunciado']}**")
@@ -881,7 +902,145 @@ with tab_tfallo:
                 st.rerun()
 
 # ────────────────────────────────────────────────────────────────
-#  TAB 5 — CHAT IA
+#  TAB 6 — PREGUNTAS UCV
+# ────────────────────────────────────────────────────────────────
+with tab_ucv:
+    if not st.session_state.ucv_active:
+        st.markdown("### 🎓 Preguntas del temario UCV")
+        st.caption("Preguntas del temario oficial + preguntas reales de examen de la UCV")
+
+        total_ucv = sum(len(v["preguntas"]) for v in BANCO_UCV.values())
+        reales_ucv = len(BANCO_UCV["ucv_reales_3_4_5"]["preguntas"])
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.metric("Total preguntas UCV", total_ucv)
+        with c2:
+            st.metric("Preguntas reales examen", reales_ucv)
+        with c3:
+            st.metric("Temas", len(BANCO_UCV))
+
+        st.divider()
+        col1, col2 = st.columns(2)
+        with col1:
+            modo_ucv = st.radio("Modo:", ["Por tema", "Por categoría", "Solo preguntas reales"], key="modo_ucv")
+        with col2:
+            n_ucv = st.slider("Nº preguntas:", 5, 20, 10, key="n_ucv")
+
+        if modo_ucv == "Por tema":
+            temas_ucv_disp = {f"{BANCO_UCV[k]['nombre']}": k for k in BANCO_UCV}
+            sel_ucv = st.selectbox("Tema:", list(temas_ucv_disp.keys()), key="sel_ucv_tema")
+            pool_ucv = [(temas_ucv_disp[sel_ucv], p) for p in BANCO_UCV[temas_ucv_disp[sel_ucv]]["preguntas"]]
+        elif modo_ucv == "Por categoría":
+            cat_ucv = st.selectbox("Categoría:", list(CATEGORIAS_UCV.keys()), key="sel_ucv_cat")
+            pool_ucv = [(k, p) for k in CATEGORIAS_UCV[cat_ucv] for p in BANCO_UCV[k]["preguntas"]]
+        else:
+            pool_ucv = [("ucv_reales_3_4_5", p) for p in BANCO_UCV["ucv_reales_3_4_5"]["preguntas"]]
+
+        st.info(f"**{len(pool_ucv)} preguntas disponibles** para este filtro.")
+
+        if st.button("▶️ Empezar test UCV", type="primary", use_container_width=True):
+            muestra_ucv = random.sample(pool_ucv, min(n_ucv, len(pool_ucv)))
+            st.session_state.ucv_active = True
+            st.session_state.ucv_pregs = muestra_ucv
+            st.session_state.ucv_idx = 0
+            st.session_state.ucv_results = []
+            st.session_state.ucv_answered = False
+            st.session_state.ucv_last_letra = None
+            st.session_state.ucv_errores = []
+            st.session_state.ucv_n_fallos = 0
+            st.rerun()
+
+    else:
+        pregs_ucv = st.session_state.ucv_pregs
+        idx_ucv = st.session_state.ucv_idx
+
+        if idx_ucv < len(pregs_ucv):
+            tema_k_ucv, p_ucv = pregs_ucv[idx_ucv]
+            tema_info = BANCO_UCV.get(tema_k_ucv, {})
+            nivel_ucv = tema_info.get("nivel", 1)
+
+            st.progress(idx_ucv / len(pregs_ucv), text=f"Progreso: {idx_ucv}/{len(pregs_ucv)}")
+            st.markdown(f"**Tema:** {tema_info.get('nombre','')}  |  **Categoría:** {tema_info.get('categoria','')}")
+
+            if not st.session_state.ucv_answered:
+                st.markdown(f'<p class="pregunta-num">Pregunta {idx_ucv+1} / {len(pregs_ucv)}</p>', unsafe_allow_html=True)
+                st.markdown(
+                    f'{badge(nivel_ucv)} <span class="concepto-tag">🔑 {p_ucv.get("concepto","")}</span>',
+                    unsafe_allow_html=True
+                )
+                st.markdown(f"**{p_ucv['enunciado']}**")
+                opciones_ucv = [f"{k})  {v}" for k, v in p_ucv["opciones"].items()]
+                resp_ucv = st.radio("", opciones_ucv, index=None, key=f"ucv_{idx_ucv}")
+
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("✔ Confirmar", type="primary", disabled=resp_ucv is None,
+                                 use_container_width=True, key="conf_ucv"):
+                        letra_ucv = resp_ucv[0]
+                        correcto_ucv = letra_ucv == p_ucv["correcta"]
+                        st.session_state.ucv_results.append(correcto_ucv)
+                        st.session_state.ucv_answered = True
+                        st.session_state.ucv_last_letra = letra_ucv
+                        if not correcto_ucv:
+                            registrar_fallo(p_ucv, tema_k_ucv, letra_ucv)
+                            st.session_state.ucv_n_fallos += 1
+                            st.session_state.ucv_errores.append({
+                                "p": p_ucv, "letra": letra_ucv, "tema": tema_k_ucv
+                            })
+                        st.rerun()
+                with col2:
+                    if st.button("⏭ Saltar", use_container_width=True, key="skip_ucv"):
+                        st.session_state.ucv_idx += 1
+                        st.rerun()
+            else:
+                # ── Feedback inline con explicación ──
+                feedback(p_ucv, st.session_state.ucv_last_letra)
+                if st.button("Siguiente →", type="primary", use_container_width=True, key="next_ucv"):
+                    st.session_state.ucv_idx += 1
+                    st.session_state.ucv_answered = False
+                    st.rerun()
+
+        else:
+            # ── Pantalla final ──
+            pantalla_final(st.session_state.ucv_results, st.session_state.ucv_n_fallos)
+            n_err_ucv = len(st.session_state.ucv_errores)
+            if n_err_ucv:
+                st.markdown(f"### 📝 Revisión de errores — {n_err_ucv} pregunta(s) fallada(s)")
+                st.caption("Repasa cada error con su explicación completa.")
+                st.divider()
+                for i, e in enumerate(st.session_state.ucv_errores, 1):
+                    tema_nombre_ucv = BANCO_UCV.get(e.get("tema", ""), {}).get("nombre", "")
+                    concepto_ucv = e["p"].get("concepto", "")
+                    with st.expander(
+                        f"❌ {i}.  {e['p']['enunciado'][:80]}{'...' if len(e['p']['enunciado']) > 80 else ''}",
+                        expanded=True
+                    ):
+                        st.markdown(f"**{e['p']['enunciado']}**")
+                        st.markdown("")
+                        for letra, texto in e["p"]["opciones"].items():
+                            if letra == e["letra"]:
+                                st.markdown(f"🔴 **{letra})** {texto}  ← *tu respuesta*")
+                            elif letra == e["p"]["correcta"]:
+                                st.markdown(f"🟢 **{letra})** {texto}  ← *correcta*")
+                            else:
+                                st.markdown(f"&nbsp;&nbsp;&nbsp;{letra}) {texto}")
+                        st.divider()
+                        st.info(f"💬 {e['p']['exp']}")
+                        if tema_nombre_ucv or concepto_ucv:
+                            st.caption(f"📚 {tema_nombre_ucv}  |  🔑 {concepto_ucv}")
+
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button("🔁 Nuevo test UCV", type="primary", use_container_width=True):
+                    st.session_state.ucv_active = False
+                    st.rerun()
+            with col2:
+                if st.button("❌ Ver todos mis fallos", use_container_width=True):
+                    st.session_state.ucv_active = False
+                    st.rerun()
+
+# ────────────────────────────────────────────────────────────────
+#  TAB 7 — CHAT IA
 # ────────────────────────────────────────────────────────────────
 with tab_chat:
     st.caption("Pregunta cualquier duda sobre anatomía del temario")
@@ -906,7 +1065,7 @@ Usa nemotecnias cuando sea útil. Incluye perlas clínicas relevantes."""
         with st.chat_message("assistant"):
             def stream_gen():
                 with client.messages.stream(
-                    model="claude-opus-4-7",
+                    model="claude-sonnet-4-5",
                     max_tokens=700,
                     system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
                     messages=mensajes_api,
