@@ -241,3 +241,138 @@ CATEGORIAS_UCV = {
     "UCV Temario": [k for k, v in BANCO_UCV.items() if v["categoria"] == "UCV Temario"],
     "UCV Examen Real": [k for k, v in BANCO_UCV.items() if v["categoria"] == "UCV Examen Real"],
 }
+
+
+# ════════════════════════════════════════════════════════════════
+#  BANCO UCV EXTRA — Preguntas adicionales del temario oficial
+# ════════════════════════════════════════════════════════════════
+BANCO_UCV_EXTRA = {
+
+    "ucv_e1_histologia": {
+        "nombre": "Tema 1 Extra: Histología y piel",
+        "nivel": 1,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Skin_layers.svg/500px-Skin_layers.svg.png",
+        "preguntas": [
+            _conv("ucv_e1_01","¿Qué le ocurre a la célula epitelial epidérmica al madurar?",["Se divide continuamente","Se llena de queratina, sube hacia la superficie y se descama","Migra hacia la dermis","Se convierte en melanocito"],1,"La maduración epidérmica consiste en que la célula se va llenando de queratina, asciende hasta la superficie y finalmente se descama como un saco de queratina sin núcleo.","queratinización"),
+            _conv("ucv_e1_02","¿Por qué un corte superficial que no llega a la dermis no sangra?",["Porque la sangre coagula inmediatamente","Porque la epidermis no tiene vasos sanguíneos","Porque la epidermis tiene vasos muy pequeños","Porque la queratina actúa de barrera"],1,"La epidermis NO tiene vasos sanguíneos. Solo la dermis y capas más profundas están vascularizadas. Por eso los cortes superficiales no sangran.","epidermis avascular"),
+            _conv("ucv_e1_03","¿Qué estructura rodea el folículo piloso y eriza el pelo ante el frío?",["Glándula sebácea","Glándula sudorípara","Músculo piloerector","Corpúsculo de Meissner"],2,"El músculo piloerector rodea el folículo piloso y al contraerse (por frío o miedo) eriza el pelo, produciendo la 'piel de gallina'.","músculo piloerector"),
+            _conv("ucv_e1_04","¿Dónde se encuentran los melanocitos?",["En la hipodermis","En la interfase epidermis-dermis","En el interior de la dermis","En el estrato córneo"],1,"Los melanocitos se sitúan en la interfase entre epidermis y dermis. Segregan melanina que protege frente a la radiación UV.","melanocitos localización"),
+            _conv("ucv_e1_05","¿Qué tipo de músculo se encuentra en la pared de los órganos huecos (vejiga, intestino)?",["Músculo estriado voluntario","Músculo cardíaco","Músculo liso involuntario","Músculo esquelético"],2,"El músculo liso se encuentra en la pared de: vía respiratoria, esófago, uréteres, vesícula biliar, intestino delgado y grueso. Es involuntario y no tiene estrías.","músculo liso"),
+            _conv("ucv_e1_06","Una glándula exocrina vierte su producto:",["A la sangre directamente","Al exterior o a una cavidad del organismo mediante un conducto","Al sistema linfático","Al tejido conjuntivo"],1,"Las glándulas exocrinas tienen conducto y vierten su producto al exterior (sudoríparas, sebáceas) o a cavidades del organismo (glándulas digestivas). Las endocrinas vierten a la sangre.","glándulas exocrinas"),
+            _conv("ucv_e1_07","¿Qué tiene de especial el tejido conectivo calcificado?",["Es el más flexible del cuerpo","Ha acumulado sales de calcio para cumplir funciones de protección, soporte y palanca","Es exclusivo del tejido nervioso","Solo aparece en el feto"],1,"El tejido conectivo calcificado (hueso) ha acumulado sales de calcio. Sus funciones son: proteger órganos, servir de soporte y actuar como palanca para los músculos.","tejido óseo"),
+            _conv("ucv_e1_08","¿Qué capa de la piel NO se regenera por sí sola?",["Epidermis","Dermis","Hipodermis","Todas se regeneran"],1,"La epidermis se regenera sola (se renueva continuamente). La PIEL (incluyendo dermis) no se regenera completamente — las cicatrices son tejido fibroso que sustituye a la dermis dañada.","regeneración piel"),
+        ]
+    },
+
+    "ucv_e2_anatomia_gral": {
+        "nombre": "Tema 2 Extra: Anatomía general y cavidades",
+        "nivel": 1,
+        "categoria": "UCV Extra",
+        "preguntas": [
+            _conv("ucv_e2_01","¿Qué órgano delimita la cavidad torácica de la abdominopélvica y qué nervio lo inerva?",["El esternón, inervado por el nervio intercostal","El diafragma, inervado por el nervio frénico","El peritoneo, inervado por el nervio vago","Las costillas, inervadas por el nervio torácico"],1,"El diafragma separa tórax de abdomen. El nervio frénico (uno por hemidiafragma) lleva el impulso motor. El hipo es una hiperestimulación del nervio frénico.","diafragma y nervio frénico"),
+            _conv("ucv_e2_02","Un traumatismo fuerte en el hipocondrio izquierdo, ¿qué órgano hace sospechar lesionado?",["Hígado","Vesícula biliar","Bazo","Riñón derecho"],2,"El hipocondrio izquierdo aloja el bazo. Un traumatismo en esta zona puede producir rotura esplénica con hemorragia interna grave, potencialmente mortal.","hipocondrio izquierdo"),
+            _conv("ucv_e2_03","¿Por qué el tórax no puede tener una protección ósea completa como el cráneo?",["Porque los huesos torácicos son más débiles","Porque el tórax debe moverse para permitir la respiración","Porque los pulmones necesitan contacto con el exterior","Por razones evolutivas sin función actual"],1,"A diferencia del cráneo (estático), el tórax debe expandirse y contraerse en cada respiración. Por eso tiene una estructura mixta hueso-cartílago que permite el movimiento.","caja torácica móvil"),
+            _conv("ucv_e2_04","El dolor en la fosa ilíaca derecha con náuseas, vómitos y febrícula sugiere:",["Cólico biliar","Pancreatitis","Apendicitis","Hernia inguinal"],2,"La fosa ilíaca derecha aloja el apéndice (colgado del ciego). La apendicitis se manifiesta con dolor en esta región + náuseas, vómitos, anorexia y febrícula.","apendicitis"),
+            _conv("ucv_e2_05","Los términos 'proximal' y 'distal' se usan para describir:",["Posición respecto al plano medio","Posición respecto al origen o raíz de un miembro","Posición respecto al plano horizontal","Anterior y posterior"],1,"Proximal = más cerca del origen/raíz del miembro. Distal = más lejos. Ej: el codo es proximal respecto a la muñeca. Se usan en extremidades y estructuras tubulares.","términos proximal distal"),
+            _conv("ucv_e2_06","¿Qué significa el término 'ipsilateral'?",["Del lado contrario","Del mismo lado","Por debajo","Por encima"],1,"Ipsilateral = del mismo lado. Contralateral = del lado opuesto. Ej: 'el nervio facial inerva los músculos ipsilaterales de la cara'.","ipsilateral"),
+        ]
+    },
+
+    "ucv_e3_locomotor": {
+        "nombre": "Tema 3 Extra: Aparato locomotor y articulaciones",
+        "nivel": 1,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Synovial_joint.svg/400px-Synovial_joint.svg.png",
+        "preguntas": [
+            _conv("ucv_e3_01","¿Qué es la aponeurosis y en qué se diferencia de un tendón?",["Son lo mismo","La aponeurosis es un tendón aplanado que refuerza músculos grandes sin unirse a un hueso concreto","La aponeurosis une músculo a cartílago","La aponeurosis es tejido muscular"],1,"La aponeurosis es un tendón especial, aplanado. No se inserta en un hueso sino que sirve de refuerzo a músculos grandes (ej: aponeurosis del músculo recto abdominal, parte blanca del diafragma).","aponeurosis"),
+            _conv("ucv_e3_02","¿Cuál es la función de los meniscos de la rodilla?",["Unir el fémur con la tibia","Actuar como cartílagos especiales que recubren las mesetas tibiales y amortiguan cargas","Producir líquido sinovial","Conectar los ligamentos cruzados"],1,"Los meniscos son cartílagos especiales (fibrocartílago) que recubren las mesetas tibiales. Amortiguan cargas, distribuyen el peso y estabilizan la articulación de la rodilla.","meniscos"),
+            _conv("ucv_e3_03","La nomenclatura muscular por FORMA incluye:",["Bíceps (dos cuerpos)","Interóseo (localización)","Trapecio (forma trapezoidal)","Elevador de la escápula (acción)"],2,"Los músculos se nombran por: forma (trapecio, deltoides), número de cuerpos (bíceps, tríceps), localización (interóseo, tibial), o acción (elevador, flexor).","nomenclatura muscular"),
+            _conv("ucv_e3_04","¿En qué se diferencia el cartílago del hueso?",["El cartílago tiene vasos sanguíneos y el hueso no","El cartílago es resistente y elástico, avascular; el hueso es rígido y vascularizado","El cartílago es más duro que el hueso","No hay diferencia funcional"],1,"El cartílago es resistente pero elástico (se deforma y recupera), avascular (sin vasos) y sin nervios. El hueso es rígido, vascularizado y con células especializadas (osteocitos).","cartílago vs hueso"),
+            _conv("ucv_e3_05","La sínfisis del pubis es un ejemplo de articulación que normalmente:",["Permite todos los movimientos","Tiene muy poco movimiento salvo en el parto","Es completamente inmóvil como una sutura","Es una articulación sinovial con líquido"],1,"La sínfisis del pubis es una anfiartrosis con movimiento muy limitado. Se distiende significativamente durante el parto para permitir el paso del bebé.","sínfisis del pubis"),
+            _conv("ucv_e3_06","¿Qué es la artrosis y cómo se produce?",["Inflamación de la membrana sinovial","Desgaste del cartílago articular que deja hueso contra hueso produciendo dolor","Fractura dentro de la articulación","Luxación crónica"],1,"La artrosis se produce cuando el cartílago articular (que recubre los extremos óseos) se va desgastando. Al desaparecer, queda hueso contra hueso produciendo dolor, rigidez e inflamación.","artrosis"),
+            _conv("ucv_e3_07","En el esqueleto axial se incluyen:",["Los huesos de los miembros superiores e inferiores","Cráneo, columna vertebral, costillas y esternón","Solo la columna vertebral","Los huesos de la pelvis exclusivamente"],1,"Esqueleto axial = eje del cuerpo: cráneo + columna vertebral + tórax (esternón y costillas). Esqueleto apendicular = extremidades + cintura escapular y pelviana.","esqueleto axial"),
+        ]
+    },
+
+    "ucv_e4_columna": {
+        "nombre": "Tema 4 Extra: Columna y tórax",
+        "nivel": 1,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Human_vertebral_column.svg/200px-Human_vertebral_column.svg.png",
+        "preguntas": [
+            _conv("ucv_e4_01","¿Por qué el cuerpo vertebral lumbar es más grande que el cervical?",["Porque las lumbares son más antiguas evolutivamente","Porque tienen que soportar más peso al estar más cerca de la base","Porque contienen más médula espinal","Por el mayor número de nervios que salen"],1,"El tamaño del cuerpo vertebral aumenta de arriba a abajo porque cada vértebra debe soportar el peso de todo lo que está por encima. Las lumbares soportan casi todo el peso corporal.","cuerpo vertebral tamaño"),
+            _conv("ucv_e4_02","¿Cuánto mayor es el agujero raquídeo cervical respecto al lumbar y por qué?",["Igual en todas las vértebras","Mayor en cervicales porque la médula cervical es más gruesa al dar nervios a los MMSS","Mayor en lumbares porque hay más raíces nerviosas","Mayor en torácicas por el corazón"],1,"El agujero raquídeo es mayor en la región cervical porque la médula cervical es más gruesa (da nervios a los MMSS). A medida que desciende, la médula se estrecha y el agujero disminuye.","agujero raquídeo"),
+            _conv("ucv_e4_03","¿Qué estructura ocupa el conducto raquídeo (canal vertebral)?",["La aorta","La médula espinal protegida por meninges y LCR","Los nervios simpáticos","Los vasos vertebrales"],1,"El conducto raquídeo aloja la médula espinal, rodeada por las meninges (duramadre, aracnoides y piamadre) y bañada por líquido cefalorraquídeo (LCR).","canal raquídeo contenido"),
+            _conv("ucv_e4_04","¿Qué son las crestas sacras y cómo se forman?",["Crestas articulares del sacro con el coxal","El resultado de la fusión de las apófisis espinosas de las 5 vértebras sacras","Inserción de los músculos glúteos","Canales para los nervios sacros"],1,"Las crestas sacras posteriores resultan de la fusión de las apófisis espinosas de las 5 vértebras sacras al soldarse entre sí formando el hueso sacro.","crestas sacras"),
+            _conv("ucv_e4_05","El apéndice xifoides del esternón sirve de inserción para:",["Las costillas superiores","El diafragma y los rectos anteriores del abdomen","El pectoral mayor","El esternocleidomastoideo"],1,"El apéndice xifoides (parte inferior del esternón) es el punto de inserción del diafragma y de los músculos rectos anteriores del abdomen.","apéndice xifoides"),
+            _conv("ucv_e4_06","Los músculos pectoral menor y trapecio son antagonistas en:",["La flexión del codo","El movimiento de la escápula (descenso vs ascenso)","La rotación del hombro","La respiración"],1,"Tomando las costillas como punto fijo: el pectoral menor desciende la escápula y el trapecio la asciende. Son antagonistas en el movimiento vertical escapular.","antagonistas escápula"),
+            _conv("ucv_e4_07","¿Qué músculo tiene la parte blanca (aponeurosis) que refuerza el recto abdominal?",["El diafragma","El oblicuo mayor","El transverso del abdomen","El recto anterior del abdomen"],0,"La parte blanca del diafragma es una aponeurosis. El recto abdominal también tiene refuerzos aponeuróticos transversales cada pocos centímetros que crean las 'marcas' visibles en los abdominales.","aponeurosis abdominal"),
+            _conv("ucv_e4_08","El aumento de presión intraabdominal por contracción de los rectos anteriores puede producir:",["Solo extensión del tronco","Vómito, defecación, micción o parto según el órgano hueco implicado","Solo respiración","Flexión de cadera"],1,"La contracción de los rectos anteriores aumenta la presión intraabdominal y puede provocar: vómito (estómago), defecación (recto), micción (vejiga) o expulsión fetal (útero).","presión intraabdominal"),
+        ]
+    },
+
+    "ucv_e5_mmss": {
+        "nombre": "Tema 5 Extra: Miembro superior",
+        "nivel": 2,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Brachial_plexus.svg/400px-Brachial_plexus.svg.png",
+        "preguntas": [
+            _conv("ucv_e5_01","¿Qué estructura pasa por el canal radial (de torsión) del húmero?",["Arteria braquial y nervio mediano","Nervio radial y vasos humerales profundos","Nervio cubital","Tendón del bíceps"],1,"Por el canal radial (surco espiral) del húmero discurren el nervio radial y los vasos humerales profundos. Las fracturas de la diáfisis humeral pueden lesionar el nervio radial → mano caída.","canal radial húmero"),
+            _conv("ucv_e5_02","¿Por qué la clavícula es el hueso más frecuentemente fracturado?",["Por ser el más largo","Por ser el primer hueso que interpone el cuerpo entre la mano y el tórax en una caída","Por ser el más delgado","Por su localización superficial"],1,"En una caída sobre la mano extendida, la fuerza se transmite hacia arriba por el miembro superior hasta la clavícula, que actúa como fusible protegiendo estructuras más importantes del tórax.","fractura clavícula"),
+            _conv("ucv_e5_03","La corredera bicipital (surco intertubercular) está entre el troquíter y el troquín. ¿Qué estructura discurre por ella?",["El nervio radial","El tendón de la cabeza larga del bíceps braquial","La arteria braquial","El nervio mediano"],1,"La corredera bicipital es el surco entre el troquíter (tuberosidad mayor) y el troquín (tuberosidad menor) del húmero. Por ella discurre el tendón de la cabeza larga del bíceps.","corredera bicipital"),
+            _conv("ucv_e5_04","¿Qué movimiento produce la pronación del antebrazo?",["El radio se aleja de la línea media (paralelo al cúbito)","El radio se acerca a la línea media montándose sobre el cúbito","El cúbito rota sobre el radio","El antebrazo se flexiona"],1,"En pronación: el radio se desplaza medialmente, cruzándose sobre el cúbito. La palma queda mirando hacia abajo/posterior. En supinación: radio paralelo al cúbito, palma hacia arriba.","pronación supinación"),
+            _conv("ucv_e5_05","¿Por qué el escafoides es propenso a la necrosis avascular tras una fractura?",["Porque es el hueso más pequeño del carpo","Porque su irrigación entra por el polo distal, y una fractura en la cintura priva de sangre al polo proximal","Porque no tiene periostio","Por su posición en la fila distal del carpo"],1,"El escafoides tiene irrigación retrógrada (entra por el polo distal). Una fractura en su cintura interrumpe el aporte al polo proximal → necrosis avascular. Por eso requiere tratamiento urgente.","escafoides necrosis"),
+            _conv("ucv_e5_06","Los troncos supraaórticos que emergen del cayado aórtico son:",["Solo la carótida izquierda y la subclavia izquierda","Tronco braquiocefálico, carótida común izquierda y subclavia izquierda","Solo las carótidas comunes","Las arterias coronarias"],1,"Del cayado aórtico emergen: 1) Tronco braquiocefálico (se divide en carótida derecha + subclavia derecha), 2) Carótida común izquierda, 3) Subclavia izquierda.","troncos supraaórticos"),
+            _conv("ucv_e5_07","Las venas cefálica y basílica pertenecen al sistema:",["Venoso profundo del MMSS","Venoso superficial del MMSS","Venoso profundo del MMII","Sistema portal"],1,"La vena cefálica (territorio radial/externo) y la vena basílica (territorio cubital/interno) son las dos grandes venas superficiales del miembro superior. Confluyen en la flexura del codo donde se extrae sangre.","venas cefálica y basílica"),
+            _conv("ucv_e5_08","¿Qué función tiene el músculo deltoides y dónde se inserta?",["Flexión del codo, se inserta en el olécranon","Abducción del brazo, se inserta en la tuberosidad deltoidea del húmero","Rotación interna, se inserta en el troquín","Extensión del codo, se inserta en el epicóndilo"],1,"El deltoides es el principal abductor del brazo (separa el brazo del cuerpo). Se inserta en la tuberosidad deltoidea (cara anterolateral de la diáfisis del húmero). Es donde se ponen las vacunas intramusculares.","deltoides función"),
+        ]
+    },
+
+    "ucv_e6_mmii": {
+        "nombre": "Tema 6 Extra: Miembro inferior",
+        "nivel": 2,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Knee_diagram.svg/400px-Knee_diagram.svg.png",
+        "preguntas": [
+            _conv("ucv_e6_01","¿Cuál es la diferencia entre el cuello anatómico y el cuello quirúrgico del fémur?",["Son la misma estructura","El cuello anatómico está cubierto por cápsula articular; el quirúrgico no tiene cápsula ni musculatura y es más propenso a fracturarse","El cuello quirúrgico es más proximal","El cuello anatómico es el que se fractura más frecuentemente"],1,"El cuello anatómico está dentro de la cápsula articular. El cuello quirúrgico está por fuera de la cápsula, sin musculatura que lo proteja, por lo que es el punto de fractura más frecuente del fémur en ancianos.","cuello femoral"),
+            _conv("ucv_e6_02","¿Qué músculos forman el tendón de Aquiles y dónde se inserta?",["Tibial anterior, se inserta en el navicular","Gastrocnemios y sóleo (tríceps sural), se inserta en el calcáneo","Peroneo largo, se inserta en el cuboides","Flexor largo de los dedos, se inserta en las falanges"],1,"El tendón de Aquiles es el tendón del tríceps sural (gastrocnemios o gemelos + sóleo). Se inserta en el calcáneo. Permite levantar el talón e iniciar la marcha.","tendón de Aquiles"),
+            _conv("ucv_e6_03","¿Qué músculo es antagonista del cuádriceps femoral en la rodilla?",["Glúteo mayor","Iliopsoas","Bíceps femoral (isquiotibiales)","Aductores"],2,"El cuádriceps extiende la pierna sobre el muslo. Su antagonista es el bíceps femoral (parte de los isquiotibiales) que la flexiona. Ambos van del isquion/fémur a la tibia/peroné.","cuádriceps vs isquiotibiales"),
+            _conv("ucv_e6_04","¿Qué pasa por el hueco poplíteo (detrás de la rodilla)?",["Solo la arteria femoral","El paquete vasculonervioso: arteria poplítea, vena poplítea y nervio ciático/poplíteo","Solo el nervio ciático","Los tendones de los isquiotibiales únicamente"],1,"Por el hueco poplíteo (fosa poplítea, detrás de la rodilla) pasa el paquete vasculonervioso: arteria poplítea (continuación de la femoral), vena poplítea y nervio ciático que se divide aquí.","fosa poplítea"),
+            _conv("ucv_e6_05","¿Cuál es la diferencia entre arteria femoral y arteria poplítea?",["Son la misma arteria con diferente nombre en toda su extensión","La femoral desciende por el muslo; al pasar por el hiato del aductor se convierte en poplítea","La poplítea es más grande que la femoral","Son arterias independientes sin relación"],1,"La arteria femoral desciende por el muslo (triángulo de Scarpa y canal de Hunter). Al atravesar el hiato del aductor mayor se convierte en arteria poplítea, de menor calibre.","femoral vs poplítea"),
+            _conv("ucv_e6_06","¿Qué permite la articulación del tobillo y qué hueso del tarso interviene?",["Permite la rotación; interviene el calcáneo","Permite la flexoextensión del pie; el astrágalo articula con los maléolos de tibia y peroné","Permite la abducción; interviene el navicular","Permite todos los movimientos; interviene el cuboides"],1,"El tobillo (articulación talocrural) permite flexoextensión del pie. El astrágalo articula por arriba con la mortaja formada por los maléolos tibial (medial) y peroneal (lateral).","articulación tobillo"),
+            _conv("ucv_e6_07","El sistema safeno es el sistema venoso _____ del miembro inferior",["Profundo","Superficial","Linfático","Arterial"],1,"Las venas safenas (mayor/interna y menor/externa) forman el sistema venoso superficial del MMII. Confluyen en la vena femoral. Se usan para bypass coronario. Su insuficiencia produce varices.","sistema safeno"),
+        ]
+    },
+
+    "ucv_e7_corazon": {
+        "nombre": "Tema 7 Extra: Corazón",
+        "nivel": 2,
+        "categoria": "UCV Extra",
+        "imagen_tema": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Heart_diagram-en.svg/400px-Heart_diagram-en.svg.png",
+        "preguntas": [
+            _conv("ucv_e7_01","¿Por qué el grosor del miocardio del ventrículo izquierdo es mayor que el del derecho?",["Porque el VI es más antiguo evolutivamente","Porque el VI debe bombear sangre a todo el cuerpo (circulación mayor) contra mayor resistencia","Porque el VI contiene más válvulas","Por el mayor volumen de sangre que recibe"],1,"El VI bombea sangre a todo el cuerpo (circulación mayor), debiendo vencer la resistencia sistémica. El VD solo bombea a los pulmones (circulación menor, menor resistencia). Por eso el VI tiene pared más gruesa.","grosor ventricular"),
+            _conv("ucv_e7_02","La afirmación 'todas las arterias conducen sangre oxigenada' es:",["Verdadera siempre","Falsa: la arteria pulmonar conduce sangre desoxigenada del VD a los pulmones","Verdadera solo en adultos","Falsa: ninguna arteria conduce sangre oxigenada"],1,"La arteria pulmonar es la excepción: lleva sangre desoxigenada del ventrículo derecho a los pulmones para oxigenarse. El resto de arterias sí llevan sangre oxigenada.","arteria pulmonar excepción"),
+            _conv("ucv_e7_03","¿Cuántas venas pulmonares desembocan en el corazón y dónde?",["2, en la aurícula derecha","4, en la aurícula izquierda","2, en el ventrículo izquierdo","4, en la aurícula derecha"],1,"Las 4 venas pulmonares (2 derechas + 2 izquierdas) llevan sangre oxigenada desde los pulmones y desembocan en la aurícula izquierda. Son la excepción: venas con sangre oxigenada.","venas pulmonares"),
+            _conv("ucv_e7_04","¿Qué son las válvulas sigmoideas y dónde están?",["Las válvulas AV entre aurícula y ventrículo","Las válvulas de salida: aórtica (VI→aorta) y pulmonar (VD→arteria pulmonar)","Las válvulas de las venas cavas","Los tendones de los músculos papilares"],1,"Las válvulas sigmoideas (semilunares) son la válvula aórtica y la pulmonar. Tienen 3 valvas en forma de nido de golondrina. Impiden el reflujo de sangre hacia los ventrículos en diástole.","válvulas sigmoideas"),
+            _conv("ucv_e7_05","El nódulo sinusal se llama 'marcapasos natural' porque:",["Regula la presión arterial","Se autoexcita y genera el impulso eléctrico que inicia cada latido cardíaco","Regula el gasto cardíaco","Controla la frecuencia respiratoria"],1,"El nódulo sinusal (SA) en la aurícula derecha tiene la capacidad de autoexcitarse (automatismo) y generar el impulso eléctrico que se propaga por todo el miocardio iniciando la contracción. Funciona a 60-100 lpm.","nódulo sinusal"),
+            _conv("ucv_e7_06","¿Qué ocurre si se obstruye una arteria coronaria?",["Produce una trombosis venosa","Produce un infarto agudo de miocardio (muerte del tejido miocárdico irrigado por esa arteria)","Produce una embolia pulmonar","Produce insuficiencia renal"],1,"Las arterias coronarias irrigan el miocardio. Su obstrucción (generalmente por un trombo sobre una placa aterosclerótica) produce necrosis del miocardio irrigado: infarto agudo de miocardio (IAM).","infarto de miocardio"),
+        ]
+    },
+
+}
+
+# Actualizar índices para incluir el extra
+for k, v in BANCO_UCV_EXTRA.items():
+    BANCO_UCV[k] = v
+
+# Regenerar índices
+NIVELES_UCV = {
+    1: [k for k, v in BANCO_UCV.items() if v["nivel"] == 1],
+    2: [k for k, v in BANCO_UCV.items() if v["nivel"] == 2],
+}
+CATEGORIAS_UCV = {
+    "UCV Temario": [k for k, v in BANCO_UCV.items() if v["categoria"] == "UCV Temario"],
+    "UCV Examen Real": [k for k, v in BANCO_UCV.items() if v["categoria"] == "UCV Examen Real"],
+    "UCV Extra": [k for k, v in BANCO_UCV.items() if v["categoria"] == "UCV Extra"],
+}

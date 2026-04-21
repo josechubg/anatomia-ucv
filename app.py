@@ -929,7 +929,16 @@ with tab_ucv:
         if modo_ucv == "Por tema":
             temas_ucv_disp = {f"{BANCO_UCV[k]['nombre']}": k for k in BANCO_UCV}
             sel_ucv = st.selectbox("Tema:", list(temas_ucv_disp.keys()), key="sel_ucv_tema")
-            pool_ucv = [(temas_ucv_disp[sel_ucv], p) for p in BANCO_UCV[temas_ucv_disp[sel_ucv]]["preguntas"]]
+            tema_sel_key = temas_ucv_disp[sel_ucv]
+            pool_ucv = [(tema_sel_key, p) for p in BANCO_UCV[tema_sel_key]["preguntas"]]
+            # Mostrar imagen del tema si existe
+            img_url = BANCO_UCV[tema_sel_key].get("imagen_tema")
+            if img_url:
+                col_img, col_txt = st.columns([1, 3])
+                with col_img:
+                    st.image(img_url, use_container_width=True)
+                with col_txt:
+                    st.caption(f"📖 {BANCO_UCV[tema_sel_key]['nombre']}")
         elif modo_ucv == "Por categoría":
             cat_ucv = st.selectbox("Categoría:", list(CATEGORIAS_UCV.keys()), key="sel_ucv_cat")
             pool_ucv = [(k, p) for k in CATEGORIAS_UCV[cat_ucv] for p in BANCO_UCV[k]["preguntas"]]
