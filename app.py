@@ -17,7 +17,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-FALLOS_PATH = Path(__file__).parent / "fallos.json"
+FALLOS_DIR = Path(__file__).parent / "usuarios"
+FALLOS_DIR.mkdir(exist_ok=True)
+
+def get_fallos_path(usuario: str) -> Path:
+    nombre_seguro = "".join(c for c in usuario.lower().strip() if c.isalnum() or c in "_-")
+    return FALLOS_DIR / f"{nombre_seguro}.json"
 
 # ── CSS ──────────────────────────────────────────────────────────
 st.markdown("""
@@ -234,28 +239,31 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Persistencia de fallos ───────────────────────────────────────
-def cargar_fallos() -> list:
-    if FALLOS_PATH.exists():
+def cargar_fallos(usuario: str = "default") -> list:
+    path = get_fallos_path(usuario)
+    if path.exists():
         try:
-            return json.loads(FALLOS_PATH.read_text(encoding="utf-8"))
+            return json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             return []
     return []
 
-def guardar_fallos(fallos: list):
+def guardar_fallos(fallos: list, usuario: str = "default"):
     try:
-        FALLOS_PATH.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
+        path = get_fallos_path(usuario)
+        path.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
 
 def registrar_fallo(pregunta: dict, tema: str, respuesta_dada: str, generada_ia: bool = False):
     fallos = st.session_state.fallos
+    usuario = st.session_state.get("usuario", "default")
     pid = pregunta["id"]
     for f in fallos:
         if f["pregunta_id"] == pid and not f.get("aprendida"):
             f["veces_fallada"] += 1
             f["ultima_fecha"] = datetime.now().strftime("%Y-%m-%d")
-            guardar_fallos(fallos)
+            guardar_fallos(fallos, usuario)
             return
     fallos.append({
         "uid": str(uuid.uuid4())[:8],
@@ -275,11 +283,13 @@ def registrar_fallo(pregunta: dict, tema: str, respuesta_dada: str, generada_ia:
         "aprendida": False,
         "generada_ia": generada_ia,
     })
-    guardar_fallos(fallos)
+    guardar_fallos(fallos, st.session_state.get("usuario", "default"))
 
 # ── Session state ────────────────────────────────────────────────
 defaults = {
-    "fallos": cargar_fallos(),
+    "fallos": [],
+    "usuario": "",
+    "usuario_confirmado": False,
     "chat_history": [],
     "test_active": False,
     "test_tema": None,
@@ -442,8 +452,70 @@ Responde SOLO con JSON válido en este formato exacto:
     return None
 
 # ════════════════════════════════════════════════════════════════
+#  PANTALLA DE LOGIN — Nombre de usuario
+# ════════════════════════════════════════════════════════════════
+if not st.session_state.get("usuario_confirmado"):
+    st.markdown("""
+    <div style="max-width:420px;margin:80px auto 0;text-align:center;">
+      <div style="font-size:60px;margin-bottom:16px;">💀</div>
+      <h1 style="font-family:sans-serif;font-size:36px;color:#e2e8f0;margin-bottom:4px;">
+        Carlo<span style="color:#a78bfa;">Test</span>
+      </h1>
+      <p style="color:#64748b;font-size:14px;margin-bottom:32px;">
+        Anatomía UCV · 1º Medicina
+      </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col_l, col_c, col_r = st.columns([1, 2, 1])
+    with col_c:
+        st.markdown("**¿Cómo te llamas?**")
+        nombre = st.text_input(
+            "", placeholder="Escribe tu nombre...",
+            key="input_nombre",
+            label_visibility="collapsed"
+        )
+        if st.button("▶️ Entrar", type="primary", use_container_width=True):
+            if nombre.strip():
+                st.session_state.usuario = nombre.strip()
+                st.session_state.usuario_confirmado = True
+                st.session_state.fallos = cargar_fallos(nombre.strip())
+                st.rerun()
+            else:
+                st.warning("Escribe tu nombre para continuar")
+
+        # Mostrar usuarios existentes
+        usuarios_existentes = []
+        if FALLOS_DIR.exists():
+            usuarios_existentes = [
+                f.stem for f in FALLOS_DIR.glob("*.json")
+                if f.stat().st_size > 2
+            ]
+        if usuarios_existentes:
+            st.divider()
+            st.caption("👥 Acceso rápido:")
+            for u in sorted(usuarios_existentes):
+                if st.button(f"👤 {u.capitalize()}", use_container_width=True, key=f"quick_{u}"):
+                    st.session_state.usuario = u
+                    st.session_state.usuario_confirmado = True
+                    st.session_state.fallos = cargar_fallos(u)
+                    st.rerun()
+    st.stop()
+
+# ════════════════════════════════════════════════════════════════
 #  HERO
 # ════════════════════════════════════════════════════════════════
+# Botón cerrar sesión en sidebar
+with st.sidebar:
+    st.markdown(f"### 👤 {st.session_state.get('usuario','').capitalize()}")
+    st.caption("Tu progreso se guarda automáticamente")
+    st.divider()
+    if st.button("🚪 Cambiar usuario", use_container_width=True):
+        st.session_state.usuario = ""
+        st.session_state.usuario_confirmado = False
+        st.session_state.fallos = []
+        st.rerun()
+
 total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
 n_fallos  = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
 n_temas   = len(BANCO)
@@ -684,7 +756,7 @@ with tab_fallos:
                         for ff in st.session_state.fallos:
                             if ff["uid"] == f["uid"]:
                                 ff["aprendida"] = True
-                        guardar_fallos(st.session_state.fallos)
+                        guardar_fallos(st.session_state.fallos, st.session_state.get("usuario", "default"))
                         st.rerun()
                 with btn_col2:
                     if st.button("🤖 Generar pregunta similar", key=f"gen_{f['uid']}_{i}", use_container_width=True):
@@ -710,7 +782,7 @@ with tab_fallos:
                 try:
                     datos = json.load(uploaded)
                     st.session_state.fallos = datos
-                    guardar_fallos(datos)
+                    guardar_fallos(datos, st.session_state.get("usuario", "default"))
                     st.success("Fallos importados correctamente")
                     st.rerun()
                 except Exception:
