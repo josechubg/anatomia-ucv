@@ -233,6 +233,42 @@ st.markdown("""
   .stSelectbox > label, .stSlider > label { color: #94a3b8 !important; font-size: 13px !important; }
   div[data-testid="stMarkdownContainer"] p { color: #cbd5e1; }
 
+
+  /* ── EXPANDER texto visible ── */
+  .streamlit-expanderContent {
+    background: #0e1120 !important;
+    border: 1px solid #1e2540 !important;
+    border-top: none !important;
+    border-radius: 0 0 10px 10px !important;
+  }
+  .streamlit-expanderContent p,
+  .streamlit-expanderContent li,
+  .streamlit-expanderContent strong,
+  .streamlit-expanderContent em,
+  .streamlit-expanderContent span {
+    color: #cbd5e1 !important;
+  }
+  .streamlit-expanderContent h1,
+  .streamlit-expanderContent h2,
+  .streamlit-expanderContent h3 {
+    color: #e2e8f0 !important;
+  }
+  .streamlit-expanderContent code {
+    color: #a78bfa !important;
+    background: #1e1a2e !important;
+  }
+  /* Header del expander */
+  .streamlit-expanderHeader {
+    background: #0c0f1e !important;
+    border: 1px solid #1e2540 !important;
+    border-radius: 10px !important;
+    color: #a78bfa !important;
+    font-weight: 600 !important;
+  }
+  .streamlit-expanderHeader:hover {
+    border-color: #7c3aed !important;
+    color: #c4b5fd !important;
+  }
   /* ── DIVIDER ── */
   hr { border-color: #1e2540 !important; margin: 16px 0 !important; }
 </style>
@@ -356,7 +392,10 @@ def feedback(p, letra):
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
 
     opciones_texto = "\n".join(f"  {k}) {v}" for k, v in p["opciones"].items())
-    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina. Acaban de responder esta pregunta tipo test:
+    falsas = [k for k in p["opciones"] if k != p["correcta"]]
+    falsas_str = ", ".join(falsas)
+
+    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina UCV. Acaban de responder esta pregunta tipo test:
 
 PREGUNTA: {p['enunciado']}
 OPCIONES:
@@ -365,19 +404,23 @@ RESPUESTA CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}
 RESPUESTA DEL ALUMNO: {letra}) {p['opciones'].get(letra, '—')}
 EXPLICACIÓN BASE: {p['exp']}
 
-Genera una explicación didáctica con este formato EXACTO (usa markdown, sé conciso pero completo):
+Genera una explicación didáctica con este formato EXACTO. Usa markdown con texto en color claro. Sé conciso pero completo:
 
 **✅ Por qué {p['correcta']}) es correcta**
-[1-2 frases explicando el mecanismo anatómico clave]
+[1-2 frases explicando el mecanismo anatómico clave. Texto en color normal, visible.]
 
-**❌ Por qué las demás opciones son incorrectas**
-- {", ".join(k for k in p["opciones"] if k != p["correcta"])}: [una frase por cada opción errónea explicando el error]
+**❌ Por qué las otras opciones son incorrectas**
+- **{falsas[0] if len(falsas)>0 else ""}**) [una frase explicando por qué es incorrecta]
+- **{falsas[1] if len(falsas)>1 else ""}**) [una frase explicando por qué es incorrecta]
+- **{falsas[2] if len(falsas)>2 else ""}**) [una frase explicando por qué es incorrecta]
 
-**🧠 Cómo memorizar**
-[truco mnemotécnico, analogía clínica o regla práctica — máx 2 frases]
+**🧠 Truco para memorizar**
+[nemotecnia, analogía clínica o regla práctica — máx 2 frases]
 
-**📌 Otras preguntas posibles sobre este tema**
-[2-3 bullet points con otras formas en que puede aparecer este concepto en un examen]"""
+**📌 Otras preguntas posibles**
+- [pregunta 1 sobre este mismo concepto que podría aparecer en examen]
+- [pregunta 2]
+- [pregunta 3]"""
 
     client = get_client()
     with st.expander("💬 Explicación detallada", expanded=True):
@@ -386,7 +429,7 @@ Genera una explicación didáctica con este formato EXACTO (usa markdown, sé co
         try:
             with client.messages.stream(
                 model="claude-sonnet-4-5",
-                max_tokens=600,
+                max_tokens=700,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 for chunk in stream.text_stream:
@@ -395,6 +438,67 @@ Genera una explicación didáctica con este formato EXACTO (usa markdown, sé co
             placeholder.markdown(texto)
         except Exception:
             placeholder.info(f"💬 {p['exp']}")
+
+    # ── Preguntas similares con botón Ver respuesta ──
+    p_id = p.get("id", "")
+    key_sim = f"sim_{p_id}_{letra}"
+    if f"pregs_sim_{key_sim}" not in st.session_state:
+        st.session_state[f"pregs_sim_{key_sim}"] = None
+    if f"resp_sim_{key_sim}" not in st.session_state:
+        st.session_state[f"resp_sim_{key_sim}"] = {}
+
+    with st.expander("🔁 Practica con preguntas similares", expanded=False):
+        if st.session_state[f"pregs_sim_{key_sim}"] is None:
+            if st.button("🤖 Generar 2 preguntas similares", key=f"btn_sim_{key_sim}", use_container_width=True):
+                with st.spinner("Generando preguntas..."):
+                    prompt_sim = f"""Genera exactamente 2 preguntas tipo test de anatomía sobre el mismo concepto: "{p.get('concepto','')}"
+Basadas en: {p['enunciado']}
+
+Responde SOLO con JSON válido, sin texto extra:
+[
+  {{
+    "enunciado": "...",
+    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
+    "correcta": "A",
+    "exp": "explicación breve"
+  }},
+  {{
+    "enunciado": "...",
+    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
+    "correcta": "B",
+    "exp": "explicación breve"
+  }}
+]"""
+                    try:
+                        resp = client.messages.create(
+                            model="claude-sonnet-4-5",
+                            max_tokens=800,
+                            messages=[{"role": "user", "content": prompt_sim}]
+                        )
+                        raw = resp.content[0].text.strip()
+                        start = raw.find("[")
+                        end = raw.rfind("]") + 1
+                        pregs_sim = json.loads(raw[start:end])
+                        st.session_state[f"pregs_sim_{key_sim}"] = pregs_sim
+                        st.rerun()
+                    except Exception:
+                        st.error("No se pudieron generar. Inténtalo de nuevo.")
+        else:
+            pregs_sim = st.session_state[f"pregs_sim_{key_sim}"]
+            for i, ps in enumerate(pregs_sim):
+                st.markdown(f"**Pregunta {i+1}:** {ps['enunciado']}")
+                for k, v in ps["opciones"].items():
+                    st.markdown(f"&nbsp;&nbsp;**{k})** {v}")
+                resp_key = f"resp_sim_{key_sim}_{i}"
+                if st.session_state[f"resp_sim_{key_sim}"].get(i) is None:
+                    if st.button(f"👁️ Ver respuesta", key=f"ver_{key_sim}_{i}", use_container_width=False):
+                        st.session_state[f"resp_sim_{key_sim}"][i] = True
+                        st.rerun()
+                else:
+                    st.success(f"✅ Correcta: **{ps['correcta']})** {ps['opciones'][ps['correcta']]}")
+                    st.caption(f"💬 {ps['exp']}")
+                if i < len(pregs_sim) - 1:
+                    st.divider()
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
