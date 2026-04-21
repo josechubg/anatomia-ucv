@@ -382,6 +382,52 @@ if "articulacion_codo" in BANCO and not any(q["enunciado"] == "Un niño de 7 añ
 if "articulacion_codo" in BANCO and not any(q["enunciado"] == "Respecto a la fosa cubital (triangular anterior del codo), señale la afirmación CORRECTA:" for q in BANCO["articulacion_codo"]["preguntas"]):
     BANCO["articulacion_codo"]["preguntas"].append({"id": "articulacion_codo_auto_cb5adf00", "concepto": "Anatomía de la fosa cubital y topografía", "enunciado": "Respecto a la fosa cubital (triangular anterior del codo), señale la afirmación CORRECTA:", "opciones": {"A": "Su límite lateral lo forma el músculo pronador redondo y el medial el braquiorradial", "B": "El nervio mediano discurre lateral a la arteria braquial en su interior", "C": "De lateral a medial contiene: tendón del bíceps, arteria braquial y nervio mediano", "D": "El techo está formado por el músculo braquial y el suelo por la aponeurosis bicipital"}, "correcta": "C", "exp": "La fosa cubital está limitada lateralmente por el braquiorradial y medialmente por el pronador redondo. Su contenido, de lateral a medial, sigue la regla mnemotécnica TAN: Tendón del bíceps, Arteria braquial y Nervio mediano."})
 
+# ═══════════════════════════════════════════════
+# PREGUNTAS REALES EXAMEN UCV — TEMAS 3-4-5
+# Anatomía Humana y Funcional (UCV San Vicente Mártir)
+# ═══════════════════════════════════════════════
+_UCV_T345 = {
+    "huesos_craneo": [
+        {"id":"ucv_cr_001","concepto":"hueso esfenoides","enunciado":"¿Cuál es el hueso que tiene forma de alas de mariposa?","opciones":{"A":"Etmoides","B":"Esfenoides","C":"Maxilar","D":"Nasal"},"correcta":"B","exp":"El esfenoides tiene dos alas mayores y dos menores que le dan aspecto de mariposa. Forma la base del cráneo y contiene la silla turca (fosa hipofisaria)."},
+        {"id":"ucv_cr_002","concepto":"conducto auditivo externo","enunciado":"¿En qué hueso encontramos el conducto auditivo externo?","opciones":{"A":"Parietal","B":"Esfenoides","C":"Occipital","D":"Temporal"},"correcta":"D","exp":"El conducto auditivo externo está en el hueso temporal (parte timpánica). El temporal también contiene el oído medio e interno, la apófisis mastoides y la apófisis estiloides."},
+        {"id":"ucv_cr_003","concepto":"huesecillos del oído","enunciado":"¿Cuál es el hueso más externo de la cadena osicular del oído?","opciones":{"A":"Yunque","B":"Caracol","C":"Martillo","D":"Estribo"},"correcta":"C","exp":"La cadena osicular va de fuera a dentro: Martillo (unido al tímpano) → Yunque → Estribo (sobre la ventana oval). El caracol (cóclea) no es un huesecillo sino la parte del oído interno."},
+        {"id":"ucv_cr_004","concepto":"inserción ECM","enunciado":"¿Cuál es la INSERCIÓN del músculo esternocleidomastoideo?","opciones":{"A":"Esternón","B":"Apófisis mastoides","C":"Clavícula","D":"Costilla 1ª"},"correcta":"B","exp":"El ECM se ORIGINA en el esternón y la clavícula, e INSERTA en la apófisis mastoides. Truco: el nombre lo dice al revés — esterno-cleido son los orígenes, mastoideo es la inserción."},
+    ],
+    "nervios_craneales": [
+        {"id":"ucv_nc_001","concepto":"NC III — elevador párpado","enunciado":"¿Qué nervio craneal inerva el músculo elevador del párpado superior?","opciones":{"A":"NC III (oculomotor)","B":"NC V (trigémino)","C":"NC VII (facial)","D":"NC IV (troclear)"},"correcta":"A","exp":"El NC III (nervio oculomotor) inerva el elevador del párpado superior y los músculos extrínsecos del ojo excepto el oblicuo superior (NC IV) y el recto lateral (NC VI). Su lesión causa ptosis."},
+    ],
+    "columna": [
+        {"id":"ucv_col_001","concepto":"número vértebras cervicales","enunciado":"¿Cuántas vértebras tiene la región cervical?","opciones":{"A":"7","B":"6","C":"5","D":"8"},"correcta":"A","exp":"La columna tiene 7 cervicales, 12 dorsales/torácicas, 5 lumbares, 5 sacras (fusionadas) y 4 coccígeas. Regla: desayuno a las 7, comes a las 12, cenas a las 5."},
+        {"id":"ucv_col_002","concepto":"apófisis transversas","enunciado":"¿Cómo se denominan las apófisis que salen de las vértebras a ambos lados?","opciones":{"A":"Pedículos","B":"Láminas","C":"Espinosas","D":"Transversas"},"correcta":"D","exp":"Las apófisis transversas salen lateralmente a ambos lados. Las espinosas salen hacia atrás. Los pedículos conectan el cuerpo con las masas laterales. Las láminas forman el arco posterior."},
+        {"id":"ucv_col_003","concepto":"foramen transverso cervical","enunciado":"¿Qué vértebras tienen agujero (foramen) en sus apófisis transversas?","opciones":{"A":"Lumbares","B":"Dorsales","C":"Cervicales","D":"Sacro"},"correcta":"C","exp":"Solo las vértebras cervicales tienen foramen transverso por donde pasa la arteria vertebral (C1-C6). Es el rasgo diferenciador más importante de las cervicales en el examen."},
+        {"id":"ucv_col_004","concepto":"carilla costal","enunciado":"¿En qué vértebras encontramos la carilla costal para articular con las costillas?","opciones":{"A":"Sacro","B":"Cervicales","C":"Lumbares","D":"Dorsales (torácicas)"},"correcta":"D","exp":"Las vértebras dorsales (torácicas) tienen carillas costales en el cuerpo y en la apófisis transversa para articular con las costillas. Ninguna otra región vertebral tiene estas carillas."},
+        {"id":"ucv_col_005","concepto":"atlas — región vertebral","enunciado":"¿En qué región vertebral se encuentra el atlas?","opciones":{"A":"Lumbares","B":"Sacro","C":"Dorsales","D":"Cervicales"},"correcta":"D","exp":"El atlas es la 1ª vértebra cervical (C1). No tiene cuerpo vertebral ni apófisis espinosa. Se articula con el occipital (articulación atlanto-occipital) y permite el movimiento de asentimiento."},
+        {"id":"ucv_col_006","concepto":"foramen de conjunción","enunciado":"¿Cómo se denomina el agujero por donde salen los nervios espinales?","opciones":{"A":"Agujero vertebral","B":"Agujero raquídeo","C":"Agujero sacro","D":"Agujero de conjunción (foramen intervertebral)"},"correcta":"D","exp":"El agujero de conjunción o foramen intervertebral se forma entre los pedículos de dos vértebras adyacentes. Por él salen los nervios espinales. El agujero vertebral es el que forma el canal medular."},
+        {"id":"ucv_col_007","concepto":"localización disco intervertebral","enunciado":"¿Entre qué estructuras se encuentra el disco intervertebral?","opciones":{"A":"Entre los pedículos","B":"Entre los cuerpos vertebrales","C":"Entre las apófisis transversas","D":"Entre las láminas"},"correcta":"B","exp":"El disco intervertebral se sitúa entre los cuerpos vertebrales de dos vértebras adyacentes. Está formado por el anulus fibrosus (exterior) y el nucleus pulposus (interior). No existe entre C1-C2."},
+        {"id":"ucv_col_008","concepto":"deformidades columna","enunciado":"Observando la columna desde atrás en posición anatómica, ¿cómo se denomina cuando se ve torcida lateralmente?","opciones":{"A":"Hipercifosis","B":"Escoliosis","C":"Hiperlordosis","D":"Cifosis"},"correcta":"B","exp":"Escoliosis = desviación lateral de la columna (vista desde atrás). Cifosis = curvatura dorsal aumentada (vista lateral). Lordosis = curvatura lumbar/cervical aumentada (vista lateral)."},
+    ],
+    "musculos_ms": [
+        {"id":"ucv_mms_001","concepto":"origen pectoral mayor","enunciado":"¿Cuál de los siguientes es un origen del músculo pectoral mayor?","opciones":{"A":"Clavícula","B":"Costillas (todas)","C":"Húmero (cresta del troquíter)","D":"Escápula"},"correcta":"A","exp":"El pectoral mayor tiene 3 orígenes: porción clavicular (clavícula), porción esternocostal (esternón + costillas 1-6), porción abdominal (vaina del recto). Se inserta en la cresta del troquíter del húmero."},
+        {"id":"ucv_mms_002","concepto":"función dorsal ancho","enunciado":"¿Cuál es una función correcta del músculo dorsal ancho?","opciones":{"A":"Rotación interna del hombro","B":"Rotación externa del hombro","C":"Abducción del hombro","D":"Flexión del hombro"},"correcta":"A","exp":"El dorsal ancho realiza extensión, aducción y rotación INTERNA del hombro. Es el músculo de la natación. Se origina en las vértebras torácicas inferiores, lumbares y cresta ilíaca, e inserta en el surco intertubercular del húmero."},
+    ],
+    "musculos_mi": [
+        {"id":"ucv_mmi_001","concepto":"función del psoas","enunciado":"¿Cuál es la función principal del músculo psoas?","opciones":{"A":"Abducción de cadera","B":"Flexión de cadera","C":"Aducción de cadera","D":"Extensión de cadera"},"correcta":"B","exp":"El iliopsoas (psoas + ilíaco) es el principal flexor de la cadera. Se origina en las vértebras lumbares (L1-L4) y la fosa ilíaca, e inserta en el trocánter menor. También flexiona el tronco sobre el muslo."},
+    ],
+    "articulacion_hombro": [
+        {"id":"ucv_ah_001","concepto":"enartrosis","enunciado":"¿Cómo se denomina la articulación que permite todos los movimientos (flexión, extensión, abducción, aducción, rotación)?","opciones":{"A":"Gínglimo","B":"Enartrosis","C":"Deslizante","D":"Condílea"},"correcta":"B","exp":"La enartrosis (articulación esférica) permite los 3 ejes de movimiento: el hombro y la cadera son ejemplos. El gínglimo (bisagra) solo permite flexo-extensión (codo, rodilla)."},
+        {"id":"ucv_ah_002","concepto":"líquido sinovial","enunciado":"¿Qué estructura genera el líquido sinovial en una articulación?","opciones":{"A":"Membrana sinovial","B":"Cartílago articular","C":"Cápsula articular","D":"Cavidad articular"},"correcta":"A","exp":"La membrana sinovial (capa interna de la cápsula articular) secreta el líquido sinovial. Este lubrica la articulación y nutre el cartílago articular, que es avascular."},
+    ],
+    "articulacion_codo": [
+        {"id":"ucv_ac_001","concepto":"articulación troclear","enunciado":"¿Cuál es el otro nombre de la articulación troclear (gínglimo)?","opciones":{"A":"Pivote","B":"Bisagra","C":"Condílea","D":"Trocoide"},"correcta":"B","exp":"La articulación troclear = bisagra = gínglimo. Solo permite flexo-extensión (un eje). El codo humeroradial es enartrosis, el humerocubital es gínglimo. La articulación en pivote (trocoide) permite rotación axial."},
+    ],
+}
+
+for _tema, _pregs in _UCV_T345.items():
+    if _tema in BANCO:
+        for _p in _pregs:
+            if not any(q["enunciado"] == _p["enunciado"] for q in BANCO[_tema]["preguntas"]):
+                BANCO[_tema]["preguntas"].append(_p)
+
 NIVELES = {
     1: list(k for k, v in BANCO.items() if v["nivel"] == 1),
     2: list(k for k, v in BANCO.items() if v["nivel"] == 2),
