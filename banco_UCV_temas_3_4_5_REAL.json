@@ -1,0 +1,307 @@
+{
+  "metadata": {
+    "titulo": "Banco Anatomía UCV - Temas 3-4-5 (PREGUNTAS REALES)",
+    "asignatura": "Anatomía Humana y Funcional",
+    "universidad": "Universidad Católica de Valencia San Vicente Mártir",
+    "fuente": "Examen real UCV - Temas 3, 4 y 5",
+    "estilo_explicaciones": "Una línea por opción: correcta con razón breve + falsas con aclaración de qué son realmente",
+    "total_preguntas": 35
+  },
+  "preguntas": [
+    {
+      "id": 1,
+      "bloque": "Articulaciones y tejidos",
+      "pregunta": "¿Quién genera el líquido sinovial?",
+      "opciones": ["Membrana sinovial", "Cartílago articular", "Cápsula articular", "Cavidad articular"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Membrana sinovial**: capa interna que secreta el líquido para lubricar.\n❌ Cartílago articular: recubre superficies óseas para reducir fricción, no secreta.\n❌ Cápsula articular: envoltura fibrosa externa, función de contención.\n❌ Cavidad articular: espacio donde se aloja el líquido, no lo produce."
+    },
+    {
+      "id": 2,
+      "bloque": "Articulaciones y tejidos",
+      "pregunta": "¿Qué articulación es anfiartrosis?",
+      "opciones": ["Sincondrosis", "Si todas son correctas indica esta opción", "Sindesmosis", "Gonfosis"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Todas son anfiartrosis** (articulaciones semimóviles).\n❌ Sincondrosis: cartilaginosa (ej. discos intervertebrales). Correcta pero incompleta.\n❌ Sindesmosis: fibrosa unida por ligamentos. Correcta pero incompleta.\n❌ Gonfosis: unión diente-alveolo. Correcta pero incompleta."
+    },
+    {
+      "id": 3,
+      "bloque": "Cráneo y cara",
+      "pregunta": "El hueso con forma de alas de mariposa:",
+      "opciones": ["Etmoides", "Esfenoides", "Maxilar", "Nasal"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Esfenoides**: forma de mariposa, piedra angular de la base del cráneo.\n❌ Etmoides: entre las órbitas, con láminas cribosas (paso del olfatorio).\n❌ Maxilar: hueso de la cara, aloja los dientes superiores.\n❌ Nasal: forma el dorso (puente) de la nariz."
+    },
+    {
+      "id": 4,
+      "bloque": "Articulaciones y tejidos",
+      "pregunta": "¿Cómo se denomina la articulación que permite todos los movimientos?",
+      "opciones": ["Gínglimo", "Enartrosis", "Deslizante", "Condílea"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Enartrosis**: 3 ejes de movimiento (hombro, cadera).\n❌ Gínglimo (bisagra): solo 1 eje, flexo-extensión (codo).\n❌ Deslizante: superficies planas, movimiento mínimo.\n❌ Condílea: 2 ejes, sin rotación axial (muñeca)."
+    },
+    {
+      "id": 5,
+      "bloque": "Tegumentario",
+      "pregunta": "¿Cuál de estas funciones es correcta respecto a la piel?",
+      "opciones": [
+        "Almacena agua y grasa",
+        "Impide la pérdida de agua",
+        "Regula la temperatura del cuerpo",
+        "Todas son correctas"
+      ],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Todas**: la piel cumple las 3 funciones simultáneamente.\n❌ Solo almacén (grasa en hipodermis): cierta pero incompleta.\n❌ Solo barrera (queratina impermeabiliza): cierta pero incompleta.\n❌ Solo termorregulación (sudor + vasodilatación): cierta pero incompleta."
+    },
+    {
+      "id": 6,
+      "bloque": "Miología",
+      "pregunta": "El músculo de la sonrisa se denomina:",
+      "opciones": ["Cigomático mayor", "Cigomático menor", "Risorio", "Buccinador"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Risorio**: tira lateralmente de las comisuras labiales = sonrisa.\n❌ Cigomático mayor: eleva la comisura (sonrisa más amplia).\n❌ Cigomático menor: eleva el labio superior.\n❌ Buccinador: comprime la mejilla (silbar, soplar, masticar)."
+    },
+    {
+      "id": 7,
+      "bloque": "Tegumentario",
+      "pregunta": "La capa más externa de la piel es:",
+      "opciones": ["Dermis", "Epidermis", "Ninguna de ellas", "Hipodermis"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Epidermis**: capa superficial con queratina, sin vasos.\n❌ Dermis: capa intermedia, rica en colágeno y con estructuras (glándulas, folículos).\n❌ Ninguna: la epidermis sí es la más externa.\n❌ Hipodermis: capa profunda, tejido adiposo."
+    },
+    {
+      "id": 8,
+      "bloque": "Tórax",
+      "pregunta": "¿Cómo se llama la parte superior del esternón?",
+      "opciones": ["Cuerpo", "Ninguna", "Mango", "Apófisis xifoides"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Mango (manubrio)**: parte superior, articula con las primeras costillas y clavícula.\n❌ Cuerpo: parte media del esternón.\n❌ Ninguna: el mango sí es la parte superior.\n❌ Xifoides: parte inferior, inserción del diafragma y rectos abdominales."
+    },
+    {
+      "id": 9,
+      "bloque": "Miología",
+      "pregunta": "La membrana que cubre las fibras musculares se denomina:",
+      "opciones": ["Perimisio", "Fascia", "Epimisio", "Endomisio"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Endomisio**: envuelve cada fibra muscular individual.\n❌ Perimisio: envuelve fascículos (grupos de fibras).\n❌ Fascia: envuelve grupos de músculos enteros.\n❌ Epimisio: envuelve el músculo completo por fuera."
+    },
+    {
+      "id": 10,
+      "bloque": "Miología",
+      "pregunta": "Función del psoas:",
+      "opciones": ["Abducción cadera", "Flexión cadera", "Aducción cadera", "Extensión cadera"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Flexión de cadera**: principal flexor (forma el iliopsoas).\n❌ Abducción: lo hacen glúteo medio y menor.\n❌ Aducción: aductores del muslo (del pubis al fémur).\n❌ Extensión: principal extensor es el glúteo mayor."
+    },
+    {
+      "id": 11,
+      "bloque": "Osteología",
+      "pregunta": "Los extremos de un hueso largo se denominan:",
+      "opciones": ["Diáfisis", "Epífisis", "Metáfisis", "Compacto"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Epífisis**: los dos extremos (proximal y distal).\n❌ Diáfisis: parte central alargada, contiene médula ósea.\n❌ Metáfisis: zona de unión epífisis-diáfisis (cartílago de crecimiento).\n❌ Compacto: tipo de tejido óseo, no una parte anatómica."
+    },
+    {
+      "id": 12,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿Cuántas vértebras cervicales hay?",
+      "opciones": ["7", "6", "5", "8"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **7 cervicales** (C1-C7). Total columna: 7+12+5+5+4 = 33.\n❌ 6: incorrecto (error numérico).\n❌ 5: es el número de lumbares y de sacras.\n❌ 8: incorrecto."
+    },
+    {
+      "id": 13,
+      "bloque": "Columna vertebral",
+      "pregunta": "Las apófisis que salen de las vértebras a ambos lados se denominan:",
+      "opciones": ["Pedículos", "Láminas", "Espinosas", "Transversas"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Transversas**: salen lateralmente a ambos lados (inserción muscular).\n❌ Pedículos: unen el cuerpo vertebral con el arco posterior.\n❌ Láminas: parte posterior del arco, entre transversas y espinosa.\n❌ Espinosa: proyección posterior única, palpable en la espalda."
+    },
+    {
+      "id": 14,
+      "bloque": "Osteología",
+      "pregunta": "La capa que envuelve el hueso en su interior se denomina:",
+      "opciones": ["Cartílago articular", "Cavidad medular", "Periostio", "Endostio"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Endostio**: capa que tapiza internamente la cavidad medular.\n❌ Cartílago articular: recubre epífisis en las articulaciones.\n❌ Cavidad medular: hueco interno donde está la médula, no una capa.\n❌ Periostio: capa externa del hueso, aporta vascularización."
+    },
+    {
+      "id": 15,
+      "bloque": "Histología",
+      "pregunta": "El epitelio cúbico simple tiene función de:",
+      "opciones": ["Ninguna de ellas", "Revestimiento", "Protección", "Absorción"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Absorción** (y secreción): típico de túbulos renales y glándulas.\n❌ Ninguna: el cúbico simple sí tiene función.\n❌ Revestimiento: propio del epitelio escamoso simple (vasos, alvéolos).\n❌ Protección: propio del estratificado queratinizado (piel)."
+    },
+    {
+      "id": 16,
+      "bloque": "Histología",
+      "pregunta": "La parte de la neurona que recoge el estímulo se denomina:",
+      "opciones": ["Axón", "Dendrita", "Soma", "Núcleo"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Dendrita**: prolongación ramificada que recibe estímulos.\n❌ Axón: prolongación única que transmite el impulso hacia fuera.\n❌ Soma: cuerpo neuronal, procesa la señal.\n❌ Núcleo: orgánulo dentro del soma, contiene ADN."
+    },
+    {
+      "id": 17,
+      "bloque": "Histología",
+      "pregunta": "Glóbulos blancos en infección parasitaria y alergias:",
+      "opciones": ["Neutrófilos", "Adipocitos", "Eosinófilos", "Mastocitos"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Eosinófilos**: aumentan en parásitos y reacciones alérgicas.\n❌ Neutrófilos: primera línea contra infecciones bacterianas.\n❌ Adipocitos: células de grasa, no son glóbulos blancos.\n❌ Mastocitos: median hipersensibilidad liberando histamina."
+    },
+    {
+      "id": 18,
+      "bloque": "Cráneo y cara",
+      "pregunta": "El nervio que inerva el elevador del párpado superior es el par:",
+      "opciones": ["3", "5", "7", "4"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **III (oculomotor)**: inerva elevador del párpado + mayoría de músculos oculares.\n❌ V (trigémino): sensibilidad de la cara y músculos de la masticación.\n❌ VII (facial): músculos de la mímica facial.\n❌ IV (troclear): solo inerva el oblicuo superior del ojo."
+    },
+    {
+      "id": 19,
+      "bloque": "Miología",
+      "pregunta": "Inserción del esternocleidomastoideo:",
+      "opciones": ["Esternón", "Mastoides", "Clavícula", "Costilla 1"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Mastoides**: inserción distal del ECM (en el hueso temporal).\n❌ Esternón: es uno de sus dos orígenes (proximal).\n❌ Clavícula: otro de sus orígenes proximales.\n❌ Costilla 1: ahí se insertan otros músculos (escalenos)."
+    },
+    {
+      "id": 20,
+      "bloque": "Articulaciones y tejidos",
+      "pregunta": "Otro nombre de la articulación troclear:",
+      "opciones": ["Pivote", "Bisagra", "Condílea", "Trocoide"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Bisagra** (o gínglimo): 1 eje de flexo-extensión. Ej: codo.\n❌ Pivote: es sinónimo de trocoide (rotación).\n❌ Condílea: 2 ejes de movimiento, no es troclear.\n❌ Trocoide: articulación en pivote (ej. atlas-axis)."
+    },
+    {
+      "id": 21,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿Qué vértebras tienen apófisis transversas con agujeros?",
+      "opciones": ["Lumbares", "Dorsales", "Cervicales", "Sacro"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Cervicales**: agujero transverso para el paso de la arteria vertebral.\n❌ Lumbares: transversas largas, sin agujero.\n❌ Dorsales: tienen carillas costales (para costillas), no agujeros.\n❌ Sacro: vértebras fusionadas con agujeros sacros (diferentes)."
+    },
+    {
+      "id": 22,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿Dónde encontramos la carilla costal?",
+      "opciones": ["Sacro", "Cervicales", "Lumbares", "Dorsales"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Dorsales**: carillas en cuerpo y transversas para articular con costillas.\n❌ Sacro: vértebras fusionadas, sin relación con costillas.\n❌ Cervicales: tienen agujero transverso (arteria vertebral).\n❌ Lumbares: soportan peso, sin carillas costales."
+    },
+    {
+      "id": 23,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿En qué región vertebral está el atlas?",
+      "opciones": ["Lumbares", "Sacro", "Dorsales", "Cervicales"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Cervicales**: el atlas es C1, sostiene el cráneo.\n❌ Lumbares: vértebras voluminosas (L1-L5), soportan peso.\n❌ Sacro: fusión de 5 vértebras sacras.\n❌ Dorsales: 12 vértebras torácicas (T1-T12)."
+    },
+    {
+      "id": 24,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿Cómo se llama el agujero por donde salen los nervios espinales?",
+      "opciones": ["Vertebral", "Todas son correctas", "Raquídeo", "Conjunción"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Conjunción** (intervertebral): por donde emergen los nervios espinales.\n❌ Vertebral: es el canal que aloja la médula.\n❌ Todas: solo el de conjunción es correcto.\n❌ Raquídeo: sinónimo de vertebral (canal medular, no salida nerviosa)."
+    },
+    {
+      "id": 25,
+      "bloque": "Miología",
+      "pregunta": "Entre los orígenes del pectoral mayor:",
+      "opciones": ["Clavícula", "Costillas", "Húmero", "Escápula"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Clavícula**: origen proximal (junto a esternón y costillas).\n❌ Costillas: también son origen, pero la opción más clásica es la clavícula.\n❌ Húmero: es la INSERCIÓN distal del pectoral mayor.\n❌ Escápula: ahí se insertan otros músculos (pectoral menor, manguito)."
+    },
+    {
+      "id": 26,
+      "bloque": "Columna vertebral",
+      "pregunta": "¿Entre qué estructuras está el disco intervertebral?",
+      "opciones": ["Entre pedículos", "Entre cuerpos", "Entre transversas", "Entre láminas"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Entre cuerpos vertebrales**: amortigua cargas entre vértebras.\n❌ Pedículos: parte del arco, no tienen discos entre sí.\n❌ Transversas: apófisis laterales, unidas por ligamentos.\n❌ Láminas: forman el arco posterior, sin discos."
+    },
+    {
+      "id": 27,
+      "bloque": "Miología",
+      "pregunta": "Función de los intercostales internos:",
+      "opciones": ["Todas son correctas", "Descender escápula", "Inspiración", "Espiración"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Espiración**: descienden costillas, reducen volumen torácico.\n❌ Todas: solo la espiración es correcta.\n❌ Descender escápula: función del pectoral menor.\n❌ Inspiración: eso lo hacen los intercostales externos (elevan costillas)."
+    },
+    {
+      "id": 28,
+      "bloque": "Tórax",
+      "pregunta": "Costillas 8-10:",
+      "opciones": ["Flotantes", "Enteras", "Verdaderas", "Falsas"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Falsas**: llegan al esternón vía cartílago de la 7ª.\n❌ Flotantes: son las 11 y 12 (no llegan al esternón).\n❌ Enteras: no es una categoría anatómica.\n❌ Verdaderas: son las 1-7 (tienen cartílago costal propio)."
+    },
+    {
+      "id": 29,
+      "bloque": "Miología",
+      "pregunta": "¿Cuál es un músculo suprahioideo?",
+      "opciones": ["Digástrico", "Esternohioideo", "Omohioideo", "Tirohioideo"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Digástrico**: suprahioideo (por encima del hioides).\n❌ Esternohioideo: infrahioideo (del esternón al hioides).\n❌ Omohioideo: infrahioideo (de la escápula al hioides).\n❌ Tirohioideo: infrahioideo (del tiroides al hioides)."
+    },
+    {
+      "id": 30,
+      "bloque": "Cráneo y cara",
+      "pregunta": "Huesecillo más externo del oído:",
+      "opciones": ["Yunque", "Caracol", "Martillo", "Estribo"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Martillo**: el más externo, unido a la membrana timpánica.\n❌ Yunque: huesecillo intermedio entre martillo y estribo.\n❌ Caracol: NO es un huesecillo, es el órgano de la audición (cóclea).\n❌ Estribo: el más interno, toca la ventana oval."
+    },
+    {
+      "id": 31,
+      "bloque": "Histología",
+      "pregunta": "Tejido conectivo maduro que regula temperatura y es reserva de energía:",
+      "opciones": [
+        "Tejido adiposo",
+        "Conectivo areolar",
+        "Conectivo reticular",
+        "Conectivo denso irregular"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Adiposo**: almacena grasa (energía) y aísla térmicamente.\n❌ Areolar: tejido de relleno, envuelve órganos y vasos.\n❌ Reticular: soporte de órganos hematopoyéticos (bazo, médula).\n❌ Denso irregular: resistencia multidireccional (dermis, cápsulas)."
+    },
+    {
+      "id": 32,
+      "bloque": "Cráneo y cara",
+      "pregunta": "¿En qué hueso está el conducto auditivo externo?",
+      "opciones": ["Parietal", "Esfenoides", "Occipital", "Temporal"],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Temporal**: aloja el CAE, oído medio e interno.\n❌ Parietal: forma la bóveda lateral del cráneo.\n❌ Esfenoides: base del cráneo, con silla turca (hipófisis).\n❌ Occipital: parte posterior e inferior (foramen magno)."
+    },
+    {
+      "id": 33,
+      "bloque": "Miología",
+      "pregunta": "Función correcta del dorsal ancho:",
+      "opciones": ["Rotación interna", "Rotación externa", "Abducción", "Flexión"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Rotación interna** del hombro (también aducción y extensión).\n❌ Rotación externa: la hacen infraespinoso y redondo menor.\n❌ Abducción: la hace el deltoides (y supraespinoso al inicio).\n❌ Flexión: el dorsal ancho extiende, no flexiona."
+    },
+    {
+      "id": 34,
+      "bloque": "Miología",
+      "pregunta": "El esplenio se inserta en:",
+      "opciones": [
+        "Apófisis espinosas primeras dorsales",
+        "Costillas primeras",
+        "Occipital",
+        "Mastoides"
+      ],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **Mastoides** (y línea nucal superior): inserción del esplenio de la cabeza.\n❌ Espinosas dorsales: ahí se ORIGINA el esplenio, no se inserta.\n❌ Costillas primeras: ahí se insertan escalenos, no el esplenio.\n❌ Occipital: solo parcialmente (línea nucal), la inserción principal es mastoides."
+    },
+    {
+      "id": 35,
+      "bloque": "Columna vertebral",
+      "pregunta": "Desviación lateral de la columna vista en posición anatómica:",
+      "opciones": ["Hipercifosis", "Escoliosis", "Hiperlordosis", "Ninguna de ellas"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Escoliosis**: desviación lateral (plano frontal).\n❌ Hipercifosis: aumento de la curva dorsal (plano sagital, 'joroba').\n❌ Hiperlordosis: aumento de curva lumbar o cervical (plano sagital).\n❌ Ninguna: la escoliosis sí es la respuesta correcta."
+    }
+  ]
+}

@@ -17,12 +17,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-FALLOS_DIR = Path(__file__).parent / "usuarios"
-FALLOS_DIR.mkdir(exist_ok=True)
-
-def get_fallos_path(usuario: str) -> Path:
-    nombre_seguro = "".join(c for c in usuario.lower().strip() if c.isalnum() or c in "_-")
-    return FALLOS_DIR / f"{nombre_seguro}.json"
+FALLOS_PATH = Path(__file__).parent / "fallos.json"
 
 # ── CSS ──────────────────────────────────────────────────────────
 st.markdown("""
@@ -233,73 +228,34 @@ st.markdown("""
   .stSelectbox > label, .stSlider > label { color: #94a3b8 !important; font-size: 13px !important; }
   div[data-testid="stMarkdownContainer"] p { color: #cbd5e1; }
 
-
-  /* ── EXPANDER texto visible ── */
-  .streamlit-expanderContent {
-    background: #0e1120 !important;
-    border: 1px solid #1e2540 !important;
-    border-top: none !important;
-    border-radius: 0 0 10px 10px !important;
-  }
-  .streamlit-expanderContent p,
-  .streamlit-expanderContent li,
-  .streamlit-expanderContent strong,
-  .streamlit-expanderContent em,
-  .streamlit-expanderContent span {
-    color: #cbd5e1 !important;
-  }
-  .streamlit-expanderContent h1,
-  .streamlit-expanderContent h2,
-  .streamlit-expanderContent h3 {
-    color: #e2e8f0 !important;
-  }
-  .streamlit-expanderContent code {
-    color: #a78bfa !important;
-    background: #1e1a2e !important;
-  }
-  /* Header del expander */
-  .streamlit-expanderHeader {
-    background: #0c0f1e !important;
-    border: 1px solid #1e2540 !important;
-    border-radius: 10px !important;
-    color: #a78bfa !important;
-    font-weight: 600 !important;
-  }
-  .streamlit-expanderHeader:hover {
-    border-color: #7c3aed !important;
-    color: #c4b5fd !important;
-  }
   /* ── DIVIDER ── */
   hr { border-color: #1e2540 !important; margin: 16px 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
 # ── Persistencia de fallos ───────────────────────────────────────
-def cargar_fallos(usuario: str = "default") -> list:
-    path = get_fallos_path(usuario)
-    if path.exists():
+def cargar_fallos() -> list:
+    if FALLOS_PATH.exists():
         try:
-            return json.loads(path.read_text(encoding="utf-8"))
+            return json.loads(FALLOS_PATH.read_text(encoding="utf-8"))
         except Exception:
             return []
     return []
 
-def guardar_fallos(fallos: list, usuario: str = "default"):
+def guardar_fallos(fallos: list):
     try:
-        path = get_fallos_path(usuario)
-        path.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
+        FALLOS_PATH.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
 
 def registrar_fallo(pregunta: dict, tema: str, respuesta_dada: str, generada_ia: bool = False):
     fallos = st.session_state.fallos
-    usuario = st.session_state.get("usuario", "default")
     pid = pregunta["id"]
     for f in fallos:
         if f["pregunta_id"] == pid and not f.get("aprendida"):
             f["veces_fallada"] += 1
             f["ultima_fecha"] = datetime.now().strftime("%Y-%m-%d")
-            guardar_fallos(fallos, usuario)
+            guardar_fallos(fallos)
             return
     fallos.append({
         "uid": str(uuid.uuid4())[:8],
@@ -319,13 +275,11 @@ def registrar_fallo(pregunta: dict, tema: str, respuesta_dada: str, generada_ia:
         "aprendida": False,
         "generada_ia": generada_ia,
     })
-    guardar_fallos(fallos, st.session_state.get("usuario", "default"))
+    guardar_fallos(fallos)
 
 # ── Session state ────────────────────────────────────────────────
 defaults = {
-    "fallos": [],
-    "usuario": "",
-    "usuario_confirmado": False,
+    "fallos": cargar_fallos(),
     "chat_history": [],
     "test_active": False,
     "test_tema": None,
@@ -392,10 +346,7 @@ def feedback(p, letra):
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
 
     opciones_texto = "\n".join(f"  {k}) {v}" for k, v in p["opciones"].items())
-    falsas = [k for k in p["opciones"] if k != p["correcta"]]
-    falsas_str = ", ".join(falsas)
-
-    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina UCV. Acaban de responder esta pregunta tipo test:
+    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina. Acaban de responder esta pregunta tipo test:
 
 PREGUNTA: {p['enunciado']}
 OPCIONES:
@@ -404,23 +355,19 @@ RESPUESTA CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}
 RESPUESTA DEL ALUMNO: {letra}) {p['opciones'].get(letra, '—')}
 EXPLICACIÓN BASE: {p['exp']}
 
-Genera una explicación didáctica con este formato EXACTO. Usa markdown con texto en color claro. Sé conciso pero completo:
+Genera una explicación didáctica con este formato EXACTO (usa markdown, sé conciso pero completo):
 
 **✅ Por qué {p['correcta']}) es correcta**
-[1-2 frases explicando el mecanismo anatómico clave. Texto en color normal, visible.]
+[1-2 frases explicando el mecanismo anatómico clave]
 
-**❌ Por qué las otras opciones son incorrectas**
-- **{falsas[0] if len(falsas)>0 else ""}**) [una frase explicando por qué es incorrecta]
-- **{falsas[1] if len(falsas)>1 else ""}**) [una frase explicando por qué es incorrecta]
-- **{falsas[2] if len(falsas)>2 else ""}**) [una frase explicando por qué es incorrecta]
+**❌ Por qué las demás opciones son incorrectas**
+- {", ".join(k for k in p["opciones"] if k != p["correcta"])}: [una frase por cada opción errónea explicando el error]
 
-**🧠 Truco para memorizar**
-[nemotecnia, analogía clínica o regla práctica — máx 2 frases]
+**🧠 Cómo memorizar**
+[truco mnemotécnico, analogía clínica o regla práctica — máx 2 frases]
 
-**📌 Otras preguntas posibles**
-- [pregunta 1 sobre este mismo concepto que podría aparecer en examen]
-- [pregunta 2]
-- [pregunta 3]"""
+**📌 Otras preguntas posibles sobre este tema**
+[2-3 bullet points con otras formas en que puede aparecer este concepto en un examen]"""
 
     client = get_client()
     with st.expander("💬 Explicación detallada", expanded=True):
@@ -429,7 +376,7 @@ Genera una explicación didáctica con este formato EXACTO. Usa markdown con tex
         try:
             with client.messages.stream(
                 model="claude-sonnet-4-5",
-                max_tokens=700,
+                max_tokens=600,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
                 for chunk in stream.text_stream:
@@ -438,67 +385,6 @@ Genera una explicación didáctica con este formato EXACTO. Usa markdown con tex
             placeholder.markdown(texto)
         except Exception:
             placeholder.info(f"💬 {p['exp']}")
-
-    # ── Preguntas similares con botón Ver respuesta ──
-    p_id = p.get("id", "")
-    key_sim = f"sim_{p_id}_{letra}"
-    if f"pregs_sim_{key_sim}" not in st.session_state:
-        st.session_state[f"pregs_sim_{key_sim}"] = None
-    if f"resp_sim_{key_sim}" not in st.session_state:
-        st.session_state[f"resp_sim_{key_sim}"] = {}
-
-    with st.expander("🔁 Practica con preguntas similares", expanded=False):
-        if st.session_state[f"pregs_sim_{key_sim}"] is None:
-            if st.button("🤖 Generar 2 preguntas similares", key=f"btn_sim_{key_sim}", use_container_width=True):
-                with st.spinner("Generando preguntas..."):
-                    prompt_sim = f"""Genera exactamente 2 preguntas tipo test de anatomía sobre el mismo concepto: "{p.get('concepto','')}"
-Basadas en: {p['enunciado']}
-
-Responde SOLO con JSON válido, sin texto extra:
-[
-  {{
-    "enunciado": "...",
-    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
-    "correcta": "A",
-    "exp": "explicación breve"
-  }},
-  {{
-    "enunciado": "...",
-    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
-    "correcta": "B",
-    "exp": "explicación breve"
-  }}
-]"""
-                    try:
-                        resp = client.messages.create(
-                            model="claude-sonnet-4-5",
-                            max_tokens=800,
-                            messages=[{"role": "user", "content": prompt_sim}]
-                        )
-                        raw = resp.content[0].text.strip()
-                        start = raw.find("[")
-                        end = raw.rfind("]") + 1
-                        pregs_sim = json.loads(raw[start:end])
-                        st.session_state[f"pregs_sim_{key_sim}"] = pregs_sim
-                        st.rerun()
-                    except Exception:
-                        st.error("No se pudieron generar. Inténtalo de nuevo.")
-        else:
-            pregs_sim = st.session_state[f"pregs_sim_{key_sim}"]
-            for i, ps in enumerate(pregs_sim):
-                st.markdown(f"**Pregunta {i+1}:** {ps['enunciado']}")
-                for k, v in ps["opciones"].items():
-                    st.markdown(f"&nbsp;&nbsp;**{k})** {v}")
-                resp_key = f"resp_sim_{key_sim}_{i}"
-                if st.session_state[f"resp_sim_{key_sim}"].get(i) is None:
-                    if st.button(f"👁️ Ver respuesta", key=f"ver_{key_sim}_{i}", use_container_width=False):
-                        st.session_state[f"resp_sim_{key_sim}"][i] = True
-                        st.rerun()
-                else:
-                    st.success(f"✅ Correcta: **{ps['correcta']})** {ps['opciones'][ps['correcta']]}")
-                    st.caption(f"💬 {ps['exp']}")
-                if i < len(pregs_sim) - 1:
-                    st.divider()
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
@@ -556,70 +442,8 @@ Responde SOLO con JSON válido en este formato exacto:
     return None
 
 # ════════════════════════════════════════════════════════════════
-#  PANTALLA DE LOGIN — Nombre de usuario
-# ════════════════════════════════════════════════════════════════
-if not st.session_state.get("usuario_confirmado"):
-    st.markdown("""
-    <div style="max-width:420px;margin:80px auto 0;text-align:center;">
-      <div style="font-size:60px;margin-bottom:16px;">💀</div>
-      <h1 style="font-family:sans-serif;font-size:36px;color:#e2e8f0;margin-bottom:4px;">
-        Carlo<span style="color:#a78bfa;">Test</span>
-      </h1>
-      <p style="color:#64748b;font-size:14px;margin-bottom:32px;">
-        Anatomía UCV · 1º Medicina
-      </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    col_l, col_c, col_r = st.columns([1, 2, 1])
-    with col_c:
-        st.markdown("**¿Cómo te llamas?**")
-        nombre = st.text_input(
-            "", placeholder="Escribe tu nombre...",
-            key="input_nombre",
-            label_visibility="collapsed"
-        )
-        if st.button("▶️ Entrar", type="primary", use_container_width=True):
-            if nombre.strip():
-                st.session_state.usuario = nombre.strip()
-                st.session_state.usuario_confirmado = True
-                st.session_state.fallos = cargar_fallos(nombre.strip())
-                st.rerun()
-            else:
-                st.warning("Escribe tu nombre para continuar")
-
-        # Mostrar usuarios existentes
-        usuarios_existentes = []
-        if FALLOS_DIR.exists():
-            usuarios_existentes = [
-                f.stem for f in FALLOS_DIR.glob("*.json")
-                if f.stat().st_size > 2
-            ]
-        if usuarios_existentes:
-            st.divider()
-            st.caption("👥 Acceso rápido:")
-            for u in sorted(usuarios_existentes):
-                if st.button(f"👤 {u.capitalize()}", use_container_width=True, key=f"quick_{u}"):
-                    st.session_state.usuario = u
-                    st.session_state.usuario_confirmado = True
-                    st.session_state.fallos = cargar_fallos(u)
-                    st.rerun()
-    st.stop()
-
-# ════════════════════════════════════════════════════════════════
 #  HERO
 # ════════════════════════════════════════════════════════════════
-# Botón cerrar sesión en sidebar
-with st.sidebar:
-    st.markdown(f"### 👤 {st.session_state.get('usuario','').capitalize()}")
-    st.caption("Tu progreso se guarda automáticamente")
-    st.divider()
-    if st.button("🚪 Cambiar usuario", use_container_width=True):
-        st.session_state.usuario = ""
-        st.session_state.usuario_confirmado = False
-        st.session_state.fallos = []
-        st.rerun()
-
 total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
 n_fallos  = sum(1 for f in st.session_state.fallos if not f.get("aprendida"))
 n_temas   = len(BANCO)
@@ -678,9 +502,8 @@ st.markdown(f"""
 # ════════════════════════════════════════════════════════════════
 #  TABS
 # ════════════════════════════════════════════════════════════════
-tab_test, tab_revision, tab_fallos, tab_flash, tab_tfallo, tab_ucv, tab_chat, tab_real, tab_temas, tab_temario = st.tabs([
-    "📚 Test", "📝 Revisión Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "🎓 Preguntas UCV", "💬 Chat IA",
-    "🏆 Preguntas reales UCV", "📖 Repaso por temas", "🗂️ Consultar temario"
+tab_test, tab_revision, tab_fallos, tab_flash, tab_tfallo, tab_ucv, tab_chat = st.tabs([
+    "📚 Test", "📝 Revisión Test", "❌ Mis Fallos", "🃏 Flashcards", "🔁 Test de Fallos", "🎓 Preguntas UCV", "💬 Chat IA"
 ])
 
 # ────────────────────────────────────────────────────────────────
@@ -861,7 +684,7 @@ with tab_fallos:
                         for ff in st.session_state.fallos:
                             if ff["uid"] == f["uid"]:
                                 ff["aprendida"] = True
-                        guardar_fallos(st.session_state.fallos, st.session_state.get("usuario", "default"))
+                        guardar_fallos(st.session_state.fallos)
                         st.rerun()
                 with btn_col2:
                     if st.button("🤖 Generar pregunta similar", key=f"gen_{f['uid']}_{i}", use_container_width=True):
@@ -887,7 +710,7 @@ with tab_fallos:
                 try:
                     datos = json.load(uploaded)
                     st.session_state.fallos = datos
-                    guardar_fallos(datos, st.session_state.get("usuario", "default"))
+                    guardar_fallos(datos)
                     st.success("Fallos importados correctamente")
                     st.rerun()
                 except Exception:
@@ -1265,284 +1088,3 @@ Usa nemotecnias cuando sea útil. Incluye perlas clínicas relevantes."""
         if st.button("🗑️ Limpiar conversación", use_container_width=True):
             st.session_state.chat_history = []
             st.rerun()
-
-# ── Carga de bancos JSON externos ────────────────────────────────
-@st.cache_data
-def cargar_banco_real():
-    p = Path(__file__).parent / "banco_UCV_temas_3_4_5_REAL.json"
-    return json.loads(p.read_text(encoding="utf-8"))
-
-@st.cache_data
-def cargar_banco_por_temas():
-    p = Path(__file__).parent / "banco_UCV_por_temas.json"
-    return json.loads(p.read_text(encoding="utf-8"))
-
-@st.cache_data
-def cargar_temario():
-    p = Path(__file__).parent / "temario_UCV_anatomia.json"
-    return json.loads(p.read_text(encoding="utf-8"))
-
-def _contexto_temario(pregunta: str, opciones: list[str]) -> str:
-    """Extrae hasta ~1200 chars de las secciones del temario más relevantes."""
-    try:
-        tm = cargar_temario()
-        palabras = set(
-            w for w in (pregunta + " " + " ".join(opciones)).lower().split()
-            if len(w) > 4
-        )
-        fragmentos = []
-        for tema_t in tm["temas"]:
-            for sec in tema_t.get("secciones", []):
-                texto = sec["contenido"].lower()
-                if sum(1 for w in palabras if w in texto) >= 2:
-                    fragmentos.append(
-                        f"**{tema_t['titulo']} › {sec['titulo']}**\n{sec['contenido'][:400]}"
-                    )
-        ctx = "\n\n".join(fragmentos[:4])
-        return ctx[:1400] if ctx else ""
-    except Exception:
-        return ""
-
-def saber_mas(p_data: dict, campo_valor: str, key_prefix: str):
-    """Expander 'Saber más' con IA: explicación ampliada, preguntas, esquema y nemotecnia."""
-    sm_key = f"sm__{key_prefix}__{p_data['id']}"
-    if sm_key not in st.session_state:
-        st.session_state[sm_key] = None
-
-    with st.expander("💡 Saber más", expanded=False):
-        if st.session_state[sm_key] is None:
-            if st.button(
-                "🤖 Ampliar con IA — explicación, preguntas, esquema y nemotecnia",
-                key=f"btn_{sm_key}",
-                use_container_width=True,
-            ):
-                correcta_idx = p_data["respuesta_correcta"]
-                correcta_txt = p_data["opciones"][correcta_idx]
-                falsas = [op for i, op in enumerate(p_data["opciones"]) if i != correcta_idx]
-                ctx = _contexto_temario(p_data["pregunta"], p_data["opciones"])
-
-                prompt = f"""Eres profesor de Anatomía Humana de 1º de Medicina UCV (Universidad Católica de Valencia).
-El alumno acaba de responder esta pregunta tipo test:
-
-PREGUNTA: {p_data["pregunta"]}
-RESPUESTA CORRECTA: {chr(65 + correcta_idx)}) {correcta_txt}
-OPCIONES INCORRECTAS: {" | ".join(falsas)}
-BLOQUE/TEMA: {campo_valor}
-EXPLICACIÓN BREVE: {p_data["explicacion"]}
-
-CONTEXTO DEL TEMARIO UCV:
-{ctx if ctx else "(no hay contexto adicional disponible)"}
-
-Genera la respuesta con este formato EXACTO en markdown, sin introducción:
-
-## 📚 Explicación ampliada
-[2-3 párrafos. Explica el mecanismo anatómico, función, localización y relevancia clínica usando el contexto del temario. Conecta con lo que el alumno debe dominar para el examen.]
-
-## 🧪 Preguntas relacionadas
-Escribe 3 preguntas tipo test diferentes sobre el mismo concepto, que podrían aparecer en el examen UCV:
-
-**Pregunta 1:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-**Pregunta 2:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-**Pregunta 3:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-## 🗂️ Esquema — lo que debes saber
-[Lista jerárquica con bullets (•) de todos los puntos clave examinables sobre este concepto. Máx 10 puntos, concretos y directos.]
-
-## 🧠 Regla nemotécnica
-[Una regla, analogía clínica o truco visual para no olvidar este concepto. Si no existe una regla natural, inventa una que funcione. Nunca dejes esta sección vacía.]"""
-
-                client = get_client()
-                placeholder = st.empty()
-                texto = ""
-                try:
-                    with client.messages.stream(
-                        model="claude-sonnet-4-5",
-                        max_tokens=1000,
-                        messages=[{"role": "user", "content": prompt}],
-                    ) as stream:
-                        for chunk in stream.text_stream:
-                            texto += chunk
-                            placeholder.markdown(texto + "▌")
-                    placeholder.markdown(texto)
-                    st.session_state[sm_key] = texto
-                except Exception as e:
-                    placeholder.error(f"Error al conectar con IA: {e}")
-        else:
-            st.markdown(st.session_state[sm_key])
-
-# ────────────────────────────────────────────────────────────────
-#  TAB 8 — PREGUNTAS REALES UCV
-# ────────────────────────────────────────────────────────────────
-with tab_real:
-    banco_real = cargar_banco_real()
-    preguntas_real = banco_real["preguntas"]
-
-    bloques_real = sorted({p["bloque"] for p in preguntas_real})
-    bloque_sel = st.selectbox(
-        "Filtrar por bloque:",
-        ["Todos los bloques"] + bloques_real,
-        key="real_bloque_sel"
-    )
-
-    pool_real = preguntas_real if bloque_sel == "Todos los bloques" else [
-        p for p in preguntas_real if p["bloque"] == bloque_sel
-    ]
-
-    st.caption(f"**{len(pool_real)} preguntas** disponibles en este bloque")
-    st.divider()
-
-    if "real_idx" not in st.session_state:
-        st.session_state.real_idx = 0
-    if "real_orden" not in st.session_state:
-        st.session_state.real_orden = list(range(len(preguntas_real)))
-    if "real_respondidas" not in st.session_state:
-        st.session_state.real_respondidas = {}
-
-    if st.button("🔀 Mezclar preguntas", key="real_shuffle"):
-        import random as _r
-        orden = list(range(len(pool_real)))
-        _r.shuffle(orden)
-        st.session_state.real_orden = orden
-        st.session_state.real_idx = 0
-        st.session_state.real_respondidas = {}
-        st.rerun()
-
-    if not pool_real:
-        st.info("No hay preguntas para este bloque.")
-    else:
-        orden_real = [i for i in range(len(pool_real))]
-        idx_r = st.session_state.real_idx % len(pool_real)
-        p_r = pool_real[idx_r]
-
-        st.markdown(f'<p class="pregunta-num">Pregunta {idx_r + 1} / {len(pool_real)}</p>', unsafe_allow_html=True)
-        st.progress((idx_r + 1) / len(pool_real))
-        st.markdown(f'<span class="concepto-tag">📂 {p_r["bloque"]}</span>', unsafe_allow_html=True)
-        st.markdown(f"**{p_r['pregunta']}**")
-
-        opciones_r = [f"{chr(65+i)})  {op}" for i, op in enumerate(p_r["opciones"])]
-        resp_r = st.radio("", opciones_r, index=None, key=f"real_radio_{idx_r}_{bloque_sel}")
-
-        resp_key = f"real_resp_{idx_r}_{bloque_sel}"
-        if resp_key not in st.session_state:
-            st.session_state[resp_key] = None
-
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("✔ Confirmar", type="primary", disabled=(resp_r is None or st.session_state[resp_key] is not None),
-                         use_container_width=True, key=f"real_conf_{idx_r}_{bloque_sel}"):
-                letra_idx = ord(resp_r[0]) - 65
-                st.session_state[resp_key] = letra_idx
-                st.rerun()
-        with col2:
-            if st.button("Siguiente →", use_container_width=True, key=f"real_next_{idx_r}_{bloque_sel}"):
-                st.session_state.real_idx = (idx_r + 1) % len(pool_real)
-                st.rerun()
-
-        if st.session_state[resp_key] is not None:
-            elegida = st.session_state[resp_key]
-            correcta = p_r["respuesta_correcta"]
-            if elegida == correcta:
-                st.success("✅ ¡Correcto!")
-            else:
-                st.error(f"❌ Incorrecto — era **{chr(65+correcta)})** {p_r['opciones'][correcta]}")
-            with st.expander("💬 Explicación", expanded=True):
-                st.markdown(p_r["explicacion"])
-            saber_mas(p_r, p_r["bloque"], f"real_{idx_r}_{bloque_sel}")
-
-# ────────────────────────────────────────────────────────────────
-#  TAB 9 — REPASO POR TEMAS
-# ────────────────────────────────────────────────────────────────
-with tab_temas:
-    banco_temas = cargar_banco_por_temas()
-    preguntas_temas = banco_temas["preguntas"]
-
-    temas_disp = sorted({p["tema"] for p in preguntas_temas})
-    tema_sel = st.selectbox(
-        "Filtrar por tema:",
-        ["Todos los temas"] + temas_disp,
-        key="temas_tema_sel"
-    )
-
-    pool_temas = preguntas_temas if tema_sel == "Todos los temas" else [
-        p for p in preguntas_temas if p["tema"] == tema_sel
-    ]
-
-    st.caption(f"**{len(pool_temas)} preguntas** disponibles en este tema")
-    st.divider()
-
-    if "temas_idx" not in st.session_state:
-        st.session_state.temas_idx = 0
-
-    if st.button("🔀 Mezclar preguntas", key="temas_shuffle"):
-        import random as _r2
-        st.session_state.temas_idx = 0
-        st.rerun()
-
-    if not pool_temas:
-        st.info("No hay preguntas para este tema.")
-    else:
-        idx_t = st.session_state.temas_idx % len(pool_temas)
-        p_t = pool_temas[idx_t]
-
-        st.markdown(f'<p class="pregunta-num">Pregunta {idx_t + 1} / {len(pool_temas)}</p>', unsafe_allow_html=True)
-        st.progress((idx_t + 1) / len(pool_temas))
-        st.markdown(f'<span class="concepto-tag">📚 {p_t["tema"]}</span>', unsafe_allow_html=True)
-        st.markdown(f"**{p_t['pregunta']}**")
-
-        opciones_t = [f"{chr(65+i)})  {op}" for i, op in enumerate(p_t["opciones"])]
-        resp_t = st.radio("", opciones_t, index=None, key=f"temas_radio_{idx_t}_{tema_sel}")
-
-        tresp_key = f"temas_resp_{idx_t}_{tema_sel}"
-        if tresp_key not in st.session_state:
-            st.session_state[tresp_key] = None
-
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("✔ Confirmar", type="primary", disabled=(resp_t is None or st.session_state[tresp_key] is not None),
-                         use_container_width=True, key=f"temas_conf_{idx_t}_{tema_sel}"):
-                letra_idx_t = ord(resp_t[0]) - 65
-                st.session_state[tresp_key] = letra_idx_t
-                st.rerun()
-        with col2:
-            if st.button("Siguiente →", use_container_width=True, key=f"temas_next_{idx_t}_{tema_sel}"):
-                st.session_state.temas_idx = (idx_t + 1) % len(pool_temas)
-                st.rerun()
-
-        if st.session_state[tresp_key] is not None:
-            elegida_t = st.session_state[tresp_key]
-            correcta_t = p_t["respuesta_correcta"]
-            if elegida_t == correcta_t:
-                st.success("✅ ¡Correcto!")
-            else:
-                st.error(f"❌ Incorrecto — era **{chr(65+correcta_t)})** {p_t['opciones'][correcta_t]}")
-            with st.expander("💬 Explicación", expanded=True):
-                st.markdown(p_t["explicacion"])
-            saber_mas(p_t, p_t["tema"], f"temas_{idx_t}_{tema_sel}")
-
-# ────────────────────────────────────────────────────────────────
-#  TAB 10 — CONSULTAR TEMARIO
-# ────────────────────────────────────────────────────────────────
-with tab_temario:
-    temario = cargar_temario()
-    st.markdown("### 🗂️ Temario oficial UCV — Anatomía Humana y Funcional")
-    st.caption("9 temas del temario oficial. Embriología excluida.")
-    st.divider()
-
-    for tema_t in temario["temas"]:
-        st.markdown(f"#### {tema_t['numero']}: {tema_t['titulo']}")
-        st.caption(tema_t.get("descripcion", ""))
-        for sec in tema_t.get("secciones", []):
-            with st.expander(f"📌 {sec['titulo']}", expanded=False):
-                st.markdown(sec["contenido"])
-                conceptos = sec.get("conceptos_clave", [])
-                if conceptos:
-                    st.markdown("**Conceptos clave:** " + " · ".join(f"`{c}`" for c in conceptos))
-        st.divider()

@@ -1,0 +1,1059 @@
+{
+  "metadata": {
+    "titulo": "Temario Anatomía Humana y Funcional",
+    "asignatura": "Anatomía Humana y Funcional",
+    "universidad": "Universidad Católica de Valencia San Vicente Mártir",
+    "grado": "1º Medicina",
+    "nota": "Embriología (Tema 0) EXCLUIDA por indicación del alumno",
+    "temas_totales": 9,
+    "version": "1.0"
+  },
+  "temas": [
+    {
+      "id": 1,
+      "numero": "Tema 1",
+      "titulo": "Histología Humana",
+      "descripcion": "Rama que estudia los tejidos. Las células se asocian formando tejidos con función específica.",
+      "secciones": [
+        {
+          "titulo": "Patrón general de los tejidos",
+          "contenido": "Todos los tejidos siguen el mismo patrón: 1) Conjunto de células especializadas (depende del tejido). 2) Tejido conectivo (o conjuntivo), compuesto de células especializadas, fibroblastos, que tienen la función de generar fibras proteicas (colágeno, elastina).",
+          "conceptos_clave": [
+            "Células especializadas",
+            "Tejido conectivo/conjuntivo",
+            "Fibroblastos",
+            "Colágeno",
+            "Elastina"
+          ]
+        },
+        {
+          "titulo": "Tipos de tejido conectivo",
+          "contenido": "El tejido conectivo puede ser: SÓLIDO (por esto casi todos los órganos son sólidos, ej. hígado, riñón, músculo, cerebro); CALCIFICADO (se ha acumulado sales de calcio, función: proteger, sujetar, palanca); LÍQUIDO (la sangre, único tejido conectivo líquido, con millones de células, cada una con su función).",
+          "conceptos_clave": ["Sólido", "Calcificado", "Líquido", "Sangre"]
+        },
+        {
+          "titulo": "Epitelios",
+          "contenido": "Células pegadas íntimamente las unas a las otras que tapizan/cubren/revisten: la superficie del cuerpo (piel), los órganos huecos (vía aérea, digestiva, urinaria) y las glándulas. EXCEPCIÓN: el hígado y el corazón NO tienen epitelio.",
+          "conceptos_clave": ["Epitelio", "Revestimiento", "Excepciones: hígado y corazón"]
+        },
+        {
+          "titulo": "Epitelio estratificado",
+          "contenido": "Estrato = capa de células. Queratinizado: en su última capa tiene una cubierta de queratina (proteína). Ej: epidermis de la piel. NO toda la epidermis está queratinizada (p.ej: planta de pies, labios, palmas). No queratinizado: no tiene queratina. La queratina sirve para impermeabilizar.",
+          "conceptos_clave": ["Queratinizado", "No queratinizado", "Queratina", "Impermeabilización"]
+        },
+        {
+          "titulo": "Piel: estructura general",
+          "contenido": "La piel es el tejido de mayor superficie. Tiene 3 capas: epidermis, dermis e hipodermis. El corte histológico muestra en la capa más superficial el epitelio estratificado.",
+          "conceptos_clave": ["3 capas", "Epidermis", "Dermis", "Hipodermis"]
+        },
+        {
+          "titulo": "Epidermis",
+          "contenido": "Los humanos cambiamos la epidermis, no la piel (cuando te rascas lo blanco que sale es queratina). La epidermis se regenera sola, la PIEL NO SE REGENERA. La maduración de las células epiteliales epidérmicas consiste en la segregación de queratina: se van llenando de queratina, suben, y la célula madura se descama. La última célula es un saco de queratina sin núcleo. NO tiene vasos sanguíneos (por eso un corte que no llega a dermis no sangra).",
+          "conceptos_clave": ["Regeneración", "Maduración", "Descamación", "Sin vasos sanguíneos"]
+        },
+        {
+          "titulo": "Dermis",
+          "contenido": "Parte más ancha. Contiene todas las estructuras de la piel: glándula sebácea, glándula sudorípara, vasos sanguíneos, folículo piloso (con músculo piloerector que rodea el folículo y tensa el pelo = erizar la piel). Capa muy rica en colágeno, le confiere elasticidad. La edad es factor que colabora en la pérdida de colágeno.",
+          "conceptos_clave": [
+            "Glándula sebácea",
+            "Glándula sudorípara",
+            "Folículo piloso",
+            "Colágeno",
+            "Elasticidad"
+          ]
+        },
+        {
+          "titulo": "Hipodermis",
+          "contenido": "Tejido celular subcutáneo. Es tejido adiposo (grasa), formado por adipocitos. Capa más profunda.",
+          "conceptos_clave": ["Subcutáneo", "Tejido adiposo", "Adipocitos"]
+        },
+        {
+          "titulo": "Melanocitos",
+          "contenido": "Se encargan de segregar melanina (proteína). La melanina protege la piel contra la radiación ultravioleta. Al exponerse al sol, se activa la síntesis de melanina para evitar quemaduras y daño a los núcleos celulares de la epidermis. Esta producción hace que la piel se oscurezca. Se encuentran en la interfase entre epidermis y dermis.",
+          "conceptos_clave": ["Melanina", "Protección UV", "Bronceado", "Interfase epidermis-dermis"]
+        },
+        {
+          "titulo": "Resumen piel",
+          "contenido": "EPIDERMIS → Queratina: impermeabilidad. DERMIS → Colágeno: elasticidad.",
+          "conceptos_clave": ["Queratina impermeabiliza", "Colágeno da elasticidad"]
+        },
+        {
+          "titulo": "Músculos: generalidades",
+          "contenido": "Como todo tejido tiene: células especializadas y tejido conectivo. Función: movimiento. Las células musculares son las encargadas del movimiento (contracción).",
+          "conceptos_clave": ["Células musculares", "Contracción", "Movimiento"]
+        },
+        {
+          "titulo": "Músculo esquelético",
+          "contenido": "Insertado/pegado/anclado al hueso. Con estrías (rayas): filamentos de proteínas, actina y miosina (proteínas contráctiles). En la contracción muscular se contraen los filamentos. MOVIMIENTO VOLUNTARIO: controlo con mi consciencia. Ejemplo: coxis, tibia.",
+          "conceptos_clave": ["Estriado", "Actina y miosina", "Voluntario", "Insertado en hueso"]
+        },
+        {
+          "titulo": "Músculo liso",
+          "contenido": "No tiene estrías. Presente en la pared de: vía respiratoria, uréteres, esófago, vesícula biliar, intestino delgado, intestino grueso. Y en la pared muscular de los órganos. MOVIMIENTO INVOLUNTARIO: no se tiene poder para moverlo.",
+          "conceptos_clave": ["Sin estrías", "Involuntario", "Órganos huecos"]
+        },
+        {
+          "titulo": "Músculo cardiaco",
+          "contenido": "Es un músculo estriado que escapa del control de mi voluntad. Contiene estrías + movimiento involuntario (reúne características de los dos anteriores). Miocardio es la parte muscular del corazón. MOVIMIENTO INVOLUNTARIO.",
+          "conceptos_clave": ["Estriado involuntario", "Miocardio", "Mixto"]
+        },
+        {
+          "titulo": "Glándulas endocrinas",
+          "contenido": "Epitelio glandular cuyo producto se vierte a la sangre (hormonas). Alcanza la sangre, en 2-3 segundos está por todo el cuerpo. Ej: glándula tiroides segrega hormona tiroidea → sangre → todas las células.",
+          "conceptos_clave": ["Hormonas", "Sangre", "Ejemplo: tiroides"]
+        },
+        {
+          "titulo": "Glándulas exocrinas",
+          "contenido": "Epitelio glandular cuyo producto (leche, sudor, sebo, saliva, cera, lágrimas) se vierte a un conducto y ese conducto desemboca en la superficie de la piel o en una estructura hueca.",
+          "conceptos_clave": ["Conducto", "Piel o hueco"]
+        },
+        {
+          "titulo": "Glándula mixta: páncreas",
+          "contenido": "EXCEPCIÓN: el páncreas contiene una glándula mixta. Parte endocrina: segrega hormona insulina. Parte exocrina: segrega enzimas (proteínas encargadas de la digestión). Se vierten al duodeno (estructura hueca).",
+          "conceptos_clave": ["Páncreas", "Insulina (endocrina)", "Enzimas (exocrina)"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "numero": "Tema 2",
+      "titulo": "Conceptos Generales de Anatomía",
+      "descripcion": "Posición anatómica, planos anatómicos, términos de relación y movimiento, cavidades corporales.",
+      "secciones": [
+        {
+          "titulo": "Posición anatómica",
+          "contenido": "Posición que tiene que estar el cuerpo humano. Requisitos: 1) Bipedestación (de pie) o decúbito supino (mirando boca arriba). 2) Cabeza, ojos y pies dirigidos anteriormente. 3) MMSS con las palmas mirando anteriormente. 4) MMII con las puntas dirigidas hacia delante.",
+          "conceptos_clave": [
+            "Bipedestación",
+            "Decúbito supino",
+            "Palmas anterior",
+            "Puntas al frente"
+          ]
+        },
+        {
+          "titulo": "Planos anatómicos: eje longitudinal",
+          "contenido": "Las descripciones anatómicas se basan en 3 planos imaginarios que siguen 2 ejes. PLANOS SAGITALES: longitudinales que dividen al cuerpo en mitades derecha e izquierda. PLANO MEDIO: plano sagital que pasa exactamente por la mitad del cuerpo. Todos los planos medios son sagitales, pero no todos los sagitales son medios. PLANO CORONAL O FRONTAL: longitudinal perpendicular al plano medio, divide en anterior y posterior.",
+          "conceptos_clave": [
+            "Sagital",
+            "Plano medio",
+            "Coronal/frontal",
+            "Derecha-izquierda",
+            "Anterior-posterior"
+          ]
+        },
+        {
+          "titulo": "Planos anatómicos: eje transversal",
+          "contenido": "PLANO HORIZONTAL O TRANSVERSAL: planos imaginarios perpendiculares al eje longitudinal (tanto a los sagitales como coronales). Dividen al cuerpo en una porción inferior y otra superior.",
+          "conceptos_clave": ["Transversal", "Horizontal", "Superior-inferior"]
+        },
+        {
+          "titulo": "Términos de relación",
+          "contenido": "Términos usados para describir la posición de una estructura respecto a otra en el cuerpo humano, usando los planos anatómicos como referencia (anterior/posterior, superior/inferior, medial/lateral, proximal/distal, superficial/profundo).",
+          "conceptos_clave": [
+            "Anterior/posterior",
+            "Superior/inferior",
+            "Medial/lateral",
+            "Proximal/distal"
+          ]
+        },
+        {
+          "titulo": "Cavidades corporales",
+          "contenido": "3 cavidades: CRANEAL (cráneo, protege al encéfalo con huesos sellados entre sí; capacidad de subluxarlos en el canal del parto y osificarse después). TORÁCICA (proteger órganos torácicos en constante movimiento, sistema de protección ósea intermitente con elementos elásticos; costillas unidas al esternón por cartílago para ventilación). ABDOMINOPÉLVICA (no hay estructura que las separe; parte caudal-inferior es la pélvica).",
+          "conceptos_clave": [
+            "Craneal",
+            "Torácica",
+            "Abdominopélvica",
+            "Diafragma: frontera tórax-abdomen"
+          ]
+        },
+        {
+          "titulo": "Cavidad torácica: contenido",
+          "contenido": "Proteger a los órganos torácicos: corazón y grandes vasos (AORTA, única arteria que no necesita la palabra 'arteria' delante; vena cava), pulmones, tráquea con grandes bronquios, esófago. DIAFRAGMA: cambio de cavidad, límite entre tórax y abdomen.",
+          "conceptos_clave": [
+            "Corazón",
+            "Grandes vasos",
+            "Pulmones",
+            "Tráquea",
+            "Esófago",
+            "Diafragma"
+          ]
+        },
+        {
+          "titulo": "Cavidad abdominopélvica: 9 regiones",
+          "contenido": "Divididas en 9 regiones con gran importancia clínica: 1) Hipocondrio derecho (hígado y vesícula biliar). 2) Epigástrica (boca del estómago; dolor agudo: pancreatitis, subagudo: úlcera duodenal). 3) Hipocondrio izquierdo (bazo). 4) Fosa lumbar derecha (riñón, litiasis/cólico nefrítico). 5) Región umbilical (colon transverso, asas del intestino delgado). 6) Fosa lumbar izquierda (riñón izquierdo). 7) Fosa ilíaca derecha (ciego con apéndice, ovario derecho). 8) Hipogástrica (vejiga, útero). 9) Fosa ilíaca izquierda (colon sigmoide, diverticulitis, ovario izquierdo).",
+          "conceptos_clave": [
+            "9 regiones",
+            "Importancia clínica",
+            "Localización de órganos",
+            "Dolor referido"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "numero": "Tema 3",
+      "titulo": "Aparato Locomotor",
+      "descripcion": "Función de movimiento. Huesos, cartílagos, articulaciones y músculos.",
+      "secciones": [
+        {
+          "titulo": "Elementos del aparato locomotor",
+          "contenido": "Los 4 elementos que tienen que estar íntegros para que se produzca el movimiento son: huesos, cartílagos, articulaciones y músculos (esquelético o estriado, el que voy a contraer cuando lo decida).",
+          "conceptos_clave": ["Huesos", "Cartílagos", "Articulaciones", "Músculos"]
+        },
+        {
+          "titulo": "Funciones del tejido óseo",
+          "contenido": "Los huesos están formados por células (osteocitos) y tejido conectivo calcificado. Funciones: 1) SOPORTE del cuerpo (mantener forma y postura erguida). 2) MOVIMIENTO (palancas donde se insertan los músculos). 3) PROTECCIÓN (cerebro, médula, pulmones, corazón, grandes vasos). 4) PRODUCCIÓN DE CÉLULAS SANGUÍNEAS (médula de los huesos largos).",
+          "conceptos_clave": [
+            "Osteocitos",
+            "Soporte",
+            "Movimiento",
+            "Protección",
+            "Hematopoyesis"
+          ]
+        },
+        {
+          "titulo": "Partes de los huesos largos",
+          "contenido": "EPÍFISIS: los extremos (2: proximal y distal). DIÁFISIS: parte intermedia, la longitud. Contiene tejido hematopoyético (médula ósea). METÁFISIS: unión de diáfisis y epífisis (cartílago de crecimiento; de adulto se calcifica, hasta que dejas de crecer).",
+          "conceptos_clave": [
+            "Epífisis",
+            "Diáfisis",
+            "Metáfisis",
+            "Médula ósea",
+            "Cartílago de crecimiento"
+          ]
+        },
+        {
+          "titulo": "División del esqueleto",
+          "contenido": "ESQUELETO AXIAL (eje): cráneo y cara, hueso hioides, columna vertebral, tórax (esternón y costillas). ESQUELETO APENDICULAR: huesos de extremidades superiores e inferiores y pelvis.",
+          "conceptos_clave": ["Axial", "Apendicular", "Hioides"]
+        },
+        {
+          "titulo": "Esqueleto de la cabeza: cráneo",
+          "contenido": "Huesos del cráneo: 8. 2 huesos PARES: parietal y temporal. 4 huesos IMPARES: frontal, etmoides, esfenoides y occipital. IMPAR en anatomía significa que es único (hay 1, como el hioides); PAR significa que hay 2 (como el fémur).",
+          "conceptos_clave": [
+            "8 huesos",
+            "2 pares: parietal y temporal",
+            "4 impares: frontal, etmoides, esfenoides, occipital"
+          ]
+        },
+        {
+          "titulo": "Hueso occipital",
+          "contenido": "Forma la parte posterior y la mayor parte de la base del cráneo (plano posterior, nuca). En la parte inferior está el foramen magno o agujero occipital: salida del bulbo raquídeo, que continúa con la médula espinal. Los cóndilos occipitales son apófisis situados a ambos lados del foramen magno que forman la articulación atlanto-occipital (con el Atlas, C1).",
+          "conceptos_clave": [
+            "Foramen magno",
+            "Bulbo raquídeo",
+            "Cóndilos occipitales",
+            "Articulación atlanto-occipital"
+          ]
+        },
+        {
+          "titulo": "Hueso frontal",
+          "contenido": "Plano anterior en posición anatómica. Forma la frente, el techo de las órbitas (cavidad par donde está el globo ocular) y la mayor parte de la porción anterior del cráneo.",
+          "conceptos_clave": ["Frente", "Techo de órbitas", "Anterior"]
+        },
+        {
+          "titulo": "Hueso esfenoides",
+          "contenido": "Hueso impar, 'hueso de las alas de mariposa'. Situado en la porción media de la base del cráneo. Es la PIEDRA ANGULAR de la base del cráneo ya que articula todos los huesos manteniéndolos unidos. Las alas mayores forman parte de la órbita, detrás del globo ocular. El cuerpo del esfenoides presenta una depresión llamada SILLA TURCA, donde se inserta la hipófisis (glándula endocrina). Está atravesado por el CONDUCTO ÓPTICO (paso del nervio óptico).",
+          "conceptos_clave": [
+            "Alas de mariposa",
+            "Piedra angular",
+            "Silla turca",
+            "Hipófisis",
+            "Conducto óptico"
+          ]
+        },
+        {
+          "titulo": "Hueso temporal",
+          "contenido": "Forma la porción lateral del cráneo. Contiene en su interior el oído interno (ATM está cerca). Apófisis cigomática: se articula con el hueso cigomático (malar, pómulos) formando el arco cigomático. En la cara inferior de la apófisis cigomática está la fosa mandibular, donde se articula la mandíbula formando la ATM. Apófisis estiloides. Apófisis mastoides: se inserta el ECM (esternocleidomastoideo).",
+          "conceptos_clave": [
+            "Lateral",
+            "Oído interno",
+            "Apófisis cigomática",
+            "Fosa mandibular",
+            "ATM",
+            "Apófisis mastoides",
+            "Inserción ECM"
+          ]
+        },
+        {
+          "titulo": "Hueso parietal",
+          "contenido": "Hueso par. Forma heterogénea: al juntarse (osificación) cada núcleo llevaba un ritmo diferente.",
+          "conceptos_clave": ["Par", "Osificación"]
+        },
+        {
+          "titulo": "Hueso etmoides",
+          "contenido": "Hueso impar. Se ubica en la línea media en la parte anterior del cráneo. Las láminas cribosas están atravesadas por fibras nerviosas que forman el nervio olfatorio. De la lámina cribosa se proyecta hacia arriba la apófisis crista galli (donde se insertan las meninges, capas de tejido conectivo que protegen el SNC). Hacia abajo se proyecta la lámina perpendicular, que forma parte del tabique nasal.",
+          "conceptos_clave": [
+            "Impar",
+            "Láminas cribosas",
+            "Nervio olfatorio",
+            "Crista galli",
+            "Tabique nasal"
+          ]
+        },
+        {
+          "titulo": "Huesos de la cara: maxilar",
+          "contenido": "Hueso par: se ha fusionado en la línea media y no permite movimiento, se considera impar. Ambos huesos maxilares se unen para formar el maxilar superior. La apófisis alveolar del maxilar es un arco que contiene los alvéolos para los dientes superiores.",
+          "conceptos_clave": ["Maxilar superior", "Apófisis alveolar", "Dientes superiores"]
+        },
+        {
+          "titulo": "Hueso cigomático (malar)",
+          "contenido": "Los dos huesos cigomáticos o malares conforman las prominencias de las mejillas (PÓMULOS). Se articulan con la apófisis cigomática del hueso temporal formando el arco cigomático.",
+          "conceptos_clave": ["Malar", "Pómulos", "Arco cigomático"]
+        },
+        {
+          "titulo": "Mandíbula",
+          "contenido": "Es el ÚNICO HUESO MÓVIL de todos los que forman el macizo craneofacial. Tiene dos ramas: horizontal y vertical. Cada rama vertical tiene un cóndilo, que se articula con la fosa mandibular del temporal formando la ATM. La apófisis alveolar contiene los alvéolos para los dientes inferiores. Ángulo mandibular con las glándulas parótidas (exocrinas).",
+          "conceptos_clave": [
+            "Único hueso móvil",
+            "Cóndilo mandibular",
+            "ATM",
+            "Dientes inferiores",
+            "Parótidas"
+          ]
+        },
+        {
+          "titulo": "Hueso hioides",
+          "contenido": "Componente del esqueleto axial que NO se articula con ningún otro hueso. Ubicado en la porción anterior del cuello entre mandíbula y laringe. Sostiene la lengua.",
+          "conceptos_clave": ["No articula", "Cuello", "Sostiene lengua"]
+        },
+        {
+          "titulo": "Columna vertebral: introducción",
+          "contenido": "Formada por dos porciones: MÓVIL (7 cervicales, 12 torácicas, 5 lumbares). FIJA (sacro, cóccix).",
+          "conceptos_clave": ["Móvil", "Fija", "7C+12T+5L", "Sacro y cóccix"]
+        },
+        {
+          "titulo": "Cartílagos",
+          "contenido": "ESQUELETO CARTILAGINOSO: tejido resistente pero elástico, con capacidad de deformarse y volver a su posición original. En el feto la mayor parte del esqueleto es cartilaginoso. En el adulto solo persisten algunas estructuras: pabellón auricular, parte cartilaginosa de la nariz, cabeza (después se osifica), pivotes cartilaginosos de la costilla, anillos de cartílago de la tráquea, discos intervertebrales, meniscos, cartílago articular (recubriendo extremos de huesos largos). Su pérdida produce ARTROSIS.",
+          "conceptos_clave": [
+            "Resistente y elástico",
+            "Pabellón auricular",
+            "Discos intervertebrales",
+            "Meniscos",
+            "Cartílago articular",
+            "Artrosis"
+          ]
+        },
+        {
+          "titulo": "Tipos de huesos",
+          "contenido": "LARGOS. CORTOS: tarso, cigomático, carpo, rótula. PLANOS: occipital, parietal, frontal, costillas, esternón. IRREGULARES: cráneo, vértebras.",
+          "conceptos_clave": ["Largos", "Cortos", "Planos", "Irregulares"]
+        },
+        {
+          "titulo": "Articulaciones: clasificación",
+          "contenido": "Articulación = medio de unión entre dos huesos (o entre un diente y un hueso). SINARTROSIS: fibrosas (inmóviles). ANFIARTROSIS: cartilaginosas (semimóviles; ej. sínfisis del pubis: anterior, detrás de la vejiga, solo se abre en el parto). DIARTROSIS: sinoviales (muñeca, codo, hombro, cadera, rodilla, tobillo).",
+          "conceptos_clave": [
+            "Sinartrosis (fibrosas)",
+            "Anfiartrosis (cartilaginosas)",
+            "Diartrosis (sinoviales)",
+            "Sínfisis del pubis"
+          ]
+        },
+        {
+          "titulo": "Músculos: estructura macroscópica",
+          "contenido": "El músculo esquelético une dos huesos y desplaza un hueso hacia otro. Insertado en el esqueleto, se activa con la voluntad. Estructura: 1) CUERPO MUSCULAR (tejido muscular estriado). 2) TENDÓN (fibras colágenas para insertar el músculo en el hueso; soporta toda la fuerza y la transporta al hueso, ej. tendón de Aquiles). 3) APONEUROSIS (tendón especial aplanado, no unido a hueso, refuerza músculos grandes; ej. tejido conectivo que refuerza el abdomen, parte blanca del diafragma).",
+          "conceptos_clave": ["Cuerpo muscular", "Tendón", "Aponeurosis"]
+        },
+        {
+          "titulo": "Nomenclatura muscular",
+          "contenido": "Los músculos se nombran según: FORMA (trapecio), NÚMERO DE CUERPOS (bíceps), LOCALIZACIÓN (interóseo), ACCIÓN (elevador de la escápula), INSERCIONES (esternocleidomastoideo).",
+          "conceptos_clave": ["Forma", "Número", "Localización", "Acción", "Inserciones"]
+        },
+        {
+          "titulo": "Accidentes anatómicos óseos",
+          "contenido": "Faceta: superficie articular aplanada, pequeña y circunscrita. Fóvea: pequeña depresión. Cóndilo: eminencia articular convexa y lisa. Fosa: excavación ancha. Surco: depresión alargada. Incisura: depresión o escotadura. Hiato: apertura alargada. Proceso: proyección ósea. Espina: proyección puntiaguda. Tuberosidad: eminencia rugosa. Tubérculo: proyección pequeña y roma. Trocánter: proyección en epífisis proximal del fémur. Cresta: proyección ósea alargada. Línea: proyección ósea alargada de escasa elevación. Epicóndilo: elevación proximal al cóndilo. Cabeza: superficie articular en epífisis. Foramen: agujero óseo. Canal: túnel de paredes óseas. Tróclea: superficie en forma de polea. Cavidad glenoidea: superficie cóncava semiovalada.",
+          "conceptos_clave": [
+            "Vocabulario óseo",
+            "Cóndilo",
+            "Tróclea",
+            "Trocánter",
+            "Foramen",
+            "Glenoides"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "numero": "Tema 4",
+      "titulo": "Columna vertebral y tórax",
+      "descripcion": "Columna vertebral/espina dorsal/raquis. Estructura ósea, músculos, caja torácica y diafragma.",
+      "secciones": [
+        {
+          "titulo": "Columna vertebral: generalidades",
+          "contenido": "Espina dorsal = plano posterior. Raquis = conducto en el medio ocupado por la médula espinal. 33 vértebras en 5 regiones. MÓVIL: 7 cervicales, 12 dorsales/torácicas, 5 lumbares. INMÓVIL (movimiento muy reducido): 5 sacras (1 sacro), 4 coxígeas (1 cóccix).",
+          "conceptos_clave": [
+            "33 vértebras",
+            "7C + 12T + 5L + 5S + 4Co",
+            "Móvil vs inmóvil",
+            "Raquis"
+          ]
+        },
+        {
+          "titulo": "Vértebra tipo",
+          "contenido": "Agujero vertebral: canal para proteger la médula espinal (el cráneo protege al encéfalo). Parte posterior con 3 apófisis: normalmente se insertan músculos (una espinosa y dos transversas).",
+          "conceptos_clave": ["Agujero vertebral", "Apófisis espinosa", "Apófisis transversas"]
+        },
+        {
+          "titulo": "C1: Atlas",
+          "contenido": "Primera vértebra, diferente a todas. Tiene dos carillas articulares muy marcadas. El atlas presenta carillas articulares para articularse con los cóndilos occipitales (hueso occipital), formando la articulación atlanto-occipital.",
+          "conceptos_clave": ["C1", "Sin cuerpo", "Atlanto-occipital", "Cóndilos occipitales"]
+        },
+        {
+          "titulo": "C2: Axis y articulación atlanto-axoidea",
+          "contenido": "El axis presenta una especie de 'pestillo de seguridad': apófisis odontoides del axis (de C2). No se fía de las carillas articulares de C1 ni de las suyas propias, lanza a C1 este pestillo para acabar de reforzarlo. Esto es la articulación atlanto-axoidea.",
+          "conceptos_clave": ["C2", "Apófisis odontoides", "Pestillo de seguridad", "Atlanto-axoidea"]
+        },
+        {
+          "titulo": "Columna torácica (dorsal)",
+          "contenido": "Las vértebras que más se asemejan a la forma básica son las vértebras torácicas (dorsales): T1-T12. Dado que se articulan las costillas, el esternón se va alejando del plano medio. RASGO PROPIO: las apófisis transversas presentan CARILLAS ARTICULARES LATERALES para las costillas en inserción posterior.",
+          "conceptos_clave": ["T1-T12", "Carillas costales", "Costillas"]
+        },
+        {
+          "titulo": "Evolución morfológica: cervical-dorsal-lumbar",
+          "contenido": "El cuerpo vertebral va aumentando: cervical (pequeño cuerpo), dorsal (medio), lumbar (grande). Cuanto mayor sea el agujero raquídeo, menor será el cuerpo vertebral. La médula, desde que desciende, se va estrechando porque quedan menos territorios que llevar impulso motor. La lumbar tiene que aguantar mucho peso y quedan menos estructuras que inervar. La cervical soporta poco peso (solo cráneo y contenido), por eso su cuerpo se ha atrofiado y tiene un espacio raquídeo elevado.",
+          "conceptos_clave": ["Progresión de tamaño", "Peso soportado", "Territorio nervioso"]
+        },
+        {
+          "titulo": "Sacro",
+          "contenido": "COLUMNA VERTEBRAL SACRA: INMÓVIL. El sacro es el resultado de la fusión de las 5 vértebras sacras. Junto con los huesos coxales forma la PELVIS. Transmite y distribuye el peso del cuerpo a los MMII. Las crestas posteriores resultan de la fusión de las diferentes apófisis. El conducto vertebral se denomina conducto sacro. Sacro + 2 coxales = pelvis. Los 2 coxales (hueso plano equivalente a la escápula): ilion (pala ilíaca) x2, isquion, pubis. Pelvis: estructura ósea que aloja la cavidad pélvica. Planos: anterior (vejiga), medio (útero), posterior (recto).",
+          "conceptos_clave": [
+            "Fusión de 5 sacras",
+            "Pelvis = sacro + 2 coxales",
+            "Ilion, isquion, pubis",
+            "Transmite peso a MMII"
+          ]
+        },
+        {
+          "titulo": "Cóccix",
+          "contenido": "Constituido por un número variable de vértebras atrofiadas (de 3 a 5). Resto de la cola de cuando éramos primates, parte de la evolución.",
+          "conceptos_clave": ["3-5 vértebras", "Atrofiadas", "Evolutivo"]
+        },
+        {
+          "titulo": "Funciones de la columna vertebral",
+          "contenido": "1) Sostener la cabeza y proteger la médula espinal. 2) Proporciona un eje rígido (tejido óseo) y flexible (discos). 3) Soporta y distribuye el peso del cuerpo. 4) Mantener la postura.",
+          "conceptos_clave": ["Sostén", "Protección", "Rígido y flexible", "Postura"]
+        },
+        {
+          "titulo": "Caja torácica: parte ósea",
+          "contenido": "Función: alojar y proteger a los órganos torácicos. Componentes: 1) Esternón (anterior). 2) Cartílagos costales. 3) Costillas (12 pares). 4) 12 vértebras torácicas (posterior). Los MÚSCULOS se INSERTAN; los HUESOS se ARTICULAN.",
+          "conceptos_clave": ["Esternón", "Costillas", "Cartílagos", "Vértebras torácicas"]
+        },
+        {
+          "titulo": "Esternón",
+          "contenido": "Hueso impar aplanado, donde se articulan las costillas. Partes: MANUBRIO (parte superior), CUERPO, APÉNDICE XIFOIDES (donde se inserta el diafragma y los rectos anteriores del abdomen). En el borde costal presenta escotaduras para las costillas.",
+          "conceptos_clave": ["Manubrio", "Cuerpo", "Xifoides", "Escotaduras costales"]
+        },
+        {
+          "titulo": "Costillas: clasificación",
+          "contenido": "12 pares. 1-7 VERDADERAS o esternales: llegan al esternón con cartílago costal propio. 8-10 FALSAS: se insertan en el esternón, pero carecen de cartílago costal propio (usan el de las verdaderas). 11-12 FLOTANTES: no se unen al esternón, solo se insertan en el cuerpo vertebral dorsal. La costilla se une al cartílago costal (anterior) y a las vértebras (posterior). En la articulación posterior no tienen cartílago (carillas); en la anterior tienen cartílago para permitir el movimiento de ventilación.",
+          "conceptos_clave": [
+            "Verdaderas 1-7",
+            "Falsas 8-10",
+            "Flotantes 11-12",
+            "Cartílago anterior"
+          ]
+        },
+        {
+          "titulo": "Pectoral mayor",
+          "contenido": "Músculo par, muy grande. Plano anterior a la caja torácica. 4 puntos de inserción: parte interna de la clavícula, esternón, costillas (inserciones proximales), al húmero (inserción distal). Tiene 2 funciones dependiendo del punto fijo: 1) Inserciones proximales fijas → actúa sobre el brazo acercándolo a la línea media (ADUCTOR). 2) Inserción distal fija (húmero) → actúa sobre clavícula, esternón y costillas. Acción de 'salir de la piscina con los brazos'.",
+          "conceptos_clave": [
+            "4 inserciones",
+            "Aductor del brazo",
+            "Agonista del dorsal ancho"
+          ]
+        },
+        {
+          "titulo": "Pectoral menor",
+          "contenido": "Plano profundo. Va de la escápula (apófisis coracoides) a las costillas superiores. Funciones según punto fijo: 1) Costillas fijas → descenso de la escápula (hombro). 2) Hombro fijo → músculo INSPIRATORIO (eleva costillas, aumenta capacidad torácica). NO participa en la espiración.",
+          "conceptos_clave": ["Profundo", "Apófisis coracoides", "Inspiratorio"]
+        },
+        {
+          "titulo": "Músculos intercostales",
+          "contenido": "Musculatura respiratoria. Espacio intercostal contiene arteria intercostal y vena intercostal.",
+          "conceptos_clave": ["Respiratorios", "Arteria y vena intercostal"]
+        },
+        {
+          "titulo": "Diafragma",
+          "contenido": "Músculo muy importante y singular. Frontera anatómica entre tórax y abdomen. Forma de paracaídas (cúpula diafragmática). INSERCIONES: apófisis xifoides del esternón, columna lumbar (6 costillas inferiores), pilares diafragmáticos (L3-L4). FUNCIÓN: se CONTRAE Y APLANA EN LA INSPIRACIÓN (pilares estiran, desciende, aumenta volumen torácico, introduce aire, separa costillas). Se RELAJA Y ELEVA EN LA ESPIRACIÓN. Presenta HIATOS (orificios), como el hiato esofágico (hernia de hiato).",
+          "conceptos_clave": [
+            "Frontera tórax-abdomen",
+            "Cúpula",
+            "Inspiración",
+            "Espiración",
+            "Hiato esofágico"
+          ]
+        },
+        {
+          "titulo": "Inervación del diafragma",
+          "contenido": "Nervio que lleva el impulso motor al músculo: nervios FRÉNICOS (uno para cada hemidiafragma). HIPO INCOERCIBLE: hiperestimulación de los nervios frénicos (por cirugías cardiacas/digestivas). Contracción involuntaria del diafragma, sale aire brusco por la tráquea con un sonido que no controlamos.",
+          "conceptos_clave": ["Nervio frénico", "Hipo incoercible"]
+        },
+        {
+          "titulo": "Parte torácica posterior: trapecio",
+          "contenido": "Por su número indica la forma: dos trapecios forman 1 trapecio. Inserción en apófisis espinosas de vértebras cervicales y torácicas; escápula. Funciones: elevar la escápula (hombro), lateralizar la cabeza. Tomando costillas como punto fijo: ASCIENDE la escápula. Músculo ANTAGONISTA del pectoral menor (que la desciende).",
+          "conceptos_clave": ["Plano superficial", "Antagonista del pectoral menor", "Eleva escápula"]
+        },
+        {
+          "titulo": "Dorsal ancho (gran dorsal)",
+          "contenido": "Músculo AGONISTA del pectoral mayor. Apófisis espinosas que les deja libre el trapecio; acerca los MMSS al plano medio. Zona blanca = aponeurosis del dorsal ancho.",
+          "conceptos_clave": ["Agonista del pectoral mayor", "Aproxima MMSS al plano medio"]
+        },
+        {
+          "titulo": "Músculos profundos de la espalda",
+          "contenido": "Inserciones en la propia columna vertebral. LATERALES. MEDIALES: interespinosos (de apófisis espinosa a espinosa, unen vértebras); intertransversos (unen dos apófisis transversas). Muy importantes en la estación bípeda. TODOS SON EXTENSORES.",
+          "conceptos_clave": ["Laterales", "Interespinosos", "Intertransversos", "Extensores"]
+        },
+        {
+          "titulo": "Recto anterior del abdomen",
+          "contenido": "Va de la apófisis xifoides al pubis (pelvis). Muy fácil de romper: por eso tiene cada tantos cm un refuerzo aponeurótico (3 o 4). El ejercicio hipertrofia el músculo, no el tendón, por eso se marcan las bandas. Abdominales: punto fijo pelvis → estira xifoides; punto fijo tórax → mueve pelvis y piernas. Protege vísceras abdominales. Presión intraabdominal (contracción de rectos) se transmite a órganos huecos: estómago (vómito), recto (defecación), vejiga (orina), útero (parto). En el embarazo los rectos se separan (distienden). LÍNEA ALBA: banda aponeurótica vertical entre los dos rectos; se vuelve oscura por hiperpigmentación hormonal en los últimos meses de embarazo.",
+          "conceptos_clave": [
+            "Xifoides a pubis",
+            "Refuerzos aponeuróticos",
+            "Presión intraabdominal",
+            "Línea alba"
+          ]
+        },
+        {
+          "titulo": "Oblicuos y psoas ilíaco",
+          "contenido": "OBLICUOS (externo e interno): músculos AUXILIARES (AGONISTAS) a los rectos anteriores. PSOAS ILÍACO: antagonista de la musculatura profunda de la espalda. Dos vientres musculares recubriendo la pala ilíaca y los cuerpos vertebrales lumbares. Los dos se insertan en el mismo sitio distalmente: en el TROCÁNTER MENOR del fémur. Función (según punto fijo): con los fémures fijos, flexiona la columna vertebral.",
+          "conceptos_clave": [
+            "Oblicuos",
+            "Psoas ilíaco",
+            "Trocánter menor",
+            "Flexor columna"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "numero": "Tema 5",
+      "titulo": "Miembro superior",
+      "descripcion": "Huesos, músculos, vascularización e inervación del miembro superior.",
+      "secciones": [
+        {
+          "titulo": "Distribución de los huesos",
+          "contenido": "Brazo: hueso impar proximal largo (húmero). Antebrazo: dos huesos, lateral externo (radio) y medial interno (cúbito).",
+          "conceptos_clave": ["Húmero", "Radio lateral", "Cúbito medial"]
+        },
+        {
+          "titulo": "Clavícula",
+          "contenido": "Hueso par. Forma que recuerda a una S. Articula desde el esternón a la escápula (accidente anatómico: acromion). Función MUY IMPORTANTE: separar los miembros superiores del esqueleto axial (tronco). Evolución → separación de los MMSS → aumenta la capacidad torácica → más oxígeno al cerebro → acciones más complejas. Ejemplo clínico: agenesia de la clavícula (ausencia desde el nacimiento).",
+          "conceptos_clave": [
+            "Forma de S",
+            "Esternón a acromion",
+            "Separa MMSS del tronco",
+            "Agenesia"
+          ]
+        },
+        {
+          "titulo": "Escápula",
+          "contenido": "Hueso par y plano de forma triangular situado en la cara posterior del tórax. ACROMION: articula la clavícula. APÓFISIS CORACOIDES: se insertan el bíceps braquial y el pectoral menor. CAVIDAD GLENOIDEA: depresión para dar cabida a la cabeza del húmero (articulación del hombro).",
+          "conceptos_clave": [
+            "Triangular",
+            "Acromion",
+            "Coracoides",
+            "Cavidad glenoidea"
+          ]
+        },
+        {
+          "titulo": "Húmero: generalidades",
+          "contenido": "Hueso largo. Dos epífisis. Diáfisis revestida por la médula ósea con tejido hematopoyético.",
+          "conceptos_clave": ["Largo", "Dos epífisis", "Diáfisis con médula"]
+        },
+        {
+          "titulo": "Húmero: epífisis proximal",
+          "contenido": "Parte que se articula con la escápula para formar el hombro (articulación sinovial de las que mayor movilidad tienen). CABEZA DEL HÚMERO: estructura hemisférica lisa, articula con cavidad glenoidea. Rodeada por CUELLO ANATÓMICO (donde se fija la cápsula articular). TROQUÍTER (tuberosidad mayor) con corredera bicipital (aloja el tendón del bíceps). TROQUÍN (tuberosidad menor). En troquíter y troquín se insertan los 4 músculos del MANGUITO DE LOS ROTADORES: subescapular, supraespinoso, infraespinoso y redondo menor (función: rotación del hombro interna o medial, y externa o lateral). CUELLO QUIRÚRGICO: por debajo de la cabeza, línea sin relieve, ZONA MÁS DÉBIL, se rompe con mayor frecuencia (el cuello anatómico está protegido por la cápsula articular).",
+          "conceptos_clave": [
+            "Cabeza humeral",
+            "Cuello anatómico (protegido)",
+            "Troquíter y troquín",
+            "Manguito rotador",
+            "Cuello quirúrgico (zona débil)"
+          ]
+        },
+        {
+          "titulo": "Húmero: epífisis distal",
+          "contenido": "EPITRÓCLEA (medial): borde interno, accidente medial, 'golpe de la suegra'. EPITROCLEÍTIS o CODO DEL GOLFISTA. TRÓCLEA HUMERAL: hueso más radial del antebrazo, articulación con el cúbito. CÓNDILO HUMERAL: se articula con el radio. EPICÓNDILO (lateral): borde externo. EPICONDILITIS o CODO DEL TENISTA. Estructuras EPI (epitróclea y epicóndilo) NO tienen capacidad articulatoria: son puntos de inserción de la musculatura del antebrazo. Nervio cubital: desciende del plexo braquial, pasa por la zona del cubital.",
+          "conceptos_clave": [
+            "Epitróclea medial",
+            "Epicóndilo lateral",
+            "Tróclea (cúbito)",
+            "Cóndilo (radio)",
+            "Codo del golfista y del tenista"
+          ]
+        },
+        {
+          "titulo": "Radio",
+          "contenido": "Hueso lateral externo del antebrazo. Marcado por el dedo pulgar. Epífisis proximal: CABEZA del radio (muy redondeada, articula con el cóndilo humeral). TUBEROSIDAD BICIPITAL del radio en la diáfisis: punto de inserción del bíceps braquial. Epífisis distal: más ancha que la del cúbito, con APÓFISIS ESTILOIDES (inserción de músculos de la muñeca) y articulación con el ESCAFOIDES (hueso del carpo). En posición anatómica: eje pulgar-escafoides-radio (TRIPLE EJE).",
+          "conceptos_clave": [
+            "Lateral",
+            "Cabeza radial",
+            "Tuberosidad bicipital",
+            "Estiloides",
+            "Triple eje con escafoides"
+          ]
+        },
+        {
+          "titulo": "Cúbito",
+          "contenido": "Hueso más medial del antebrazo (en supinación en posición anatómica). Epífisis proximal articula con la tróclea humeral. Plano lateral en forma de 'llave inglesa' que bascula sobre la tróclea humoral. OLÉCRANON del cúbito: parte posterior de la 'llave inglesa' (fractura de codo = fractura del olécranon). Epífisis distal más estrecha, con APÓFISIS ESTILOIDES para inserción del músculo de la muñeca.",
+          "conceptos_clave": [
+            "Medial",
+            "Llave inglesa",
+            "Olécranon",
+            "Estiloides"
+          ]
+        },
+        {
+          "titulo": "Movimiento prono-supinación",
+          "contenido": "SUPINACIÓN: el radio se aleja de la línea media. Queda paralelo al cúbito (palmas hacia arriba). PRONACIÓN: el radio se acerca a la línea media. El cúbito queda quieto; el radio se monta encima del cúbito y se hace más medial.",
+          "conceptos_clave": ["Supinación", "Pronación", "Radio sobre cúbito"]
+        },
+        {
+          "titulo": "Huesos de la mano (27)",
+          "contenido": "8 HUESOS DEL CARPO: escafoides, semilunar, piramidal, pisiforme, trapecio, trapezoide, grande, ganchoso. 5 METACARPIANOS. 14 FALANGES: proximal, media y distal (todos los dedos 3, el pulgar 2). Caída: el pulgar hace hiperextensión, y como está articulado con el escafoides, este se rompe.",
+          "conceptos_clave": ["27 huesos", "8 carpo", "5 metacarpianos", "14 falanges"]
+        },
+        {
+          "titulo": "Músculos de la cintura escapular (hombro)",
+          "contenido": "Se insertan desde la escápula al troquíter y troquín del húmero. Son: 1) DELTOIDES (no forma parte del manguito). 2) Supraespinoso. 3) Infraespinoso. 4) Redondo mayor (no forma parte del manguito). 5) Redondo menor. 6) Subescapular.",
+          "conceptos_clave": ["Deltoides", "Manguito rotador", "Redondo mayor (fuera del manguito)"]
+        },
+        {
+          "titulo": "Deltoides",
+          "contenido": "Muy potente. Inserción: de la escápula a la diáfisis del húmero. FUNCIÓN: músculo ABD (abductor) del MMSS. Donde se pone la vacuna intramuscular. Antagonistas: plano anterior → pectoral mayor; plano posterior → dorsal ancho.",
+          "conceptos_clave": [
+            "Abductor del MMSS",
+            "Vacuna",
+            "Antagonistas: pectoral mayor y dorsal ancho"
+          ]
+        },
+        {
+          "titulo": "Músculos del brazo",
+          "contenido": "FLEXORES (compartimiento anterior): BÍCEPS BRAQUIAL (2 vientres: largo en parte superior de la cavidad glenoidea, corto en apófisis coracoides junto al pectoral menor; se insertan distalmente en la tuberosidad bicipital del radio → flexiona el antebrazo sobre el brazo). Músculo braquial. Músculo coracobraquial. EXTENSOR (compartimiento posterior): TRÍCEPS BRAQUIAL (inserción omóplato y parte posterior del húmero; 3 cuerpos fusionados se insertan distalmente en el olécranon del cúbito → extensor del antebrazo). REGLA: BÍCEPS va al radio, TRÍCEPS va al cúbito (por detrás).",
+          "conceptos_clave": [
+            "Bíceps braquial",
+            "Tríceps braquial",
+            "Bíceps al radio",
+            "Tríceps al cúbito"
+          ]
+        },
+        {
+          "titulo": "Músculos del antebrazo",
+          "contenido": "EPITRÓCLEA: se inserta la musculatura pronadora y la flexora de la mano. EPICÓNDILO y alrededores: se inserta la musculatura supinadora. Antebrazo plano posterior: extensión de la mano. Funciones: pronación, supinación, flexión, extensión.",
+          "conceptos_clave": ["Epitróclea: pronación y flexión", "Epicóndilo: supinación"]
+        },
+        {
+          "titulo": "Músculos de la mano",
+          "contenido": "MÚSCULO OPONENTE DEL PULGAR: lo opone a la palma de la mano. Nos diferencia de casi todos los animales. Función: aprehensión, 'pinza inteligente'. MÚSCULO ABDUCTOR DEL PULGAR: tabaquera anatómica (tendones ABD del pulgar).",
+          "conceptos_clave": ["Oponente del pulgar", "Aprehensión", "Tabaquera anatómica"]
+        },
+        {
+          "titulo": "Arterias del miembro superior",
+          "contenido": "Del VI salen arterias aportando O2 y nutrientes (todas las arterias salen del corazón). AORTA → CAYADO de la aorta → emergen TRONCOS SUPRAAÓRTICOS: 1) Tronco braquiocefálico (arteria carótida derecha + arteria subclavia derecha). 2) Arteria carótida izquierda. 3) Arteria subclavia izquierda. Arterias del MMSS: 1) Arteria subclavia (debajo de la clavícula; pulso subclavio). 2) Arteria axilar (hueco axilar, menor calibre). 3) Arteria humeral (húmero). 4) Al llegar a la flexura del codo se bifurca en arteria radial (discurre por canal radial) y arteria cubital. 5) Arterias palmares y digitales. Todas las arterias se alejan del corazón y bifurcan, disminuyendo su calibre.",
+          "conceptos_clave": [
+            "Aorta",
+            "Troncos supraaórticos",
+            "Subclavia → axilar → humeral",
+            "Radial y cubital"
+          ]
+        },
+        {
+          "titulo": "Venas del miembro superior",
+          "contenido": "Sangre periferia → corazón. Paralelas a las arterias. Las venas se originan en los tejidos con calibre muy pequeño y van confluyendo, aumentando su calibre y acercándose al corazón. SISTEMA VENOSO PROFUNDO: venas paralelas a las arterias. SISTEMA VENOSO SUPERFICIAL: bajo la grasa subcutánea, muy pegadas a la hipodermis (las venas que se ven, donde se extrae sangre). Empiezan en el dorso de la mano (donde se pone la vía). Doble sistema: parte externa (territorio radial) asciende VENA CEFÁLICA; parte interna (territorio cubital) asciende VENA BASÍLICA. Conexiones en la flexura del codo (por eso se saca sangre de ahí). Ascienden hasta drenar en la vena axilar (sistema profundo).",
+          "conceptos_clave": [
+            "Profundo paralelo a arterias",
+            "Superficial: cefálica (radial) y basílica (cubital)",
+            "Flexura del codo"
+          ]
+        },
+        {
+          "titulo": "Nervios del miembro superior",
+          "contenido": "Los nervios son normalmente mixtos (impulsos motores y sensibles). 1) NERVIO CUBITAL: pasa cerca de la epitróclea, al golpearlo estimula el dedo meñique y anular. 2) NERVIO RADIAL: se encarga del pulgar, canaliza el movimiento. 3) NERVIO MEDIANO: entre territorio radial y cubital. SÍNDROME DEL TÚNEL CARPIANO: atrapamiento del mediano (dolor y parestesias/hormigueo en territorio del mediano: índice, corazón y anular). Más frecuente en mujeres.",
+          "conceptos_clave": [
+            "Cubital (meñique y anular)",
+            "Radial (pulgar)",
+            "Mediano (túnel carpiano)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "numero": "Tema 6",
+      "titulo": "Miembro inferior",
+      "descripcion": "Huesos, músculos, vascularización e inervación del miembro inferior.",
+      "secciones": [
+        {
+          "titulo": "Distribución de los huesos del MMII",
+          "contenido": "Proximal: hueso plano irregular COXAL. Único, más largo del cuerpo humano: FÉMUR. Medial (interno): TIBIA. Lateral (externo): PERONÉ. Tarso. Metatarso. Falanges.",
+          "conceptos_clave": ["Coxal", "Fémur", "Tibia medial", "Peroné lateral"]
+        },
+        {
+          "titulo": "Coxal y pelvis",
+          "contenido": "2 COXALES + SACRO = PELVIS. El coxal tiene: ILION (más ancho, pala ilíaca), ISQUION (plano posterior), PUBIS (se aproxima a la línea media articulándose en la SÍNFISIS DEL PUBIS, con poco movimiento, se distiende en el parto). ACETÁBULO del coxal: depresión donde se articula la cabeza del fémur formando una diartrosis-sinovial (CADERA).",
+          "conceptos_clave": [
+            "Ilion",
+            "Isquion",
+            "Pubis",
+            "Sínfisis del pubis",
+            "Acetábulo",
+            "Cadera"
+          ]
+        },
+        {
+          "titulo": "Fémur",
+          "contenido": "Epífisis proximal: CABEZA (encaja en acetábulo → cadera); CUELLO QUIRÚRGICO (se rompe porque no tiene cápsula ni musculatura); CUELLO ANATÓMICO; apófisis: TROCÁNTER MAYOR (se insertan los glúteos, posterior) y TROCÁNTER MENOR (se inserta el psoas ilíaco, anterior). Epífisis distal: CÓNDILO MEDIAL o interno y CÓNDILO LATERAL o externo; se articulan con las mesetas tibiales. 2 cóndilos fémur + 2 mesetas tibiales + rótula = RODILLA. El peroné NO interviene en la articulación de la rodilla.",
+          "conceptos_clave": [
+            "Cabeza femoral",
+            "Cuello quirúrgico (frágil)",
+            "Trocánter mayor (glúteos)",
+            "Trocánter menor (psoas)",
+            "Cóndilos",
+            "Rodilla"
+          ]
+        },
+        {
+          "titulo": "Rótula (patela)",
+          "contenido": "Plano y par. SESAMOIDEO (aquellos incrustados en tendones) MÁS GRANDE. Se ha formado en el espesor del tendón del cuádriceps. Fijada por tendón del cuádriceps (extensor del muslo) y tendón rotuliano. Cara posterior articula con fémur: articulación fémoro-patelar. El tendón del cuádriceps, tras pasar la rótula, se llama TENDÓN ROTULIANO y se inserta en la diáfisis de la tibia. Cara anterior arañada/estriada (pasa el tendón). Cara posterior lisa (articula con fémur). Rodilla = unión de 2 articulaciones (peroné no interviene): fémoro-tibial (abajo) y fémoro-patelar (arriba).",
+          "conceptos_clave": [
+            "Sesamoideo más grande",
+            "Tendón cuádriceps → tendón rotuliano",
+            "Fémoro-tibial y fémoro-patelar"
+          ]
+        },
+        {
+          "titulo": "Tibia",
+          "contenido": "Hueso medial de la pierna. En la diáfisis se inserta el tendón rotuliano. Epífisis proximal: 2 mesetas con forma de haba, cubiertas por meniscos (cartílagos especiales), articulan con los cóndilos del fémur. Cara externa articula con el peroné por la parte lateral. Epífisis distal: MALÉOLOS del tobillo (articulación del tobillo: epífisis distal de tibia y peroné con astrágalo, hueso del tarso).",
+          "conceptos_clave": [
+            "Medial",
+            "Mesetas tibiales",
+            "Meniscos",
+            "Maléolo interno"
+          ]
+        },
+        {
+          "titulo": "Peroné",
+          "contenido": "Hueso lateral de la pierna. Sigue un curso paralelo a la tibia. Epífisis proximal (cabeza del peroné): articula con la tibia. NO INTERVIENE EN LA ARTICULACIÓN DE LA RODILLA. Parte externa. Epífisis distal: se ensancha y forma el MALÉOLO EXTERNO. Superficie articular para el astrágalo.",
+          "conceptos_clave": [
+            "Lateral",
+            "No interviene en rodilla",
+            "Maléolo externo"
+          ]
+        },
+        {
+          "titulo": "Huesos del pie: tarso",
+          "contenido": "ASTRÁGALO: se articula por arriba con los maléolos tibial y peroneo (articulación del tobillo). CALCÁNEO (talón): se articula por debajo del astrágalo, en contacto con el suelo. Se fija el TENDÓN DE AQUILES.",
+          "conceptos_clave": ["Astrágalo", "Calcáneo", "Tobillo", "Aquiles"]
+        },
+        {
+          "titulo": "Articulaciones de la pelvis y el hombro",
+          "contenido": "PELVIS → CADERA: articulación coxo-femoral (acetábulo del coxal + cabeza del fémur). HOMBRO: articulación gleno-humeral, tipo diartrosis sinovial (cápsula, líquido sinovial).",
+          "conceptos_clave": ["Cadera = coxo-femoral", "Hombro = gleno-humeral"]
+        },
+        {
+          "titulo": "Músculos de la pelvis",
+          "contenido": "PLANO ANTERIOR: PSOAS ILÍACO (descolgándose de las vértebras finales al trocánter menor del fémur). Función: FLEXIÓN DEL MUSLO. PLANO POSTERIOR: GLÚTEO MAYOR (músculo bestial; en abanico, tapiza la pala ilíaca, se inserta en el trocánter mayor del fémur y en la cresta ilíaca posterior; función: extensión del muslo y bipedestación). GLÚTEO MEDIANO y PIRAMIDAL (mismo plano; sale el nervio ciático bajo el piramidal). SÍNDROME CIÁTICO: compresión del nervio ciático (dolor intenso en territorio posterior, planta del pie, parte posterior del glúteo y pierna, parestesias). SÍNDROME PIRAMIDAL: más distal, por inflamación del músculo piramidal. Hernia discal lumbar V-sacra I puede pellizcar el nervio ciático. GLÚTEO MENOR: plano más profundo.",
+          "conceptos_clave": [
+            "Psoas (flexión muslo)",
+            "Glúteo mayor (extensión, bipedestación)",
+            "Piramidal",
+            "Ciático",
+            "Síndrome ciático"
+          ]
+        },
+        {
+          "titulo": "Músculos aductores",
+          "contenido": "Se originan en el pubis y se insertan en el fémur. Función: ACERCAN LA PIERNA AL PLANO MEDIO.",
+          "conceptos_clave": ["Pubis a fémur", "Aducción"]
+        },
+        {
+          "titulo": "Músculos del muslo",
+          "contenido": "Equivalente al húmero con bíceps. CUÁDRICEPS FEMORAL: 4 vientres: 1) RECTO ANTERIOR del cuádriceps (cara anterior del fémur). 2) VASTO EXTERNO. 3) CRURAL (vasto intermedio, no se ve, plano más interno). 4) VASTO INTERNO. Los 4 forman el tendón del cuádriceps → arañan la rótula → se insertan en la diáfisis de la tibia como tendón rotuliano. Función: EXTENSIÓN DE LA PIERNA (al revés del húmero, donde la flexión la hace la cara anterior).",
+          "conceptos_clave": [
+            "4 vientres",
+            "Extensor de la pierna",
+            "Tendón rotuliano"
+          ]
+        },
+        {
+          "titulo": "Sartorio",
+          "contenido": "Músculo más largo del cuerpo, con trayecto oblicuo. Forma de cinta. Funciones: 1) Dobla la pierna sobre el muslo. 2) Dobla el muslo sobre la pelvis. 3) Conduce el muslo en abducción y rotación externa.",
+          "conceptos_clave": ["Más largo", "Oblicuo", "Triple función"]
+        },
+        {
+          "titulo": "Triángulo de Scarpa",
+          "contenido": "'El de los toreros'. Lesión grave, muerte por hemorragia. Por ahí pasan: arteria femoral (desciende sangre), vena femoral (asciende sangre) y nervio femoral. En conjunto forman el PAQUETE VÁSCULO-NERVIOSO FEMORAL.",
+          "conceptos_clave": ["Vásculo-nervioso femoral", "Lesión grave", "Arteria-vena-nervio"]
+        },
+        {
+          "titulo": "Cara posterior del muslo: isquiotibiales",
+          "contenido": "BÍCEPS FEMORAL: flexión de la pierna sobre el muslo. Va del isquion a la tibia/peroné. Antagonistas: bíceps femoral (flexiona) y cuádriceps femoral (extiende) la pierna sobre el muslo. Detrás de la rodilla: HUECO POPLÍTEO, por donde pasa otro paquete vásculo-nervioso (arteria poplítea, vena poplítea y nervio poplíteo).",
+          "conceptos_clave": [
+            "Bíceps femoral (flexor)",
+            "Antagonista del cuádriceps",
+            "Hueco poplíteo"
+          ]
+        },
+        {
+          "titulo": "Músculos de la pierna",
+          "contenido": "CARA ANTERIOR: TIBIAL ANTERIOR (actúa sobre el pie, flexión del pie). CARA POSTERIOR: GASTROCNEMIOS o gemelos (interno/medial y externo/lateral) → forman el TENDÓN DE AQUILES (al calcáneo; si no lo tengo, no puedo caminar, por eso es un punto débil). SÓLEO (por debajo). Función: levantan el talón e inician la marcha.",
+          "conceptos_clave": [
+            "Tibial anterior",
+            "Gemelos",
+            "Sóleo",
+            "Aquiles",
+            "Iniciar marcha"
+          ]
+        },
+        {
+          "titulo": "Arterias del miembro inferior",
+          "contenido": "La sangre la lleva la aorta. Aorta abdominal a nivel de las últimas vértebras lumbares. BIFURCACIÓN ILÍACA: la aorta se bifurca en 2 ARTERIAS ILÍACAS COMUNES. ARTERIA ILÍACA EXTERNA → arteria femoral (se encaja en el triángulo de Scarpa). ARTERIA ILÍACA INTERNA o hipogástrica: lleva sangre a las estructuras pélvicas. Arteria vesical: va a la vejiga. La arteria femoral desciende, se hace posterior y se mete en el agujero poplíteo (ARTERIA POPLÍTEA): baja el calibre.",
+          "conceptos_clave": [
+            "Bifurcación ilíaca",
+            "Ilíaca externa → femoral",
+            "Ilíaca interna → pélvico",
+            "Poplítea"
+          ]
+        },
+        {
+          "titulo": "Venas del miembro inferior",
+          "contenido": "SISTEMA VENOSO PROFUNDO: paralelo a las arterias en trayecto y nombre. Venas plantares y digitales → venas tibial y peroneal → vena poplítea → vena femoral → vena ilíaca externa → vena ilíaca común → vena cava inferior → diafragma → aurícula derecha. También recibe la sangre de la vena ilíaca interna. SISTEMA VENOSO SUPERFICIAL: sistema safeno (dos grandes venas safenas: MAYOR/interno y MENOR/externo). Confluyen a nivel de la vena femoral. A veces se usa el sistema safeno para bypass (sobrepasar obstrucciones).",
+          "conceptos_clave": [
+            "Profundo paralelo",
+            "Safena mayor y menor",
+            "Bypass"
+          ]
+        },
+        {
+          "titulo": "Nervios del miembro inferior",
+          "contenido": "Nervio general motor. El NERVIO CIÁTICO es el NERVIO MÁS LARGO DEL ORGANISMO. Afecta al glúteo, parte posterior del muslo y planta del pie.",
+          "conceptos_clave": ["Ciático", "Más largo del organismo"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "numero": "Tema 7",
+      "titulo": "Anatomía del corazón",
+      "descripcion": "Capas, cavidades, vascularización e inervación cardíacas.",
+      "secciones": [
+        {
+          "titulo": "Generalidades del corazón",
+          "contenido": "Primera víscera. Tamaño: algo mayor que un puño cerrado. Peso: 280-340 g (varones), 230-280 g (mujeres). Localización: tórax, de forma oblicua, entre los pulmones, ligeramente apoyado en diafragma. NO está en el plano medio (2/3 a la izquierda). El ápex cardiaco (punta) está ligeramente lateralizado a la izquierda. Función: llevar sangre rica en O2 y nutrientes a todos los tejidos, y oxigenar la sangre.",
+          "conceptos_clave": [
+            "Tórax oblicuo",
+            "2/3 a la izquierda",
+            "Ápex",
+            "Función dual"
+          ]
+        },
+        {
+          "titulo": "Doble circulación",
+          "contenido": "1) CIRCULACIÓN MAYOR O SISTÉMICA: impulsar sangre a los tejidos para aportar O2 y nutrientes. 2) CIRCULACIÓN MENOR O PULMONAR: impulsar sangre a los pulmones para eliminar CO2 y oxigenarla.",
+          "conceptos_clave": ["Mayor (sistémica)", "Menor (pulmonar)"]
+        },
+        {
+          "titulo": "Cámaras cardíacas",
+          "contenido": "4 cavidades: 2 aurículas y 2 ventrículos (izquierdas y derechas). En la vida embrionaria son 2 corazones; en el adulto se fusionan creando un tabique. No hay comunicación entre A y V (si la hay, es un soplo/agujero, evidencia de que teníamos 2 corazones). PARTE DERECHA: circulación menor o pulmonar. Sangre pobre en O2, rica en CO2. PARTE IZQUIERDA: sangre oxigenada.",
+          "conceptos_clave": [
+            "4 cavidades",
+            "Tabique",
+            "Derecha: pulmonar",
+            "Izquierda: sistémica"
+          ]
+        },
+        {
+          "titulo": "Recorrido de la sangre",
+          "contenido": "1) Vena cava inferior y superior → AURÍCULA DERECHA (sangre venosa, CO2). 2) Sangre desoxigenada entra al VENTRÍCULO DERECHO → se contrae → expulsa por la ARTERIA PULMONAR (se bifurca) a los pulmones. 3) Sangre se oxigena en los pulmones → vuelve al corazón por las VENAS PULMONARES. 4) 4 venas pulmonares vierten sangre en la AURÍCULA IZQUIERDA → empieza la circulación mayor. 5) VENTRÍCULO IZQUIERDO → se contrae → sangre oxigenada por la AORTA.",
+          "conceptos_clave": [
+            "Vena cava → AD → VD → arteria pulmonar → pulmones",
+            "Venas pulmonares → AI → VI → aorta"
+          ]
+        },
+        {
+          "titulo": "Principios clave (afirmaciones)",
+          "contenido": "Todas las arterias conducen sangre oxigenada: FALSO (la arteria pulmonar no). Todas las arterias salen del corazón: VERDADERO (todas son ramas de la aorta, que sale del VI). Todas las venas llevan sangre desoxigenada: FALSO (las venas pulmonares no). Todas las venas desembocan en el corazón: VERDADERO (vena cava en AD, vena pulmonar en AI).",
+          "conceptos_clave": [
+            "Arteria pulmonar: excepción",
+            "Venas pulmonares: excepción"
+          ]
+        },
+        {
+          "titulo": "Presión y dureza arterial",
+          "contenido": "Las arterias son más duras que las venas porque tienen que soportar una presión muy elevada, presión por VD y VI.",
+          "conceptos_clave": ["Arterias duras", "Alta presión"]
+        },
+        {
+          "titulo": "Histología del corazón: 3 capas",
+          "contenido": "Desde el punto de vista estructural, el corazón está constituido por 3 capas: 1) PERICARDIO (externa): membrana de tejido conjuntivo/conectivo con abundantes fibras de colágeno. Función: protección al corazón. Otros ejemplos de 'telillas': pleura (pulmones), peritoneo (órganos digestivos), meninges (SNC). 2) MIOCARDIO o músculo cardíaco (capa media): función BOMBEAR. Músculo estriado involuntario. Mayor requerimiento energético, sangre, O2 y glucosa. Más sensible a isquemia (IAM: Infarto Agudo de Miocardio). 3) ENDOCARDIO: capa interna y válvulas cardíacas.",
+          "conceptos_clave": [
+            "Pericardio (externo)",
+            "Miocardio (bombea)",
+            "Endocardio (interno)",
+            "IAM"
+          ]
+        },
+        {
+          "titulo": "Grosor del miocardio",
+          "contenido": "Pericardio y endocardio tienen mismo grosor. El MIOCARDIO es HETEROGÉNEO: el VI tiene mayor grosor que el VD porque el VI bombea a todo el cuerpo (contra gravedad, hasta 1 metro) y el VD solo a los pulmones. El grosor es proporcional a la presión necesaria.",
+          "conceptos_clave": ["Miocardio heterogéneo", "VI más grueso", "Presión"]
+        },
+        {
+          "titulo": "Válvulas cardíacas",
+          "contenido": "Las válvulas están formadas por endocardio. VÁLVULAS AURÍCULO-VENTRICULARES: VÁLVULA TRICÚSPIDE (comunica AD con VD); VÁLVULA MITRAL (AI con VI). VÁLVULAS SEMILUNARES: VÁLVULA AÓRTICA (VI con aorta); VÁLVULA PULMONAR (VD con tronco pulmonar).",
+          "conceptos_clave": [
+            "Tricúspide (derecha)",
+            "Mitral (izquierda)",
+            "Aórtica (VI→aorta)",
+            "Pulmonar (VD→tronco)"
+          ]
+        },
+        {
+          "titulo": "Ciclo cardiaco",
+          "contenido": "SÍSTOLE = contracción (expulsión). DIÁSTOLE = relajación (llenado). En reposo 60 lpm; deporte ~160 lpm. Dos aurículas se llenan y contraen a la vez (sístole auricular) → expulsan a ventrículos (diástole ventricular) → ventrículos llenos se contraen, sangre sale por válvula pulmonar (derecha) y aórtica (izquierda) (sístole ventricular) → aurículas se llenan de sangre (diástole auricular). LAS SÍSTOLES NO PUEDEN COINCIDIR (soltarían aire).",
+          "conceptos_clave": [
+            "Sístole y diástole",
+            "Auricular y ventricular no coinciden"
+          ]
+        },
+        {
+          "titulo": "Sistema de conducción cardíaca",
+          "contenido": "Inervación propia, autónoma, por fibras miocárdicas especializadas. NÓDULO SINUSAL: en AD a la altura de la desembocadura de la cava superior. MARCAPASOS NATURAL: autoexcita y produce impulso nervioso. El impulso se propaga: 1) Miocardio auricular → sístole auricular. 2) Poco después llega a los ventrículos vía NAV. NÓDULO AURICULOVENTRICULAR (NAV): en el septo interauricular. Retrasa la transmisión del impulso a los ventrículos para facilitar su llenado (diástole ventricular). Por eso las sístoles no coinciden. HAZ DE HIS: continuación del NAV, llega al tabique interventricular y se divide en rama izquierda y derecha. RED DE PURKINJE: los dos troncos se ramifican para llegar a todo el espesor de los ventrículos.",
+          "conceptos_clave": [
+            "Nódulo sinusal (marcapasos)",
+            "NAV (retrasa)",
+            "Haz de His",
+            "Red de Purkinje"
+          ]
+        },
+        {
+          "titulo": "Nervios cardíacos (SNA)",
+          "contenido": "Proceden del SISTEMA NERVIOSO AUTÓNOMO (simpático y parasimpático). SIMPÁTICO: TAQUICARDIA (aumenta frecuencia: susto, deporte). PARASIMPÁTICO: BRADICARDIA (disminuye frecuencia: tranquilo, relajado, leyendo). Ambos son autónomos (la excitación no se controla).",
+          "conceptos_clave": ["Simpático → taquicardia", "Parasimpático → bradicardia"]
+        },
+        {
+          "titulo": "Vascularización arterial del corazón",
+          "contenido": "O2 y glucosa en sangre. Antes de llegar a los troncos supraaórticos, la aorta da las ARTERIAS CORONARIAS (derecha e izquierda). Se obstruyen en un infarto. Se bifurcan y llevan sangre al pericardio, gran parte al miocardio, y un poco a las válvulas (endocardio). LAS PRIMERAS ARTERIAS QUE SALEN DE LA AORTA SON LAS CORONARIAS, y después los troncos supraaórticos.",
+          "conceptos_clave": [
+            "Coronarias (primeras)",
+            "Después troncos supraaórticos",
+            "Infarto"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "numero": "Tema 8",
+      "titulo": "Grandes vasos arteriales",
+      "descripcion": "Estructura, clasificación, localización y distribución general de las arterias.",
+      "secciones": [
+        {
+          "titulo": "Concepto de arteria",
+          "contenido": "Son conductos ELÁSTICOS Y CONTRÁCTILES que transportan la sangre desde el corazón hacia los tejidos.",
+          "conceptos_clave": ["Elásticas", "Contráctiles", "Corazón a tejidos"]
+        },
+        {
+          "titulo": "Estructura arterial: 3 capas",
+          "contenido": "1) TÚNICA EXTERNA: tejido conjuntivo/conectivo que, envolviendo las arterias, contiene los vasos y nervios de la arteria. Las pequeñas arterias no la presentan, solo las grandes arterias para nutrirlas. Vasoconstricción o vasodilatación mediadas por los nervios. 2) TÚNICA O CAPA MEDIA (IMPORTANTE): tejido muscular liso fuera del movimiento voluntario. Importante porque le da la rigidez a la arteria, sino no aguantaría la presión elevada del VI. Flexible pero dura. 3) TÚNICA INTERNA O ÍNTIMA: endotelio. Forma una capa continua que IMPIDE LA COAGULACIÓN SANGUÍNEA. Cuando el endotelio se rompe se activa la coagulación. Cristal de colesterol → 'rotura' del endotelio → tromboembolismo.",
+          "conceptos_clave": [
+            "Túnica externa (conjuntiva)",
+            "Túnica media (muscular lisa)",
+            "Túnica íntima (endotelio)",
+            "Tromboembolismo"
+          ]
+        },
+        {
+          "titulo": "Relación estructura-función",
+          "contenido": "Las arterias tienen una capa muscular muy desarrollada para soportar la presión del VI. Las arterias se van bifurcando, bajando el calibre, y la capa muscular se hace cada vez más delgada. No aguanta la misma presión la subclavia que las digitales. Dado que las arterias más alejadas no tienen que soportar tanta presión, la capa muscular se adelgaza.",
+          "conceptos_clave": [
+            "Capa muscular proporcional a presión",
+            "Disminuye con el calibre"
+          ]
+        },
+        {
+          "titulo": "Capilares",
+          "contenido": "Capilar = una hilera de células endoteliales. Son MICROSCÓPICOS (5 a 30 micras). NO tienen capa muscular ni externa, ya que tienen que hacer intercambio (capas típicas de los vasos de conducción). Comunican ARTERIOLAS con VÉNULAS. Carecen de capa media y externa para poder llevar a cabo el intercambio de gases y moléculas como la glucosa.",
+          "conceptos_clave": [
+            "Células endoteliales",
+            "5-30 micras",
+            "Arteriola a vénula",
+            "Intercambio"
+          ]
+        },
+        {
+          "titulo": "Tejidos avasculares",
+          "contenido": "Las arterias se encuentran repartidas por todo el organismo, EXCEPTO en: cartílago, córnea, cristalino, epidermis, uñas, cabello y faneras.",
+          "conceptos_clave": [
+            "Avasculares",
+            "Cartílago, córnea, cristalino, epidermis, uñas, cabello"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "numero": "Tema 9",
+      "titulo": "Grandes vasos venosos y linfáticos",
+      "descripcion": "Estructura y distribución general de venas y sistema linfático.",
+      "secciones": [
+        {
+          "titulo": "Concepto de vena",
+          "contenido": "Son conductos que transportan la sangre desde los tejidos hacia el corazón. Volver la sangre cargada de CO2 al corazón (aurícula derecha). RETORNO VENOSO = venas. DIFERENCIA: NO presentan pulsaciones. Los pulsos son manifestaciones de la sístole ventricular izquierda. Las venas no soportan la presión del VI (la amortiguan las arterias). Su capa media no es tan gruesa. Las arterias sangran brutalmente pero intermitentemente; las venas sangran 'EN SÁBANA' (homogéneamente).",
+          "conceptos_clave": [
+            "Retorno venoso",
+            "No pulsan",
+            "Sangran en sábana"
+          ]
+        },
+        {
+          "titulo": "Estructura de la vena: 3 capas",
+          "contenido": "La pared está formada por tres capas o túnicas: 1) CAPA EXTERNA O ADVENTICIA: de naturaleza conjuntiva. 2) CAPA MEDIA: de naturaleza muscular, MUCHO MÁS DELGADA que la de las arterias. 3) CAPA INTERNA O ÍNTIMA: constituida por endotelio.",
+          "conceptos_clave": ["Adventicia", "Media delgada", "Íntima (endotelio)"]
+        },
+        {
+          "titulo": "Válvulas venosas",
+          "contenido": "Son REPLIEGUES DEL ENDOTELIO que obstruyen periódicamente la luz venosa. Si la sangre se remansa, las válvulas se cierran; al volver a abrirse, la impulsan. Las válvulas suelen tener 2 bordes (valvas): uno adherido a la pared venosa (endotelio) y otro libre orientado al corazón. Elemento característico de algunas venas, como las pequeñas venas de los dedos de las piernas (muy lejos de la AD y contra gravedad). SU NÚMERO AUMENTA CON LA DISMINUCIÓN DE CALIBRE. Las GRANDES VENAS NO POSEEN VÁLVULAS (por el volumen de sangre que tienen): cava, femoral, subclavia, yugular.",
+          "conceptos_clave": [
+            "Repliegues del endotelio",
+            "Más válvulas en menor calibre",
+            "Grandes venas: sin válvulas"
+          ]
+        },
+        {
+          "titulo": "Tromboflebitis",
+          "contenido": "Enfermedad: TROMBOFLEBITIS (varices). El sistema valvular se inflama, normalmente en las piernas. Las venas pequeñas de los MMII presentan un repliegue endotelial llamado válvula para favorecer el retorno venoso.",
+          "conceptos_clave": ["Varices", "Inflamación valvular", "MMII"]
+        },
+        {
+          "titulo": "Clasificación de las venas",
+          "contenido": "1) VENAS PROFUNDAS: acompañan a los grandes vasos arteriales. El 80% del volumen es transportado por el sistema profundo. Ej: coronarias, yugulares. 2) VENAS SUPERFICIALES: son subcutáneas. Drenan a las venas profundas a través de las VENAS PERFORANTES. Ej: basílica (MS) y safena (MI). 3) VENAS VISCERALES: ej. hígado, pulmones.",
+          "conceptos_clave": [
+            "Profundas (80% volumen)",
+            "Superficiales",
+            "Viscerales",
+            "Perforantes"
+          ]
+        },
+        {
+          "titulo": "Sistema linfático: componentes",
+          "contenido": "Comprende: 1) LOS VASOS Y GANGLIOS LINFÁTICOS. 2) EL BAZO. 3) EL TIMO.",
+          "conceptos_clave": ["Vasos linfáticos", "Ganglios", "Bazo", "Timo"]
+        },
+        {
+          "titulo": "Vasos linfáticos",
+          "contenido": "Son conductos que transportan LINFA: líquido claro que contiene abundantes linfocitos. Los vasos linfáticos DRENAN EN EL SISTEMA VENOSO. Estructura: ÍNTIMA formada por endotelio con repliegues que forman las VÁLVULAS; MEDIA es tejido muscular; EXTERNA es tejido conjuntivo. Los vasos linfáticos presentan ENSANCHAMIENTOS llamados GANGLIOS LINFÁTICOS.",
+          "conceptos_clave": [
+            "Linfa",
+            "Linfocitos",
+            "Drenan al sistema venoso",
+            "Ganglios linfáticos"
+          ]
+        }
+      ]
+    }
+  ]
+}

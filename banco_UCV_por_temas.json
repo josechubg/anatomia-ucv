@@ -1,0 +1,1052 @@
+{
+  "metadata": {
+    "titulo": "Banco Anatomía UCV - Por temas",
+    "asignatura": "Anatomía Humana y Funcional",
+    "universidad": "Universidad Católica de Valencia San Vicente Mártir",
+    "estilo_explicaciones": "Una línea por opción: ✅ correcta con razón breve + ❌ falsas aclarando qué son realmente",
+    "total_preguntas": 90,
+    "temas": [
+      "Tema 1: Histología humana",
+      "Tema 2: Conceptos generales de anatomía",
+      "Tema 3: Aparato locomotor",
+      "Tema 4: Columna vertebral y tórax",
+      "Tema 5: Miembro superior",
+      "Tema 6: Miembro inferior",
+      "Tema 7: Anatomía del corazón",
+      "Tema 8: Grandes vasos arteriales",
+      "Tema 9: Grandes vasos venosos y linfáticos"
+    ]
+  },
+  "preguntas": [
+    {
+      "id": 1,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Cuál es la función del tejido conectivo?",
+      "opciones": [
+        "Solo transportar oxígeno",
+        "Formar los huesos únicamente",
+        "Generar fibras proteicas como colágeno y elastina",
+        "Ninguna de las anteriores"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Colágeno y elastina**: los fibroblastos las producen para dar soporte y elasticidad.\n❌ Solo O2: esa es función de la sangre (conectivo líquido), no del tejido en general.\n❌ Solo huesos: el tejido conectivo incluye muchos más (sangre, adiposo, cartílago...).\n❌ Ninguna: la opción c es correcta."
+    },
+    {
+      "id": 2,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Cuál es el único tejido conectivo líquido?",
+      "opciones": ["El hígado", "La sangre", "El músculo", "El riñón"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Sangre**: tejido conectivo con matriz líquida (plasma) y células.\n❌ Hígado: órgano glandular, no tejido conectivo líquido.\n❌ Músculo: tejido muscular, no conectivo.\n❌ Riñón: órgano excretor, no un tejido."
+    },
+    {
+      "id": 3,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Qué órganos NO tienen epitelio?",
+      "opciones": ["Hígado y corazón", "Piel y estómago", "Pulmones e intestino", "Vejiga y uréteres"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Hígado y corazón**: son las excepciones, no tienen epitelio.\n❌ Piel y estómago: ambos tienen epitelio (piel estratificado, estómago simple).\n❌ Pulmones e intestino: ambos están tapizados por epitelio.\n❌ Vejiga y uréteres: epitelio urotelial (transicional)."
+    },
+    {
+      "id": 4,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Cuál es la función de la queratina en la epidermis?",
+      "opciones": ["Dar elasticidad", "Impermeabilizar", "Nutrir la piel", "Protección solar"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Impermeabilizar**: la queratina crea barrera contra pérdida de agua.\n❌ Elasticidad: función del colágeno en la dermis.\n❌ Nutrir: los nutrientes llegan por vasos de la dermis (epidermis no tiene vasos).\n❌ Protección solar: la hace la melanina, no la queratina."
+    },
+    {
+      "id": 5,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Cuál es la función del colágeno en la dermis?",
+      "opciones": ["Impermeabilidad", "Elasticidad", "Producir melanina", "Protección solar"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Elasticidad**: el colágeno da elasticidad y resistencia.\n❌ Impermeabilidad: la hace la queratina de la epidermis.\n❌ Producir melanina: la producen los melanocitos, no el colágeno.\n❌ Protección solar: la hace la melanina frente a UV."
+    },
+    {
+      "id": 6,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Qué células producen la melanina?",
+      "opciones": ["Fibroblastos", "Adipocitos", "Melanocitos", "Miocitos"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Melanocitos**: producen melanina en la interfase epidermis-dermis.\n❌ Fibroblastos: producen colágeno y elastina.\n❌ Adipocitos: células de grasa en la hipodermis.\n❌ Miocitos: células musculares."
+    },
+    {
+      "id": 7,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Qué tipo de músculo forma el miocardio?",
+      "opciones": [
+        "Músculo liso involuntario",
+        "Músculo esquelético voluntario",
+        "Músculo estriado de movimiento involuntario",
+        "Músculo liso voluntario"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Estriado involuntario**: tiene estrías como el esquelético pero escapa a la voluntad.\n❌ Liso involuntario: propio de vísceras (intestino, vasos), no del corazón.\n❌ Esquelético voluntario: se inserta en hueso y se controla (ej. bíceps).\n❌ Liso voluntario: no existe, el liso siempre es involuntario."
+    },
+    {
+      "id": 8,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Dónde se vierte el producto de una glándula endocrina?",
+      "opciones": [
+        "A la superficie de la piel",
+        "A la sangre",
+        "A una estructura hueca",
+        "Al conducto glandular"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **A la sangre**: las endocrinas vierten hormonas directamente al torrente.\n❌ Piel: eso lo hacen exocrinas (sebáceas, sudoríparas).\n❌ Estructura hueca: destino de exocrinas (digestivas al intestino).\n❌ Conducto: característico de exocrinas, no endocrinas."
+    },
+    {
+      "id": 9,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Qué órgano es un ejemplo de glándula mixta?",
+      "opciones": ["Tiroides", "Hígado", "Páncreas", "Glándula sudorípara"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Páncreas**: insulina (endocrina) + enzimas digestivas (exocrina).\n❌ Tiroides: solo endocrina (tiroxina a la sangre).\n❌ Hígado: produce bilis (exocrina), aunque tiene funciones metabólicas.\n❌ Sudorípara: solo exocrina (vierte sudor a la piel)."
+    },
+    {
+      "id": 10,
+      "tema": "Tema 1: Histología humana",
+      "pregunta": "¿Qué capa de la piel contiene el tejido adiposo?",
+      "opciones": ["Epidermis", "Dermis", "Hipodermis", "Todas las anteriores"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Hipodermis**: capa más profunda, formada por adipocitos.\n❌ Epidermis: capa superficial con queratina, sin grasa.\n❌ Dermis: tiene colágeno y estructuras (glándulas, folículos), no adiposo.\n❌ Todas: solo la hipodermis es adiposa."
+    },
+    {
+      "id": 11,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿Cuál NO es un requisito de la posición anatómica?",
+      "opciones": [
+        "Bipedestación o decúbito supino",
+        "Palmas mirando anteriormente",
+        "Ojos y pies dirigidos anteriormente",
+        "MMSS cruzados sobre el tórax"
+      ],
+      "respuesta_correcta": 3,
+      "explicacion": "✅ **MMSS cruzados**: NO es parte de la posición anatómica (deben estar extendidos).\n❌ Bipedestación o supino: sí son válidas como posiciones base.\n❌ Palmas anteriores: requisito clave de la posición anatómica.\n❌ Ojos y pies al frente: también requisito estándar."
+    },
+    {
+      "id": 12,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "El plano sagital divide al cuerpo en:",
+      "opciones": [
+        "Anterior y posterior",
+        "Mitades derecha e izquierda",
+        "Superior e inferior",
+        "Interno y externo"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Derecha e izquierda**: el sagital recorre el eje longitudinal.\n❌ Anterior/posterior: eso lo hace el plano coronal o frontal.\n❌ Superior/inferior: eso lo hace el plano transversal.\n❌ Interno/externo: no es un plano anatómico válido."
+    },
+    {
+      "id": 13,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿Qué afirmación es correcta sobre el plano medio?",
+      "opciones": [
+        "Todos los planos sagitales son medios",
+        "Todos los planos medios son sagitales",
+        "El plano medio es horizontal",
+        "El plano medio divide en anterior y posterior"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Todo medio es sagital**: el medio es un sagital específico (pasa por el centro).\n❌ Todos los sagitales son medios: hay sagitales laterales al medio.\n❌ Horizontal: el medio es longitudinal, no horizontal.\n❌ Anterior/posterior: eso lo hace el coronal."
+    },
+    {
+      "id": 14,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "El plano coronal o frontal divide el cuerpo en:",
+      "opciones": [
+        "Derecha e izquierda",
+        "Superior e inferior",
+        "Anterior y posterior",
+        "Proximal y distal"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Anterior y posterior**: el coronal es longitudinal y perpendicular al sagital.\n❌ Derecha/izquierda: eso lo hace el sagital.\n❌ Superior/inferior: eso lo hace el transversal.\n❌ Proximal/distal: son términos de relación, no un plano."
+    },
+    {
+      "id": 15,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "El plano horizontal o transversal divide al cuerpo en:",
+      "opciones": [
+        "Anterior y posterior",
+        "Superior e inferior",
+        "Derecha e izquierda",
+        "Medial y lateral"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Superior e inferior**: el transversal cruza perpendicular al eje longitudinal.\n❌ Anterior/posterior: eso lo hace el coronal.\n❌ Derecha/izquierda: eso lo hace el sagital.\n❌ Medial/lateral: son términos de relación, no un plano."
+    },
+    {
+      "id": 16,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿Cuántas cavidades corporales existen?",
+      "opciones": ["2", "3", "4", "5"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **3**: craneal, torácica y abdominopélvica.\n❌ 2: faltaría una de las tres cavidades.\n❌ 4: se estaría dividiendo la abdominopélvica (pero no hay frontera anatómica).\n❌ 5: error numérico, son 3."
+    },
+    {
+      "id": 17,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿Qué estructura separa la cavidad torácica de la abdominopélvica?",
+      "opciones": ["Peritoneo", "Diafragma", "Mediastino", "Esternón"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Diafragma**: músculo en cúpula que separa tórax y abdomen.\n❌ Peritoneo: serosa que envuelve órganos abdominales.\n❌ Mediastino: región central del tórax (entre pulmones).\n❌ Esternón: hueso anterior del tórax, no separa cavidades."
+    },
+    {
+      "id": 18,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "En la región epigástrica, un dolor agudo puede sugerir:",
+      "opciones": ["Cólico biliar", "Pancreatitis", "Apendicitis", "Litiasis renal"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Pancreatitis**: dolor agudo epigástrico típico.\n❌ Cólico biliar: dolor en hipocondrio derecho (vesícula).\n❌ Apendicitis: dolor en fosa ilíaca derecha.\n❌ Litiasis renal: dolor lumbar (fosa lumbar)."
+    },
+    {
+      "id": 19,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿Qué órganos se encuentran en el hipocondrio derecho?",
+      "opciones": [
+        "Estómago y bazo",
+        "Hígado y vesícula biliar",
+        "Riñón derecho y ciego",
+        "Colon sigmoide"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Hígado y vesícula**: ocupan el hipocondrio derecho.\n❌ Estómago y bazo: están en hipocondrio izquierdo.\n❌ Riñón derecho: en fosa lumbar derecha; ciego en fosa ilíaca derecha.\n❌ Colon sigmoide: en fosa ilíaca izquierda."
+    },
+    {
+      "id": 20,
+      "tema": "Tema 2: Conceptos generales de anatomía",
+      "pregunta": "¿En qué región se sitúa el apéndice?",
+      "opciones": [
+        "Fosa ilíaca izquierda",
+        "Hipogastrio",
+        "Fosa ilíaca derecha",
+        "Epigastrio"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Fosa ilíaca derecha**: apéndice colgando del ciego.\n❌ Fosa ilíaca izquierda: ahí está el colon sigmoide.\n❌ Hipogastrio: vejiga y útero.\n❌ Epigastrio: estómago, páncreas."
+    },
+    {
+      "id": 21,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Cuáles son los 4 elementos necesarios para el movimiento?",
+      "opciones": [
+        "Huesos, tendones, nervios y sangre",
+        "Huesos, cartílagos, articulaciones y músculos",
+        "Músculos, ligamentos, articulaciones y arterias",
+        "Huesos, vasos, nervios y músculos"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Huesos + cartílagos + articulaciones + músculos**: los 4 componentes del aparato locomotor.\n❌ Tendones y nervios son estructuras complementarias, no los 4 básicos.\n❌ Ligamentos y arterias: importantes pero no forman los 4 pilares.\n❌ Vasos y nervios: dan soporte vascular y motor, no son locomotor."
+    },
+    {
+      "id": 22,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Cuáles son las partes de un hueso largo?",
+      "opciones": [
+        "Epífisis, diáfisis y metáfisis",
+        "Cabeza, cuello y cuerpo",
+        "Periostio, endostio y médula",
+        "Proximal, medial y distal"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Epífisis (extremos) + Diáfisis (centro) + Metáfisis (unión)**.\n❌ Cabeza, cuello y cuerpo: accidentes anatómicos concretos, no partes generales.\n❌ Periostio, endostio y médula: son capas/contenido, no partes anatómicas.\n❌ Proximal/medial/distal: términos de posición, no de estructura."
+    },
+    {
+      "id": 23,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Cuántos huesos forman el cráneo?",
+      "opciones": ["6", "8", "10", "12"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **8 huesos**: 2 pares (parietal, temporal) + 4 impares (frontal, etmoides, esfenoides, occipital).\n❌ 6: falta contar temporal y parietal como pares.\n❌ 10: se estarían contando huesos de la cara.\n❌ 12: incluye huesos que no forman el neurocráneo."
+    },
+    {
+      "id": 24,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Cuál es la función del foramen magno?",
+      "opciones": [
+        "Paso del nervio óptico",
+        "Salida del bulbo raquídeo que continúa con la médula espinal",
+        "Articular con la mandíbula",
+        "Alojar el oído interno"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Paso bulbo/médula**: agujero del occipital por donde sale la médula.\n❌ Nervio óptico: pasa por el conducto óptico del esfenoides.\n❌ Articulación mandíbula: se da en la ATM (fosa mandibular del temporal).\n❌ Oído interno: alojado en el peñasco del temporal."
+    },
+    {
+      "id": 25,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Qué hueso es 'alas de mariposa' y piedra angular de la base del cráneo?",
+      "opciones": ["Frontal", "Etmoides", "Esfenoides", "Occipital"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Esfenoides**: forma de mariposa, articula todos los huesos del cráneo.\n❌ Frontal: parte anterior del cráneo (frente).\n❌ Etmoides: pequeño, entre las órbitas.\n❌ Occipital: parte posterior del cráneo (foramen magno)."
+    },
+    {
+      "id": 26,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "La silla turca aloja:",
+      "opciones": ["Tiroides", "Hipófisis", "Paratiroides", "Timo"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Hipófisis**: alojada en la silla turca del esfenoides.\n❌ Tiroides: está en el cuello, delante de la tráquea.\n❌ Paratiroides: detrás del tiroides (también en el cuello).\n❌ Timo: en el mediastino (tórax superior)."
+    },
+    {
+      "id": 27,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "El ECM (esternocleidomastoideo) se inserta distalmente en:",
+      "opciones": [
+        "Apófisis cigomática del temporal",
+        "Apófisis estiloides",
+        "Apófisis mastoides del temporal",
+        "Cóndilos occipitales"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Mastoides**: inserción distal del ECM (orígenes: esternón + clavícula).\n❌ Cigomática: forma el arco cigomático (pómulo).\n❌ Estiloides: inserción de músculos estilofaríngeo y estilohioideo.\n❌ Cóndilos occipitales: articulación atlanto-occipital con C1."
+    },
+    {
+      "id": 28,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Cuál es el único hueso móvil del macizo craneofacial?",
+      "opciones": ["Maxilar", "Cigomático", "Mandíbula", "Hioides"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Mandíbula**: único móvil (articula en la ATM).\n❌ Maxilar: fijo, alberga dientes superiores.\n❌ Cigomático: fijo, forma el pómulo.\n❌ Hioides: móvil pero NO forma parte del macizo craneofacial (está en el cuello)."
+    },
+    {
+      "id": 29,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Qué particularidad tiene el hueso hioides?",
+      "opciones": [
+        "Es el más pequeño del cuerpo",
+        "No se articula con ningún otro hueso",
+        "Es un hueso par",
+        "Se fusiona al crecer"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **No articula**: único hueso sin articulación ósea directa.\n❌ Más pequeño: el más pequeño es el estribo (oído).\n❌ Par: el hioides es impar (único).\n❌ Se fusiona: no, se mantiene independiente toda la vida."
+    },
+    {
+      "id": 30,
+      "tema": "Tema 3: Aparato locomotor",
+      "pregunta": "¿Qué tipo de articulación corresponde con las sinoviales?",
+      "opciones": ["Sinartrosis", "Anfiartrosis", "Diartrosis", "Sindesmosis"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Diartrosis = sinoviales**: con cápsula y líquido (hombro, codo, rodilla).\n❌ Sinartrosis: fibrosas inmóviles (suturas del cráneo).\n❌ Anfiartrosis: cartilaginosas semimóviles (discos intervertebrales).\n❌ Sindesmosis: tipo de sinartrosis (articulación fibrosa)."
+    },
+    {
+      "id": 31,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Cuántas vértebras tiene la columna vertebral en total?",
+      "opciones": ["24", "26", "33", "35"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **33**: 7C + 12D + 5L + 5S + 4Co.\n❌ 24: solo cuenta las móviles (7+12+5), sin sacro ni cóccix.\n❌ 26: cuenta sacro y cóccix como una unidad cada uno.\n❌ 35: error numérico, son 33."
+    },
+    {
+      "id": 32,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Qué vértebras forman la porción INMÓVIL?",
+      "opciones": [
+        "Cervicales y dorsales",
+        "Dorsales y lumbares",
+        "Sacras y coxígeas",
+        "Lumbares y sacras"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Sacro y cóccix**: fusionadas, no se mueven entre sí.\n❌ Cervicales y dorsales: móviles.\n❌ Dorsales y lumbares: móviles (soportan movimiento).\n❌ Lumbares y sacras: las lumbares son móviles."
+    },
+    {
+      "id": 33,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Qué estructura tiene el axis que no tiene ninguna otra vértebra?",
+      "opciones": [
+        "Agujero transverso",
+        "Apófisis odontoides (pestillo de seguridad)",
+        "Carillas articulares",
+        "Apófisis espinosa bífida"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Apófisis odontoides (diente del axis)**: única en C2.\n❌ Agujero transverso: lo tienen todas las cervicales.\n❌ Carillas articulares: presentes en todas las vértebras.\n❌ Espinosa bífida: típica de cervicales (C2-C6), no exclusiva del axis."
+    },
+    {
+      "id": 34,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Cuál es el rasgo propio de las vértebras torácicas?",
+      "opciones": [
+        "Agujero transverso",
+        "Carillas articulares laterales para costillas",
+        "Apófisis espinosas bífidas",
+        "Cuerpo muy voluminoso"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Carillas costales**: rasgo exclusivo para articular con las costillas.\n❌ Agujero transverso: propio de las cervicales.\n❌ Espinosas bífidas: propias de cervicales.\n❌ Cuerpo voluminoso: propio de las lumbares (soportan peso)."
+    },
+    {
+      "id": 35,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Qué forma la pelvis?",
+      "opciones": [
+        "Solo el sacro",
+        "Sacro + 2 coxales",
+        "Solo los 2 coxales",
+        "Sacro + cóccix + coxales"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Sacro + 2 coxales**: estructura ósea de la pelvis.\n❌ Solo sacro: es parte, no toda la pelvis.\n❌ Solo coxales: sin sacro no hay pelvis.\n❌ Con cóccix: el cóccix es continuación, pero no se considera parte de la pelvis ósea."
+    },
+    {
+      "id": 36,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Cuáles son las 3 partes del esternón?",
+      "opciones": [
+        "Cabeza, cuerpo y cola",
+        "Manubrio, cuerpo y apéndice xifoides",
+        "Diáfisis, epífisis y metáfisis",
+        "Superior, medio e inferior"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Manubrio (sup) + Cuerpo (medio) + Xifoides (inf)**.\n❌ Cabeza/cuerpo/cola: nomenclatura de huesos largos o páncreas, no esternón.\n❌ Diáfisis/epífisis/metáfisis: propio de huesos largos.\n❌ Superior/medio/inferior: genérico, no son los nombres anatómicos."
+    },
+    {
+      "id": 37,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "Las costillas 8-10 se denominan:",
+      "opciones": ["Verdaderas", "Falsas", "Flotantes", "Flotantes auxiliares"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Falsas**: llegan al esternón vía cartílago de la 7ª.\n❌ Verdaderas: son las 1-7 (cartílago propio al esternón).\n❌ Flotantes: son las 11-12 (no llegan al esternón).\n❌ Flotantes auxiliares: no existe esa categoría."
+    },
+    {
+      "id": 38,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Cuál es la acción del diafragma en la inspiración?",
+      "opciones": [
+        "Se eleva y se relaja",
+        "Se contrae y aplana, ↑ volumen torácico",
+        "Se mantiene inmóvil",
+        "Disminuye el volumen torácico"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Contrae y aplana** en inspiración (↑volumen → entra aire).\n❌ Eleva y relaja: eso es lo que hace en ESPIRACIÓN.\n❌ Inmóvil: imposible, el diafragma siempre se mueve para respirar.\n❌ Disminuye volumen: eso ocurre en espiración."
+    },
+    {
+      "id": 39,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Qué nervio lleva el impulso motor al diafragma?",
+      "opciones": ["Vago", "Frénico", "Intercostal", "Torácico"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Frénico** (C3-C5): inerva cada hemidiafragma.\n❌ Vago (X): parasimpático de vísceras, no del diafragma.\n❌ Intercostal: inerva los músculos intercostales.\n❌ Torácico: designación genérica, no específica del diafragma."
+    },
+    {
+      "id": 40,
+      "tema": "Tema 4: Columna vertebral y tórax",
+      "pregunta": "¿Qué músculos son antagonistas sobre la escápula?",
+      "opciones": [
+        "Pectoral mayor y dorsal ancho",
+        "Pectoral menor (desciende) y trapecio (asciende)",
+        "Trapecio y dorsal ancho",
+        "Pectoral mayor y trapecio"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Pectoral menor (↓) vs Trapecio (↑)**: antagonistas en movilización escapular.\n❌ Pectoral mayor y dorsal ancho: actúan sobre el húmero, no escápula.\n❌ Trapecio y dorsal ancho: ambos actúan de formas que no son opuestas entre sí.\n❌ Pectoral mayor y trapecio: no son antagonistas directos."
+    },
+    {
+      "id": 41,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Cuál es la función principal de la clavícula?",
+      "opciones": [
+        "Proteger los pulmones",
+        "Separar los MMSS del esqueleto axial",
+        "Sostener el cráneo",
+        "Permitir la rotación del hombro"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Separar MMSS del tronco**: aumenta capacidad torácica y permite movilidad.\n❌ Proteger pulmones: lo hacen las costillas.\n❌ Sostener cráneo: lo hace la columna cervical.\n❌ Rotación hombro: la permiten músculos (manguito rotador), no la clavícula."
+    },
+    {
+      "id": 42,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Con qué estructura se articula la clavícula en su extremo externo?",
+      "opciones": [
+        "Apófisis coracoides",
+        "Acromion",
+        "Cavidad glenoidea",
+        "Cabeza del húmero"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Acromion**: extremo externo de la clavícula articula con el acromion escapular.\n❌ Coracoides: ahí se insertan bíceps y pectoral menor.\n❌ Glenoidea: cavidad de la escápula para el húmero.\n❌ Cabeza del húmero: articula con la glenoidea, no con la clavícula."
+    },
+    {
+      "id": 43,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Qué músculos se insertan en la apófisis coracoides?",
+      "opciones": [
+        "Deltoides y supraespinoso",
+        "Bíceps braquial y pectoral menor",
+        "Tríceps y pectoral mayor",
+        "Subescapular y redondo menor"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Bíceps (cabeza corta) + Pectoral menor**: ambos en la coracoides.\n❌ Deltoides: se origina en clavícula, acromion y espina escapular.\n❌ Tríceps: en tubérculo infraglenoideo y húmero.\n❌ Subescapular y redondo menor: forman el manguito rotador (no en coracoides)."
+    },
+    {
+      "id": 44,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Qué 4 músculos forman el manguito de los rotadores?",
+      "opciones": [
+        "Deltoides, supraespinoso, infraespinoso y redondo mayor",
+        "Subescapular, supraespinoso, infraespinoso y redondo menor",
+        "Supraespinoso, infraespinoso, redondo mayor y bíceps",
+        "Deltoides, subescapular, supraespinoso y tríceps"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **SITS**: Subescapular + Supraespinoso + Infraespinoso + redondo menor (Teres minor).\n❌ Con redondo MAYOR: el mayor NO pertenece al manguito.\n❌ Con deltoides: el deltoides es abductor, no parte del manguito.\n❌ Con bíceps o tríceps: son músculos del brazo, no del manguito."
+    },
+    {
+      "id": 45,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Por qué se rompe más el cuello quirúrgico del húmero?",
+      "opciones": [
+        "Está muy expuesto",
+        "Sin relieve = zona más débil",
+        "Soporta más peso",
+        "Menos vascularización"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Sin relieve = zona débil**: por eso es el punto típico de fractura.\n❌ Muy expuesto: la exposición no es el factor anatómico clave.\n❌ Más peso: el húmero no soporta carga axial como el fémur.\n❌ Menos vascularización: afecta a la consolidación, no al riesgo de rotura."
+    },
+    {
+      "id": 46,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "La inflamación de los tendones del epicóndilo produce:",
+      "opciones": [
+        "Codo del golfista",
+        "Codo del tenista",
+        "Síndrome del túnel carpiano",
+        "Tendinitis rotuliana"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Codo del tenista (epicondilitis)**: inflamación de los extensores laterales.\n❌ Codo del golfista: es en la epitróclea (medial), flexores.\n❌ Túnel carpiano: atrapamiento del nervio mediano en la muñeca.\n❌ Tendinitis rotuliana: afecta al tendón de la rótula (rodilla)."
+    },
+    {
+      "id": 47,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Qué movimiento lleva el radio paralelo al cúbito?",
+      "opciones": ["Pronación", "Supinación", "Flexión", "Extensión"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Supinación**: palmas hacia arriba, radio y cúbito paralelos.\n❌ Pronación: el radio se cruza sobre el cúbito (palmas abajo).\n❌ Flexión: movimiento del codo, no del radio sobre el cúbito.\n❌ Extensión: movimiento del codo, no relacionado con prono-supinación."
+    },
+    {
+      "id": 48,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Cuántos huesos tiene la mano?",
+      "opciones": ["24", "25", "27", "30"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **27 huesos**: 8 carpo + 5 metacarpianos + 14 falanges.\n❌ 24: incorrecto (faltan huesos).\n❌ 25: incorrecto.\n❌ 30: demasiados, se estarían incluyendo huesos que no son de la mano."
+    },
+    {
+      "id": 49,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Cuál es la función principal del deltoides?",
+      "opciones": [
+        "Flexión del hombro",
+        "Abducción del MMSS",
+        "Rotación interna",
+        "Extensión del brazo"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Abducción**: el deltoides separa el brazo del tronco.\n❌ Flexión hombro: lo hacen fibras anteriores parcialmente, no es principal.\n❌ Rotación interna: subescapular y dorsal ancho.\n❌ Extensión: la hacen dorsal ancho y fibras posteriores del deltoides."
+    },
+    {
+      "id": 50,
+      "tema": "Tema 5: Miembro superior",
+      "pregunta": "¿Qué nervio se afecta en el síndrome del túnel carpiano?",
+      "opciones": ["Cubital", "Radial", "Mediano", "Axilar"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Mediano**: atrapado en el túnel carpiano (hormigueo índice-corazón-anular).\n❌ Cubital: inerva meñique y anular (pasa por el canal de Guyon).\n❌ Radial: inerva extensores y zona del pulgar.\n❌ Axilar: inerva el deltoides (parte proximal del brazo)."
+    },
+    {
+      "id": 51,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué 3 huesos forman el coxal?",
+      "opciones": [
+        "Ilion, isquion y pubis",
+        "Ilion, sacro y cóccix",
+        "Fémur, tibia y peroné",
+        "Sacro, ilion y pubis"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Ilion + Isquion + Pubis**: los 3 huesos fusionados del coxal.\n❌ Con sacro y cóccix: son huesos separados, no parte del coxal.\n❌ Fémur/tibia/peroné: son huesos del miembro inferior libre.\n❌ Con sacro: el sacro se articula con el coxal, no lo forma."
+    },
+    {
+      "id": 52,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué estructura del coxal aloja la cabeza del fémur?",
+      "opciones": ["Cresta ilíaca", "Sínfisis del pubis", "Acetábulo", "Trocánter mayor"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Acetábulo**: cavidad del coxal donde encaja la cabeza femoral (cadera).\n❌ Cresta ilíaca: borde superior del ilion (palpable en caderas).\n❌ Sínfisis del pubis: articulación anterior entre los dos pubis.\n❌ Trocánter mayor: está en el fémur, no en el coxal."
+    },
+    {
+      "id": 53,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Dónde se insertan los glúteos y el psoas ilíaco?",
+      "opciones": [
+        "Glúteos: trocánter menor / Psoas: mayor",
+        "Glúteos: trocánter mayor / Psoas: menor",
+        "Ambos: trocánter mayor",
+        "Ambos: cabeza del fémur"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Glúteos → Trocánter MAYOR (posterior); Psoas → MENOR (anterior)**.\n❌ Invertido: es al revés, cuidado con no confundirlos.\n❌ Ambos en mayor: el psoas va al menor, no comparten inserción.\n❌ En cabeza: ahí se inserta el ligamento redondo, no músculos."
+    },
+    {
+      "id": 54,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué estructuras forman la articulación de la rodilla?",
+      "opciones": [
+        "Fémur, tibia y peroné",
+        "2 cóndilos fémur + 2 mesetas tibiales + rótula",
+        "Fémur, rótula y peroné",
+        "Tibia, peroné y rótula"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Cóndilos femorales + Mesetas tibiales + Rótula**: el peroné NO participa.\n❌ Con peroné: no interviene en la articulación de la rodilla.\n❌ Sin tibia: imposible, la tibia es clave.\n❌ Con peroné y sin fémur: el fémur es imprescindible."
+    },
+    {
+      "id": 55,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "La rótula es un hueso:",
+      "opciones": [
+        "Largo",
+        "Plano y sesamoideo (el más grande)",
+        "Corto irregular",
+        "Esponjoso largo"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Sesamoideo más grande**: incrustado en el tendón del cuádriceps.\n❌ Largo: los largos son fémur, tibia, peroné (con diáfisis).\n❌ Corto irregular: cortos son los del tarso/carpo.\n❌ Esponjoso largo: no es una clasificación anatómica estándar."
+    },
+    {
+      "id": 56,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué músculo es el principal extensor de cadera y clave en bipedestación?",
+      "opciones": ["Glúteo mayor", "Glúteo menor", "Psoas ilíaco", "Cuádriceps"],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Glúteo mayor**: extensor principal de cadera, clave para ponerse de pie.\n❌ Glúteo menor: abductor y rotador interno, no principal extensor.\n❌ Psoas: es FLEXOR de cadera (antagonista del glúteo mayor).\n❌ Cuádriceps: extensor de rodilla, no de cadera."
+    },
+    {
+      "id": 57,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Cuáles son los 4 vientres del cuádriceps?",
+      "opciones": [
+        "Recto anterior, vasto externo, crural y vasto interno",
+        "Bíceps, semitendinoso, semimembranoso y sartorio",
+        "Gemelos, sóleo y plantar",
+        "Sartorio, grácil, aductor y recto"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Recto anterior + 3 vastos (externo, crural/intermedio, interno)**.\n❌ Isquiotibiales: bíceps/semitendinoso/semimembranoso son flexores posteriores.\n❌ Gemelos/sóleo: músculos de la pantorrilla, no del muslo anterior.\n❌ Sartorio/grácil: músculos mediales, no parte del cuádriceps."
+    },
+    {
+      "id": 58,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué estructuras pasan por el triángulo de Scarpa?",
+      "opciones": [
+        "Arteria, vena y nervio femoral",
+        "Arteria y vena safena",
+        "Nervio ciático",
+        "Arteria poplítea"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Paquete vásculo-nervioso femoral**: arteria + vena + nervio.\n❌ Safena: es vena superficial, no pasa por el triángulo como paquete.\n❌ Ciático: pasa por la región glútea (bajo el piramidal).\n❌ Poplítea: detrás de la rodilla, no en el triángulo de Scarpa."
+    },
+    {
+      "id": 59,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Cuál es el nervio más largo del organismo?",
+      "opciones": ["Femoral", "Obturador", "Ciático", "Peroneo"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Ciático**: desde glúteo hasta planta del pie.\n❌ Femoral: solo llega hasta la pierna (vía safeno).\n❌ Obturador: inerva aductores del muslo, corto.\n❌ Peroneo: es rama del ciático, más corto."
+    },
+    {
+      "id": 60,
+      "tema": "Tema 6: Miembro inferior",
+      "pregunta": "¿Qué músculos forman el tendón de Aquiles?",
+      "opciones": [
+        "Tibial anterior y gemelos",
+        "Gastrocnemios y sóleo",
+        "Sóleo y peroneo",
+        "Solo los gemelos"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Gemelos (gastrocnemios) + Sóleo = tríceps sural** → Aquiles → calcáneo.\n❌ Tibial anterior: compartimento anterior (dorsiflexor), no en Aquiles.\n❌ Peroneo: eversores del pie, no forman Aquiles.\n❌ Solo gemelos: faltaría el sóleo (es parte esencial del tríceps sural)."
+    },
+    {
+      "id": 61,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Dónde está localizado el corazón?",
+      "opciones": [
+        "Plano medio entre los pulmones",
+        "Tórax oblicuo, 2/3 a la izquierda",
+        "Cavidad abdominal superior",
+        "Completamente en hemitórax izquierdo"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Tórax oblicuo, 2/3 a la izquierda**: ápex lateralizado al izquierdo.\n❌ Plano medio: no está centrado, está lateralizado.\n❌ Abdomen: el corazón está en el tórax, no en abdomen.\n❌ Completamente izquierdo: 1/3 está en el hemitórax derecho."
+    },
+    {
+      "id": 62,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Cuántas cavidades tiene el corazón?",
+      "opciones": ["2", "3", "4", "5"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **4**: 2 aurículas + 2 ventrículos.\n❌ 2: solo serían aurículas o ventrículos, no el total.\n❌ 3: error, no existe esa configuración.\n❌ 5: error numérico."
+    },
+    {
+      "id": 63,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Qué función tiene la parte derecha del corazón?",
+      "opciones": [
+        "Circulación mayor o sistémica",
+        "Circulación menor o pulmonar",
+        "Solo bombear sangre",
+        "Filtrar la sangre"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Circulación menor (pulmonar)**: envía sangre a pulmones para oxigenarla.\n❌ Mayor/sistémica: la hace la parte izquierda.\n❌ Solo bombear: ambas partes bombean, pero a destinos distintos.\n❌ Filtrar: el corazón no filtra (lo hacen riñones e hígado)."
+    },
+    {
+      "id": 64,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Qué válvula comunica AI con VI?",
+      "opciones": ["Tricúspide", "Mitral", "Aórtica", "Pulmonar"],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Mitral (bicúspide)**: entre aurícula y ventrículo izquierdos.\n❌ Tricúspide: entre AD y VD (parte derecha).\n❌ Aórtica: salida del VI hacia la aorta.\n❌ Pulmonar: salida del VD hacia el tronco pulmonar."
+    },
+    {
+      "id": 65,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Qué afirmación es CORRECTA?",
+      "opciones": [
+        "Todas las arterias conducen sangre oxigenada",
+        "Todas las venas llevan sangre desoxigenada",
+        "Todas las arterias salen del corazón",
+        "Las venas pulmonares llevan sangre desoxigenada"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Todas las arterias SALEN del corazón**: definición anatómica.\n❌ Todas oxigenadas: la arteria pulmonar lleva sangre desoxigenada.\n❌ Todas venas desoxigenadas: las venas pulmonares llevan sangre oxigenada.\n❌ Venas pulmonares desox: al contrario, llevan sangre OXIGENADA."
+    },
+    {
+      "id": 66,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Cuáles son las 3 capas del corazón (externa → interna)?",
+      "opciones": [
+        "Endocardio, miocardio, pericardio",
+        "Pericardio, miocardio, endocardio",
+        "Epicardio, miocardio, endotelio",
+        "Pleura, miocardio, endocardio"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Pericardio (ext) → Miocardio → Endocardio (int)**.\n❌ Invertido: el endocardio es la capa interna, no la externa.\n❌ Con 'endotelio': el endotelio es el revestimiento de vasos, no una capa cardiaca.\n❌ Con pleura: la pleura envuelve los pulmones, no el corazón."
+    },
+    {
+      "id": 67,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Por qué el grosor del VI > VD?",
+      "opciones": [
+        "Porque el VD late más rápido",
+        "VI bombea a todo el cuerpo (mayor presión)",
+        "El VD es más importante",
+        "Tienen el mismo grosor"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **VI bombea a todo el cuerpo**: necesita más fuerza (circulación mayor).\n❌ VD más rápido: ambos laten al mismo ritmo.\n❌ VD más importante: ambos son esenciales.\n❌ Mismo grosor: no, el VI es claramente más grueso."
+    },
+    {
+      "id": 68,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Dónde se genera el impulso cardiaco (marcapasos natural)?",
+      "opciones": [
+        "Nódulo auriculoventricular",
+        "Haz de His",
+        "Nódulo sinusal",
+        "Red de Purkinje"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Nódulo sinusal (en AD)**: marcapasos natural, genera el impulso.\n❌ NAV: retrasa el impulso hacia ventrículos, no lo genera.\n❌ Haz de His: transmite el impulso desde el NAV.\n❌ Red de Purkinje: distribuye el impulso por los ventrículos."
+    },
+    {
+      "id": 69,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Qué efecto produce el simpático sobre el corazón?",
+      "opciones": [
+        "Bradicardia",
+        "Taquicardia",
+        "Paro cardiaco",
+        "No tiene efecto"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Taquicardia**: el simpático ↑frecuencia cardíaca (situación de estrés).\n❌ Bradicardia: la produce el parasimpático (relajación).\n❌ Paro cardiaco: no es el efecto normal de la activación simpática.\n❌ Sin efecto: el simpático sí modula activamente el corazón."
+    },
+    {
+      "id": 70,
+      "tema": "Tema 7: Anatomía del corazón",
+      "pregunta": "¿Cuáles son las PRIMERAS arterias que salen de la aorta?",
+      "opciones": [
+        "Troncos supraaórticos",
+        "Arterias coronarias",
+        "Arteria subclavia",
+        "Arteria carótida"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Coronarias**: salen justo al inicio de la aorta para irrigar el propio corazón.\n❌ Troncos supraaórticos: salen DESPUÉS, en el cayado aórtico.\n❌ Subclavia: rama de los troncos supraaórticos.\n❌ Carótida: también rama posterior a las coronarias."
+    },
+    {
+      "id": 71,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Cuáles son las 3 capas de una arteria?",
+      "opciones": [
+        "Externa, media e interna",
+        "Externa (conjuntivo), media (muscular lisa) e íntima (endotelio)",
+        "Adventicia, muscular y mucosa",
+        "Pericardio, miocardio y endocardio"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Externa (conjuntivo) + Media (muscular lisa) + Íntima (endotelio)**.\n❌ Externa/media/interna: demasiado genérico, falta especificar tejido.\n❌ Con 'mucosa': la mucosa es propia de órganos huecos, no de arterias.\n❌ Pericardio/miocardio/endocardio: son las capas del corazón, no de arterias."
+    },
+    {
+      "id": 72,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Por qué es importante la capa media de las arterias?",
+      "opciones": [
+        "Permite la coagulación",
+        "Da rigidez para soportar la presión del VI",
+        "Nutre la arteria",
+        "Impide la oxidación"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Da rigidez**: muscular lisa soporta la presión del VI en sístole.\n❌ Coagulación: se activa al dañarse el endotelio (íntima).\n❌ Nutre la arteria: los vasa vasorum (en la externa) aportan nutrición.\n❌ Oxidación: no es una función de la capa media."
+    },
+    {
+      "id": 73,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Cuál es la función de la túnica íntima (endotelio)?",
+      "opciones": [
+        "Dar rigidez",
+        "Impedir la coagulación sanguínea",
+        "Transportar oxígeno",
+        "Contraer la arteria"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Impide coagulación**: el endotelio intacto evita trombosis.\n❌ Dar rigidez: es función de la capa media.\n❌ Transportar O2: lo hace la sangre dentro del vaso, no el endotelio.\n❌ Contraer: la contracción es función del músculo liso (media)."
+    },
+    {
+      "id": 74,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Qué son los capilares?",
+      "opciones": [
+        "Arterias pequeñas",
+        "Hilera de células endoteliales, sin capa media ni externa",
+        "Venas muy pequeñas",
+        "Vasos linfáticos"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Solo endotelio**: sin media ni externa → permite intercambio de gases/nutrientes.\n❌ Arterias pequeñas: son arteriolas (sí tienen capa media).\n❌ Venas pequeñas: son vénulas (también tienen más capas).\n❌ Linfáticos: son otro sistema (llevan linfa, no sangre)."
+    },
+    {
+      "id": 75,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Qué comunican los capilares?",
+      "opciones": [
+        "Arterias con venas",
+        "Arteriolas con vénulas",
+        "Aurículas con ventrículos",
+        "Venas con linfáticos"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Arteriolas ↔ vénulas**: donde ocurre el intercambio tisular.\n❌ Arterias con venas: más impreciso, son los vasos de mayor calibre.\n❌ Aurículas con ventrículos: las comunican válvulas AV, no capilares.\n❌ Venas con linfáticos: el drenaje linfático ocurre en los tejidos, no vía capilares."
+    },
+    {
+      "id": 76,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿En qué estructuras NO hay arterias?",
+      "opciones": [
+        "Músculos y huesos",
+        "Cartílago, córnea, cristalino, epidermis, uñas y cabello",
+        "Vísceras abdominales",
+        "SNC"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Cartílago, córnea, cristalino, epidermis, uñas, pelo**: estructuras avasculares.\n❌ Músculos y huesos: muy vascularizados.\n❌ Vísceras: todas tienen irrigación arterial.\n❌ SNC: muy vascularizado (polígono de Willis, arterias cerebrales)."
+    },
+    {
+      "id": 77,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Qué arteria es la única sin prefijo 'arteria'?",
+      "opciones": ["Carótida", "Subclavia", "Aorta", "Pulmonar"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Aorta**: se dice 'aorta' sin añadir 'arteria' delante.\n❌ Carótida: se dice 'arteria carótida'.\n❌ Subclavia: se dice 'arteria subclavia'.\n❌ Pulmonar: se dice 'arteria pulmonar'."
+    },
+    {
+      "id": 78,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Cuáles son los troncos supraaórticos?",
+      "opciones": [
+        "Tronco braquiocefálico, carótida izq y subclavia izq",
+        "Arterias pulmonares",
+        "Arterias coronarias",
+        "Aorta abdominal y torácica"
+      ],
+      "respuesta_correcta": 0,
+      "explicacion": "✅ **Braquiocefálico + Carótida izq + Subclavia izq**: salen del cayado aórtico.\n❌ Pulmonares: salen del VD, no de la aorta.\n❌ Coronarias: salen de la aorta pero no son troncos supraaórticos.\n❌ Aorta abdominal/torácica: son segmentos de la aorta, no ramas."
+    },
+    {
+      "id": 79,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿Por qué las arterias más alejadas tienen capa muscular más delgada?",
+      "opciones": [
+        "Porque se desgastan",
+        "Porque no soportan tanta presión",
+        "Porque son más jóvenes",
+        "Por anomalía genética"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Menos presión → menos necesidad de capa muscular gruesa**.\n❌ Se desgastan: no es así como funciona la anatomía vascular.\n❌ Más jóvenes: no tiene sentido biológico.\n❌ Anomalía: es la anatomía normal, no patológica."
+    },
+    {
+      "id": 80,
+      "tema": "Tema 8: Grandes vasos arteriales",
+      "pregunta": "¿En qué se bifurca la aorta abdominal?",
+      "opciones": [
+        "Arterias renales",
+        "Arterias ilíacas comunes",
+        "Arterias femorales",
+        "Arterias mesentéricas"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Ilíacas comunes**: bifurcación terminal de la aorta (a nivel L4).\n❌ Renales: ramas laterales, no bifurcación terminal.\n❌ Femorales: salen de la ilíaca externa (más distal).\n❌ Mesentéricas: ramas anteriores (irrigan intestino)."
+    },
+    {
+      "id": 81,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Por qué las venas NO presentan pulso?",
+      "opciones": [
+        "Porque no tienen sangre",
+        "No soportan la presión del VI",
+        "Están obstruidas",
+        "Tienen válvulas"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **No llega la presión del VI**: las arterias la amortiguan antes.\n❌ Sin sangre: falso, transportan sangre venosa.\n❌ Obstruidas: eso es patológico (trombosis).\n❌ Válvulas: son características, pero no explican la ausencia de pulso."
+    },
+    {
+      "id": 82,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Cómo sangran venas vs arterias?",
+      "opciones": [
+        "Venas intermitente, arterias 'en sábana'",
+        "Arterias brutal intermitente, venas 'en sábana'",
+        "Ambas igual",
+        "Las venas no sangran"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Arterias a chorro pulsátil; venas continuas (en sábana)**.\n❌ Invertido: las arterias sí pulsan, las venas no.\n❌ Igual: sangran distinto por la diferente presión.\n❌ Venas no sangran: sí sangran, pero sin pulsación."
+    },
+    {
+      "id": 83,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Qué son las válvulas venosas?",
+      "opciones": [
+        "Repliegues de músculo liso",
+        "Repliegues del endotelio",
+        "Válvulas similares a las cardíacas",
+        "Estructuras óseas"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Repliegues del endotelio**: evitan reflujo al impulsar sangre al corazón.\n❌ Músculo liso: el músculo está en la capa media, las válvulas son endoteliales.\n❌ Como las cardíacas: son distintas en estructura y localización.\n❌ Óseas: imposible, las válvulas son tejido blando."
+    },
+    {
+      "id": 84,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Qué sucede con el nº de válvulas venosas?",
+      "opciones": [
+        "Aumenta con el calibre",
+        "Aumenta con la disminución del calibre",
+        "Es siempre el mismo",
+        "Solo en venas grandes"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **A menor calibre → más válvulas**: venas pequeñas necesitan más apoyo.\n❌ Aumenta con calibre: al revés.\n❌ Siempre mismo: varía según localización.\n❌ Solo grandes: las grandes venas no suelen tener (cava, subclavia)."
+    },
+    {
+      "id": 85,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Por qué las grandes venas no tienen válvulas?",
+      "opciones": [
+        "Porque no son importantes",
+        "Por el volumen de sangre (presión suficiente)",
+        "Por evolución",
+        "Porque son cortas"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Volumen suficiente**: el propio flujo mantiene el avance sin necesidad de válvulas.\n❌ No importantes: son muy importantes (cava, femoral, yugular).\n❌ Por evolución: explicación vaga.\n❌ Cortas: algunas grandes son largas (cava, femoral)."
+    },
+    {
+      "id": 86,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Qué % del volumen sanguíneo llevan las venas profundas?",
+      "opciones": ["20%", "50%", "80%", "100%"],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **80%**: las profundas llevan la mayor parte del retorno venoso.\n❌ 20%: correspondería aproximadamente a las superficiales.\n❌ 50%: no es el reparto real.\n❌ 100%: imposible, hay sistema superficial también."
+    },
+    {
+      "id": 87,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Cuál es una vena superficial del MMII?",
+      "opciones": [
+        "Vena femoral",
+        "Vena poplítea",
+        "Vena safena",
+        "Vena cava"
+      ],
+      "respuesta_correcta": 2,
+      "explicacion": "✅ **Safena (mayor y menor)**: sistema superficial del miembro inferior.\n❌ Femoral: profunda, en el triángulo de Scarpa.\n❌ Poplítea: profunda, detrás de la rodilla.\n❌ Cava: gran vena central, no del MMII."
+    },
+    {
+      "id": 88,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Qué enfermedad afecta al sistema valvular venoso?",
+      "opciones": [
+        "Arteriosclerosis",
+        "Tromboflebitis (varices)",
+        "Hemorroides",
+        "Aneurisma"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Tromboflebitis/varices**: fallo valvular → dilatación e inflamación venosa.\n❌ Arteriosclerosis: afecta a arterias (endurecimiento, placa).\n❌ Hemorroides: son venas dilatadas pero por congestión anal, no por fallo valvular primario.\n❌ Aneurisma: dilatación arterial, no venosa."
+    },
+    {
+      "id": 89,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Qué comprende el sistema linfático?",
+      "opciones": [
+        "Solo los ganglios",
+        "Vasos y ganglios linfáticos + bazo + timo",
+        "Bazo e hígado",
+        "Solo los vasos linfáticos"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **Vasos + ganglios + bazo + timo**: componentes del sistema linfático.\n❌ Solo ganglios: incompleto.\n❌ Con hígado: el hígado no forma parte del sistema linfático.\n❌ Solo vasos: faltan ganglios, bazo y timo."
+    },
+    {
+      "id": 90,
+      "tema": "Tema 9: Grandes vasos venosos y linfáticos",
+      "pregunta": "¿Dónde drenan los vasos linfáticos?",
+      "opciones": [
+        "En el corazón directamente",
+        "En el sistema venoso",
+        "En el sistema arterial",
+        "En el sistema digestivo"
+      ],
+      "respuesta_correcta": 1,
+      "explicacion": "✅ **En el sistema venoso**: vía conducto torácico → venas subclavias.\n❌ Al corazón directo: pasa antes por el sistema venoso.\n❌ Al sistema arterial: imposible (dirección de flujo contraria).\n❌ Al digestivo: no se vacía ahí, aunque recoge quilo intestinal."
+    }
+  ]
+}
