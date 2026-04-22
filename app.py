@@ -6,6 +6,7 @@ import uuid
 import base64
 from datetime import datetime
 from pathlib import Path
+from streamlit_js_eval import streamlit_js_eval
 
 from banco_preguntas import BANCO, NIVELES, CATEGORIAS
 from banco_ucv import BANCO_UCV, NIVELES_UCV, CATEGORIAS_UCV
@@ -284,10 +285,31 @@ def cargar_fallos(usuario: str = "default") -> list:
             return []
     return []
 
+def _ls_key(usuario: str) -> str:
+    nombre = "".join(c for c in usuario.lower().strip() if c.isalnum() or c in "_-")
+    return f"carlotest_v1_{nombre}"
+
 def guardar_fallos(fallos: list, usuario: str = "default"):
+    # Guardar en archivo local (funciona en desarrollo local)
     try:
         path = get_fallos_path(usuario)
         path.write_text(json.dumps(fallos, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    # Guardar en localStorage del navegador (persiste en Streamlit Cloud)
+    try:
+        payload = base64.b64encode(
+            json.dumps(fallos, ensure_ascii=False).encode()
+        ).decode()
+        st.session_state._ls_save_n = st.session_state.get("_ls_save_n", 0) + 1
+        streamlit_js_eval(
+            js_expressions=(
+                f"(function(){{"
+                f"localStorage.setItem('{_ls_key(usuario)}', atob('{payload}'));"
+                f"return true;}})();"
+            ),
+            key=f"ls_save_{usuario}_{st.session_state._ls_save_n}",
+        )
     except Exception:
         pass
 
@@ -584,6 +606,7 @@ if not st.session_state.get("usuario_confirmado"):
                 st.session_state.usuario = nombre.strip()
                 st.session_state.usuario_confirmado = True
                 st.session_state.fallos = cargar_fallos(nombre.strip())
+                st.session_state._ls_loaded = False  # forzar carga desde localStorage
                 st.rerun()
             else:
                 st.warning("Escribe tu nombre para continuar")
@@ -603,8 +626,32 @@ if not st.session_state.get("usuario_confirmado"):
                     st.session_state.usuario = u
                     st.session_state.usuario_confirmado = True
                     st.session_state.fallos = cargar_fallos(u)
+                    st.session_state._ls_loaded = False
                     st.rerun()
     st.stop()
+
+# ── Carga desde localStorage (Streamlit Cloud no persiste archivos) ──
+# streamlit_js_eval devuelve None la primera vez (JS aún no ejecutó)
+# y el valor real en el siguiente rerun. El flag _ls_loaded evita
+# sobreescribir datos una vez cargados.
+if not st.session_state.get("_ls_loaded"):
+    _usuario = st.session_state.get("usuario", "")
+    if _usuario:
+        _raw_ls = streamlit_js_eval(
+            js_expressions=f"localStorage.getItem('{_ls_key(_usuario)}')",
+            key=f"ls_load_{_usuario}",
+        )
+        if _raw_ls is not None:
+            # JS ejecutó: puede ser null (sin datos) o un JSON string
+            if isinstance(_raw_ls, str) and _raw_ls.strip() and _raw_ls != "null":
+                try:
+                    _desde_ls = json.loads(_raw_ls)
+                    # Usar localStorage si tiene más fallos que el archivo local
+                    if len(_desde_ls) > len(st.session_state.fallos):
+                        st.session_state.fallos = _desde_ls
+                except Exception:
+                    pass
+            st.session_state._ls_loaded = True
 
 # ════════════════════════════════════════════════════════════════
 #  HERO
@@ -618,6 +665,7 @@ with st.sidebar:
         st.session_state.usuario = ""
         st.session_state.usuario_confirmado = False
         st.session_state.fallos = []
+        st.session_state._ls_loaded = False
         st.rerun()
 
 total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
