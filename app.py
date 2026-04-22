@@ -289,6 +289,10 @@ def _ls_key(usuario: str) -> str:
     nombre = "".join(c for c in usuario.lower().strip() if c.isalnum() or c in "_-")
     return f"carlotest_v1_{nombre}"
 
+def _ls_pin_key(usuario: str) -> str:
+    nombre = "".join(c for c in usuario.lower().strip() if c.isalnum() or c in "_-")
+    return f"carlotest_pin_v1_{nombre}"
+
 def guardar_fallos(fallos: list, usuario: str = "default"):
     # Guardar en archivo local (funciona en desarrollo local)
     try:
@@ -349,6 +353,11 @@ defaults = {
     "usuario": "",
     "usuario_confirmado": False,
     "chat_history": [],
+    # ── Login con PIN ──
+    "login_step": "nombre",       # "nombre" | "buscando_pin" | "pin_nuevo" | "pin_verificar" | "pin_bloqueado"
+    "login_usuario_temp": "",
+    "login_pin_stored": None,
+    "login_intentos": 0,
     "test_active": False,
     "test_tema": None,
     "test_pregs": [],
@@ -595,39 +604,152 @@ if not st.session_state.get("usuario_confirmado"):
 
     col_l, col_c, col_r = st.columns([1, 2, 1])
     with col_c:
-        st.markdown("**¿Cómo te llamas?**")
-        nombre = st.text_input(
-            "", placeholder="Escribe tu nombre...",
-            key="input_nombre",
-            label_visibility="collapsed"
-        )
-        if st.button("▶️ Entrar", type="primary", use_container_width=True):
-            if nombre.strip():
-                st.session_state.usuario = nombre.strip()
-                st.session_state.usuario_confirmado = True
-                st.session_state.fallos = cargar_fallos(nombre.strip())
-                st.session_state._ls_loaded = False  # forzar carga desde localStorage
+        _step = st.session_state.login_step
+        _tmp  = st.session_state.login_usuario_temp
+
+        # ── PASO 1: introducir nombre ─────────────────────────────
+        if _step == "nombre":
+            st.markdown("**¿Cómo te llamas?**")
+            nombre = st.text_input(
+                "", placeholder="Escribe tu nombre...",
+                key="input_nombre", label_visibility="collapsed"
+            )
+            if st.button("▶️ Siguiente", type="primary", use_container_width=True):
+                if nombre.strip():
+                    st.session_state.login_usuario_temp = nombre.strip()
+                    st.session_state.login_step = "buscando_pin"
+                    st.rerun()
+                else:
+                    st.warning("Escribe tu nombre para continuar")
+
+            # Acceso rápido (solo en local donde hay archivos)
+            usuarios_existentes = []
+            if FALLOS_DIR.exists():
+                usuarios_existentes = [
+                    f.stem for f in FALLOS_DIR.glob("*.json")
+                    if f.stat().st_size > 2
+                ]
+            if usuarios_existentes:
+                st.divider()
+                st.caption("👥 Acceso rápido:")
+                for u in sorted(usuarios_existentes):
+                    if st.button(f"👤 {u.capitalize()}", use_container_width=True, key=f"quick_{u}"):
+                        st.session_state.login_usuario_temp = u
+                        st.session_state.login_step = "buscando_pin"
+                        st.rerun()
+
+        # ── PASO 2: comprobar si el usuario tiene PIN en localStorage ──
+        elif _step == "buscando_pin":
+            st.markdown(f"Verificando **{_tmp}**...")
+            _raw_pin = streamlit_js_eval(
+                js_expressions=f"localStorage.getItem('{_ls_pin_key(_tmp)}') || '__NO_PIN__'",
+                key=f"ls_check_pin_{_tmp}",
+            )
+            if _raw_pin is None:
+                st.caption("Un momento...")       # JS aún no ejecutó, el siguiente rerun lo trae
+            elif _raw_pin == "__NO_PIN__":
+                st.session_state.login_step = "pin_nuevo"
+                st.session_state.login_intentos = 0
                 st.rerun()
             else:
-                st.warning("Escribe tu nombre para continuar")
+                st.session_state.login_pin_stored = _raw_pin
+                st.session_state.login_step = "pin_verificar"
+                st.session_state.login_intentos = 0
+                st.rerun()
 
-        # Mostrar usuarios existentes
-        usuarios_existentes = []
-        if FALLOS_DIR.exists():
-            usuarios_existentes = [
-                f.stem for f in FALLOS_DIR.glob("*.json")
-                if f.stat().st_size > 2
-            ]
-        if usuarios_existentes:
-            st.divider()
-            st.caption("👥 Acceso rápido:")
-            for u in sorted(usuarios_existentes):
-                if st.button(f"👤 {u.capitalize()}", use_container_width=True, key=f"quick_{u}"):
-                    st.session_state.usuario = u
-                    st.session_state.usuario_confirmado = True
-                    st.session_state.fallos = cargar_fallos(u)
-                    st.session_state._ls_loaded = False
+        # ── PASO 3a: nuevo usuario — crear PIN ────────────────────
+        elif _step == "pin_nuevo":
+            st.markdown(f"### 👋 ¡Bienvenida, {_tmp}!")
+            st.caption("Primera vez en CarloTest. Crea un PIN de 4 dígitos para que nadie más acceda a tus datos.")
+            pin_nuevo = st.text_input(
+                "Introduce tu PIN de 4 dígitos:",
+                type="password", max_chars=4, placeholder="••••",
+                key="input_pin_nuevo"
+            )
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if st.button("✅ Crear PIN y entrar", type="primary", use_container_width=True):
+                    if len(pin_nuevo) == 4 and pin_nuevo.isdigit():
+                        streamlit_js_eval(
+                            js_expressions=(
+                                f"localStorage.setItem('{_ls_pin_key(_tmp)}', '{pin_nuevo}'); true"
+                            ),
+                            key=f"ls_save_pin_{_tmp}",
+                        )
+                        st.session_state.usuario = _tmp
+                        st.session_state.usuario_confirmado = True
+                        st.session_state.fallos = cargar_fallos(_tmp)
+                        st.session_state._ls_loaded = False
+                        st.session_state.login_step = "nombre"
+                        st.session_state.login_usuario_temp = ""
+                        st.rerun()
+                    else:
+                        st.error("El PIN debe ser exactamente 4 dígitos (solo números).")
+            with col_b:
+                if st.button("← Volver", use_container_width=True):
+                    st.session_state.login_step = "nombre"
+                    st.session_state.login_usuario_temp = ""
                     st.rerun()
+
+        # ── PASO 3b: usuario existente — verificar PIN ────────────
+        elif _step == "pin_verificar":
+            intentos = st.session_state.login_intentos
+            st.markdown(f"### 👋 ¡Hola de nuevo, {_tmp}!")
+            if intentos > 0:
+                st.warning(f"PIN incorrecto. Intento {intentos} de 3.")
+            pin_intro = st.text_input(
+                "Introduce tu PIN de 4 dígitos:",
+                type="password", max_chars=4, placeholder="••••",
+                key=f"input_pin_ver_{intentos}"
+            )
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if st.button("▶️ Entrar", type="primary", use_container_width=True):
+                    if pin_intro == st.session_state.login_pin_stored:
+                        st.session_state.usuario = _tmp
+                        st.session_state.usuario_confirmado = True
+                        st.session_state.fallos = cargar_fallos(_tmp)
+                        st.session_state._ls_loaded = False
+                        st.session_state.login_step = "nombre"
+                        st.session_state.login_usuario_temp = ""
+                        st.session_state.login_intentos = 0
+                        st.rerun()
+                    else:
+                        nuevos_intentos = intentos + 1
+                        st.session_state.login_intentos = nuevos_intentos
+                        if nuevos_intentos >= 3:
+                            st.session_state.login_step = "pin_bloqueado"
+                        st.rerun()
+            with col_b:
+                if st.button("← Volver", use_container_width=True):
+                    st.session_state.login_step = "nombre"
+                    st.session_state.login_usuario_temp = ""
+                    st.rerun()
+
+        # ── PASO 4: bloqueado tras 3 intentos fallidos ────────────
+        elif _step == "pin_bloqueado":
+            st.error(f"🔒 PIN incorrecto 3 veces para **{_tmp}**.")
+            st.markdown("Si olvidaste tu PIN puedes empezar de cero. Se borrarán todos tus fallos guardados.")
+            col_a, col_b = st.columns(2)
+            with col_a:
+                if st.button("🗑️ Borrar datos y crear nuevo PIN", use_container_width=True):
+                    streamlit_js_eval(
+                        js_expressions=(
+                            f"localStorage.removeItem('{_ls_key(_tmp)}');"
+                            f"localStorage.removeItem('{_ls_pin_key(_tmp)}');"
+                            f"true"
+                        ),
+                        key=f"ls_clear_{_tmp}",
+                    )
+                    st.session_state.login_step = "pin_nuevo"
+                    st.session_state.login_intentos = 0
+                    st.rerun()
+            with col_b:
+                if st.button("← Intentar de nuevo", use_container_width=True):
+                    st.session_state.login_step = "pin_verificar"
+                    st.session_state.login_intentos = 0
+                    st.rerun()
+
     st.stop()
 
 # ── Carga desde localStorage (Streamlit Cloud no persiste archivos) ──
@@ -666,6 +788,10 @@ with st.sidebar:
         st.session_state.usuario_confirmado = False
         st.session_state.fallos = []
         st.session_state._ls_loaded = False
+        st.session_state.login_step = "nombre"
+        st.session_state.login_usuario_temp = ""
+        st.session_state.login_pin_stored = None
+        st.session_state.login_intentos = 0
         st.rerun()
 
 total_q   = sum(len(v["preguntas"]) for v in BANCO.values())
