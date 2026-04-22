@@ -1477,69 +1477,20 @@ def _contexto_temario(pregunta: str, opciones: list[str]) -> str:
     except Exception:
         return ""
 
-def saber_mas(p_data: dict, campo_valor: str, key_prefix: str):
-    """Expander 'Saber más' con IA: explicación ampliada, preguntas, esquema y nemotecnia."""
-    sm_key = f"sm__{key_prefix}__{p_data['id']}"
+def _gen_expander(titulo: str, prompt: str, sm_key: str, max_tokens: int = 500):
+    """Expander genérico con generación IA bajo demanda y caché en session_state."""
     if sm_key not in st.session_state:
         st.session_state[sm_key] = None
-
-    with st.expander("💡 Saber más", expanded=False):
+    with st.expander(titulo, expanded=False):
         if st.session_state[sm_key] is None:
-            if st.button(
-                "🤖 Ampliar con IA — explicación, preguntas, esquema y nemotecnia",
-                key=f"btn_{sm_key}",
-                use_container_width=True,
-            ):
-                correcta_idx = p_data["respuesta_correcta"]
-                correcta_txt = p_data["opciones"][correcta_idx]
-                falsas = [op for i, op in enumerate(p_data["opciones"]) if i != correcta_idx]
-                ctx = _contexto_temario(p_data["pregunta"], p_data["opciones"])
-
-                prompt = f"""Eres profesor de Anatomía Humana de 1º de Medicina UCV (Universidad Católica de Valencia).
-El alumno acaba de responder esta pregunta tipo test:
-
-PREGUNTA: {p_data["pregunta"]}
-RESPUESTA CORRECTA: {chr(65 + correcta_idx)}) {correcta_txt}
-OPCIONES INCORRECTAS: {" | ".join(falsas)}
-BLOQUE/TEMA: {campo_valor}
-EXPLICACIÓN BREVE: {p_data["explicacion"]}
-
-CONTEXTO DEL TEMARIO UCV:
-{ctx if ctx else "(no hay contexto adicional disponible)"}
-
-Genera la respuesta con este formato EXACTO en markdown, sin introducción:
-
-## 📚 Explicación ampliada
-[2-3 párrafos. Explica el mecanismo anatómico, función, localización y relevancia clínica usando el contexto del temario. Conecta con lo que el alumno debe dominar para el examen.]
-
-## 🧪 Preguntas relacionadas
-Escribe 3 preguntas tipo test diferentes sobre el mismo concepto, que podrían aparecer en el examen UCV:
-
-**Pregunta 1:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-**Pregunta 2:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-**Pregunta 3:** [enunciado]
-A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
-✅ **Correcta: [letra])** [opción] — [explicación en 1 línea]
-
-## 🗂️ Esquema — lo que debes saber
-[Lista jerárquica con bullets (•) de todos los puntos clave examinables sobre este concepto. Máx 10 puntos, concretos y directos.]
-
-## 🧠 Regla nemotécnica
-[Una regla, analogía clínica o truco visual para no olvidar este concepto. Si no existe una regla natural, inventa una que funcione. Nunca dejes esta sección vacía.]"""
-
+            if st.button("🤖 Generar", key=f"btn_{sm_key}", use_container_width=True):
                 client = get_client()
                 placeholder = st.empty()
                 texto = ""
                 try:
                     with client.messages.stream(
                         model="claude-sonnet-4-5",
-                        max_tokens=1000,
+                        max_tokens=max_tokens,
                         messages=[{"role": "user", "content": prompt}],
                     ) as stream:
                         for chunk in stream.text_stream:
@@ -1548,9 +1499,77 @@ A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...
                     placeholder.markdown(texto)
                     st.session_state[sm_key] = texto
                 except Exception as e:
-                    placeholder.error(f"Error al conectar con IA: {e}")
+                    placeholder.error(f"Error IA: {e}")
         else:
             st.markdown(st.session_state[sm_key])
+
+def explicacion_expandida(p_data: dict, campo_valor: str, key_prefix: str):
+    """3 expanders independientes: explicación detallada · truco · preguntas similares."""
+    correcta_idx = p_data["respuesta_correcta"]
+    correcta_letra = chr(65 + correcta_idx)
+    correcta_txt = p_data["opciones"][correcta_idx]
+    opciones_fmt = "\n".join(f"{chr(65+i)}) {op}" for i, op in enumerate(p_data["opciones"]))
+    ctx = _contexto_temario(p_data["pregunta"], p_data["opciones"])
+    ctx_short = ctx[:700] if ctx else "(sin contexto adicional)"
+
+    base = (
+        f"Eres profesor de Anatomía Humana de 1º de Medicina UCV.\n"
+        f"PREGUNTA: {p_data['pregunta']}\n"
+        f"OPCIONES:\n{opciones_fmt}\n"
+        f"CORRECTA: {correcta_letra}) {correcta_txt}\n"
+        f"BLOQUE/TEMA: {campo_valor}\n"
+        f"CONTEXTO TEMARIO:\n{ctx_short}"
+    )
+
+    # ── 1. Explicación detallada ──────────────────────────────────
+    falsas_bloque = "\n".join(
+        f"**❌ {chr(65+i)}) {op}**\n[Explica en 2 frases por qué esta opción es incorrecta, qué es realmente]"
+        for i, op in enumerate(p_data["opciones"]) if i != correcta_idx
+    )
+    prompt_det = (
+        f"{base}\n\n"
+        f"Explica DETALLADAMENTE cada opción. Sin introducción, ve directo al grano.\n\n"
+        f"**✅ {correcta_letra}) {correcta_txt}**\n"
+        f"[Explica en 2-3 frases el mecanismo anatómico completo que justifica esta respuesta]\n\n"
+        f"{falsas_bloque}"
+    )
+    _gen_expander(
+        "📖 Explicación detallada",
+        prompt_det,
+        f"exp_det_{key_prefix}_{p_data['id']}",
+        max_tokens=550,
+    )
+
+    # ── 2. Truco nemotécnico ──────────────────────────────────────
+    prompt_truco = (
+        f"{base}\n\n"
+        f"Genera UN ÚNICO truco nemotécnico o regla para recordar este concepto para el examen.\n"
+        f"Puede ser: siglas, rima, analogía clínica, imagen visual, historia corta.\n"
+        f"Que sea realmente memorable. Solo el truco, sin introducción ni conclusión."
+    )
+    _gen_expander(
+        "🧠 Truco nemotécnico",
+        prompt_truco,
+        f"exp_truco_{key_prefix}_{p_data['id']}",
+        max_tokens=200,
+    )
+
+    # ── 3. Preguntas similares ────────────────────────────────────
+    prompt_sim = (
+        f"{base}\n\n"
+        f"Genera 3 preguntas tipo test DISTINTAS sobre el mismo concepto anatómico "
+        f"que podrían aparecer en el examen UCV. Formato exacto:\n\n"
+        f"**P1:** [enunciado]\n"
+        f"A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...\n"
+        f"✅ **Correcta: X)** [opción] — [explicación en 1 línea]\n\n"
+        f"(misma estructura para P2 y P3)"
+    )
+    _gen_expander(
+        "🔁 Preguntas similares",
+        prompt_sim,
+        f"exp_sim_{key_prefix}_{p_data['id']}",
+        max_tokens=600,
+    )
 
 # ────────────────────────────────────────────────────────────────
 #  TAB 8 — PREGUNTAS REALES UCV
@@ -1628,7 +1647,7 @@ with tab_real:
             else:
                 st.error(f"❌ Incorrecto — era **{chr(65+correcta)})** {p_r['opciones'][correcta]}")
             st.markdown(p_r["explicacion"])
-            saber_mas(p_r, p_r["bloque"], f"real_{idx_r}_{bloque_sel}")
+            explicacion_expandida(p_r, p_r["bloque"], f"real_{idx_r}_{bloque_sel}")
 
 # ────────────────────────────────────────────────────────────────
 #  TAB 9 — REPASO POR TEMAS
@@ -1697,7 +1716,7 @@ with tab_temas:
             else:
                 st.error(f"❌ Incorrecto — era **{chr(65+correcta_t)})** {p_t['opciones'][correcta_t]}")
             st.markdown(p_t["explicacion"])
-            saber_mas(p_t, p_t["tema"], f"temas_{idx_t}_{tema_sel}")
+            explicacion_expandida(p_t, p_t["tema"], f"temas_{idx_t}_{tema_sel}")
 
 # ────────────────────────────────────────────────────────────────
 #  TAB 10 — CONSULTAR TEMARIO
