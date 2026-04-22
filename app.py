@@ -1627,8 +1627,7 @@ with tab_real:
                 st.success("✅ ¡Correcto!")
             else:
                 st.error(f"❌ Incorrecto — era **{chr(65+correcta)})** {p_r['opciones'][correcta]}")
-            with st.expander("💬 Explicación", expanded=True):
-                st.markdown(p_r["explicacion"])
+            st.markdown(p_r["explicacion"])
             saber_mas(p_r, p_r["bloque"], f"real_{idx_r}_{bloque_sel}")
 
 # ────────────────────────────────────────────────────────────────
@@ -1697,8 +1696,7 @@ with tab_temas:
                 st.success("✅ ¡Correcto!")
             else:
                 st.error(f"❌ Incorrecto — era **{chr(65+correcta_t)})** {p_t['opciones'][correcta_t]}")
-            with st.expander("💬 Explicación", expanded=True):
-                st.markdown(p_t["explicacion"])
+            st.markdown(p_t["explicacion"])
             saber_mas(p_t, p_t["tema"], f"temas_{idx_t}_{tema_sel}")
 
 # ────────────────────────────────────────────────────────────────
