@@ -415,121 +415,73 @@ def mostrar_pregunta(p, idx, total, key_prefix):
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
 def feedback(p, letra):
-    """Muestra correcto/incorrecto + explicación extendida con Claude."""
+    """Muestra correcto/incorrecto + explicación breve + 3 expanders IA con caché."""
     acertada = letra == p["correcta"]
     if acertada:
         st.success("✅  ¡Correcto!")
     else:
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
 
-    opciones_texto = "\n".join(f"  {k}) {v}" for k, v in p["opciones"].items())
-    falsas = [k for k in p["opciones"] if k != p["correcta"]]
-    falsas_str = ", ".join(falsas)
+    # Explicación telegráfica inmediata (sin IA)
+    st.markdown(f"💬 {p['exp']}")
 
-    prompt = f"""Eres profesor de Anatomía Humana para estudiantes de 1º de Medicina UCV. Acaban de responder esta pregunta tipo test:
+    # Base compartida para los 3 prompts
+    p_id = str(p.get("id", abs(hash(p["enunciado"]))))
+    opciones_fmt = "\n".join(f"{k}) {v}" for k, v in p["opciones"].items())
+    falsas_bloque = "\n".join(
+        f"**❌ {k}) {v}**\n[Explica en 2 frases por qué es incorrecta y qué es realmente]"
+        for k, v in p["opciones"].items() if k != p["correcta"]
+    )
+    base = (
+        f"Eres profesor de Anatomía Humana de 1º de Medicina UCV.\n"
+        f"PREGUNTA: {p['enunciado']}\n"
+        f"OPCIONES:\n{opciones_fmt}\n"
+        f"CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}\n"
+        f"EXPLICACIÓN BASE: {p['exp']}"
+    )
 
-PREGUNTA: {p['enunciado']}
-OPCIONES:
-{opciones_texto}
-RESPUESTA CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}
-RESPUESTA DEL ALUMNO: {letra}) {p['opciones'].get(letra, '—')}
-EXPLICACIÓN BASE: {p['exp']}
+    # ── Expander 1: Explicación detallada ──────────────────────────
+    _gen_expander(
+        "📖 Explicación detallada",
+        (
+            f"{base}\n\n"
+            f"Explica DETALLADAMENTE cada opción. Sin introducción, ve directo.\n\n"
+            f"**✅ {p['correcta']}) {p['opciones'][p['correcta']]}**\n"
+            f"[2-3 frases: mecanismo anatómico completo, función, localización]\n\n"
+            f"{falsas_bloque}"
+        ),
+        f"fb_det_{p_id}",
+        max_tokens=550,
+    )
 
-Genera una explicación didáctica con este formato EXACTO. Usa markdown con texto en color claro. Sé conciso pero completo:
+    # ── Expander 2: Truco nemotécnico ───────────────────────────────
+    _gen_expander(
+        "🧠 Truco nemotécnico",
+        (
+            f"{base}\n\n"
+            f"Genera UN ÚNICO truco nemotécnico para recordar este concepto.\n"
+            f"Puede ser: siglas, rima, analogía clínica, imagen visual, historia corta.\n"
+            f"Solo el truco, sin introducción ni conclusión."
+        ),
+        f"fb_truco_{p_id}",
+        max_tokens=200,
+    )
 
-**✅ Por qué {p['correcta']}) es correcta**
-[1-2 frases explicando el mecanismo anatómico clave. Texto en color normal, visible.]
-
-**❌ Por qué las otras opciones son incorrectas**
-- **{falsas[0] if len(falsas)>0 else ""}**) [una frase explicando por qué es incorrecta]
-- **{falsas[1] if len(falsas)>1 else ""}**) [una frase explicando por qué es incorrecta]
-- **{falsas[2] if len(falsas)>2 else ""}**) [una frase explicando por qué es incorrecta]
-
-**🧠 Truco para memorizar**
-[nemotecnia, analogía clínica o regla práctica — máx 2 frases]
-
-**📌 Otras preguntas posibles**
-- [pregunta 1 sobre este mismo concepto que podría aparecer en examen]
-- [pregunta 2]
-- [pregunta 3]"""
-
-    client = get_client()
-    with st.expander("💬 Explicación detallada", expanded=True):
-        placeholder = st.empty()
-        texto = ""
-        try:
-            with client.messages.stream(
-                model="claude-sonnet-4-5",
-                max_tokens=700,
-                messages=[{"role": "user", "content": prompt}]
-            ) as stream:
-                for chunk in stream.text_stream:
-                    texto += chunk
-                    placeholder.markdown(texto + "▌")
-            placeholder.markdown(texto)
-        except Exception:
-            placeholder.info(f"💬 {p['exp']}")
-
-    # ── Preguntas similares con botón Ver respuesta ──
-    p_id = p.get("id", "")
-    key_sim = f"sim_{p_id}_{letra}"
-    if f"pregs_sim_{key_sim}" not in st.session_state:
-        st.session_state[f"pregs_sim_{key_sim}"] = None
-    if f"resp_sim_{key_sim}" not in st.session_state:
-        st.session_state[f"resp_sim_{key_sim}"] = {}
-
-    with st.expander("🔁 Practica con preguntas similares", expanded=False):
-        if st.session_state[f"pregs_sim_{key_sim}"] is None:
-            if st.button("🤖 Generar 2 preguntas similares", key=f"btn_sim_{key_sim}", use_container_width=True):
-                with st.spinner("Generando preguntas..."):
-                    prompt_sim = f"""Genera exactamente 2 preguntas tipo test de anatomía sobre el mismo concepto: "{p.get('concepto','')}"
-Basadas en: {p['enunciado']}
-
-Responde SOLO con JSON válido, sin texto extra:
-[
-  {{
-    "enunciado": "...",
-    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
-    "correcta": "A",
-    "exp": "explicación breve"
-  }},
-  {{
-    "enunciado": "...",
-    "opciones": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
-    "correcta": "B",
-    "exp": "explicación breve"
-  }}
-]"""
-                    try:
-                        resp = client.messages.create(
-                            model="claude-sonnet-4-5",
-                            max_tokens=800,
-                            messages=[{"role": "user", "content": prompt_sim}]
-                        )
-                        raw = resp.content[0].text.strip()
-                        start = raw.find("[")
-                        end = raw.rfind("]") + 1
-                        pregs_sim = json.loads(raw[start:end])
-                        st.session_state[f"pregs_sim_{key_sim}"] = pregs_sim
-                        st.rerun()
-                    except Exception:
-                        st.error("No se pudieron generar. Inténtalo de nuevo.")
-        else:
-            pregs_sim = st.session_state[f"pregs_sim_{key_sim}"]
-            for i, ps in enumerate(pregs_sim):
-                st.markdown(f"**Pregunta {i+1}:** {ps['enunciado']}")
-                for k, v in ps["opciones"].items():
-                    st.markdown(f"&nbsp;&nbsp;**{k})** {v}")
-                resp_key = f"resp_sim_{key_sim}_{i}"
-                if st.session_state[f"resp_sim_{key_sim}"].get(i) is None:
-                    if st.button(f"👁️ Ver respuesta", key=f"ver_{key_sim}_{i}", use_container_width=False):
-                        st.session_state[f"resp_sim_{key_sim}"][i] = True
-                        st.rerun()
-                else:
-                    st.success(f"✅ Correcta: **{ps['correcta']})** {ps['opciones'][ps['correcta']]}")
-                    st.caption(f"💬 {ps['exp']}")
-                if i < len(pregs_sim) - 1:
-                    st.divider()
+    # ── Expander 3: Preguntas similares ─────────────────────────────
+    _gen_expander(
+        "🔁 Preguntas similares",
+        (
+            f"{base}\n\n"
+            f"Genera 3 preguntas tipo test DISTINTAS sobre el mismo concepto "
+            f"que podrían aparecer en el examen UCV. Formato:\n\n"
+            f"**P1:** [enunciado]\n"
+            f"A) ... &nbsp; B) ... &nbsp; C) ... &nbsp; D) ...\n"
+            f"✅ **Correcta: X)** [opción] — [explicación en 1 línea]\n\n"
+            f"(misma estructura para P2 y P3)"
+        ),
+        f"fb_sim_{p_id}",
+        max_tokens=600,
+    )
 
 def pantalla_final(results, n_fallos_nuevos=0):
     c = sum(results)
