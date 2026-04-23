@@ -414,30 +414,109 @@ def mostrar_pregunta(p, idx, total, key_prefix):
     opciones = [f"{k})  {v}" for k, v in p["opciones"].items()]
     return st.radio("", opciones, index=None, key=f"{key_prefix}_{idx}")
 
+# ── Helpers IA compartidos ───────────────────────────────────────
+def _contexto_temario(pregunta: str, opciones) -> str:
+    """Extrae hasta ~1200 chars de las secciones del temario más relevantes."""
+    try:
+        tm = cargar_temario()
+        palabras = set(
+            w for w in (pregunta + " " + " ".join(opciones)).lower().split()
+            if len(w) > 4
+        )
+        fragmentos = []
+        for tema_t in tm["temas"]:
+            for sec in tema_t.get("secciones", []):
+                texto = sec["contenido"].lower()
+                if sum(1 for w in palabras if w in texto) >= 2:
+                    fragmentos.append(
+                        f"**{tema_t['titulo']} › {sec['titulo']}**\n{sec['contenido'][:400]}"
+                    )
+        ctx = "\n\n".join(fragmentos[:4])
+        return ctx[:1400] if ctx else ""
+    except Exception:
+        return ""
+
+def _gen_expander(titulo: str, prompt: str, sm_key: str, max_tokens: int = 500):
+    """Expander genérico con generación IA bajo demanda y caché en session_state."""
+    if sm_key not in st.session_state:
+        st.session_state[sm_key] = None
+    with st.expander(titulo, expanded=False):
+        if st.session_state[sm_key] is None:
+            if st.button("🤖 Generar", key=f"btn_{sm_key}", use_container_width=True):
+                client = get_client()
+                placeholder = st.empty()
+                texto = ""
+                try:
+                    with client.messages.stream(
+                        model="claude-sonnet-4-5",
+                        max_tokens=max_tokens,
+                        messages=[{"role": "user", "content": prompt}],
+                    ) as stream:
+                        for chunk in stream.text_stream:
+                            texto += chunk
+                            placeholder.markdown(texto + "▌")
+                    placeholder.markdown(texto)
+                    st.session_state[sm_key] = texto
+                except Exception as e:
+                    placeholder.error(f"Error IA: {e}")
+        else:
+            st.markdown(st.session_state[sm_key])
+
 def feedback(p, letra):
-    """Muestra correcto/incorrecto + explicación breve + 3 expanders IA con caché."""
+    """Correcto/incorrecto + telegrama por opción (auto) + 3 expanders IA con caché."""
     acertada = letra == p["correcta"]
     if acertada:
         st.success("✅  ¡Correcto!")
     else:
         st.error(f"❌  Incorrecto — era  **{p['correcta']})** {p['opciones'][p['correcta']]}")
 
-    # Explicación telegráfica inmediata (sin IA)
-    st.markdown(f"💬 {p['exp']}")
-
-    # Base compartida para los 3 prompts
     p_id = str(p.get("id", abs(hash(p["enunciado"]))))
     opciones_fmt = "\n".join(f"{k}) {v}" for k, v in p["opciones"].items())
-    falsas_bloque = "\n".join(
-        f"**❌ {k}) {v}**\n[Explica en 2 frases por qué es incorrecta y qué es realmente]"
-        for k, v in p["opciones"].items() if k != p["correcta"]
-    )
     base = (
         f"Eres profesor de Anatomía Humana de 1º de Medicina UCV.\n"
         f"PREGUNTA: {p['enunciado']}\n"
         f"OPCIONES:\n{opciones_fmt}\n"
         f"CORRECTA: {p['correcta']}) {p['opciones'][p['correcta']]}\n"
         f"EXPLICACIÓN BASE: {p['exp']}"
+    )
+
+    # ── Telegrama automático — siempre visible, se genera una vez ──
+    tg_key = f"fb_tg_{p_id}"
+    if tg_key not in st.session_state:
+        st.session_state[tg_key] = None
+
+    if st.session_state[tg_key] is None:
+        lineas_fmt = "\n".join(
+            f"{'✅' if k == p['correcta'] else '❌'} **{k})** [razón en ≤10 palabras]"
+            for k in p["opciones"]
+        )
+        prompt_tg = (
+            f"{base}\n\n"
+            f"Escribe UNA FRASE TELEGRÁFICA por opción (máx 10 palabras cada una). "
+            f"Sin introducción. Formato exacto:\n{lineas_fmt}"
+        )
+        client = get_client()
+        ph = st.empty()
+        txt = ""
+        try:
+            with client.messages.stream(
+                model="claude-sonnet-4-5", max_tokens=160,
+                messages=[{"role": "user", "content": prompt_tg}],
+            ) as stream:
+                for chunk in stream.text_stream:
+                    txt += chunk
+                    ph.markdown(txt + "▌")
+            ph.markdown(txt)
+            st.session_state[tg_key] = txt
+        except Exception:
+            ph.markdown(f"💬 {p['exp']}")
+            st.session_state[tg_key] = p["exp"]
+    else:
+        st.markdown(st.session_state[tg_key])
+
+    falsas_bloque = "\n".join(
+        f"**❌ {k}) {v}**\n[Explica en 2 frases por qué es incorrecta y qué es realmente]"
+        for k, v in p["opciones"].items() if k != p["correcta"]
     )
 
     # ── Expander 1: Explicación detallada ──────────────────────────
@@ -1407,53 +1486,6 @@ def cargar_banco_por_temas():
 def cargar_temario():
     p = Path(__file__).parent / "temario_UCV_anatomia.json"
     return json.loads(p.read_text(encoding="utf-8"))
-
-def _contexto_temario(pregunta: str, opciones: list[str]) -> str:
-    """Extrae hasta ~1200 chars de las secciones del temario más relevantes."""
-    try:
-        tm = cargar_temario()
-        palabras = set(
-            w for w in (pregunta + " " + " ".join(opciones)).lower().split()
-            if len(w) > 4
-        )
-        fragmentos = []
-        for tema_t in tm["temas"]:
-            for sec in tema_t.get("secciones", []):
-                texto = sec["contenido"].lower()
-                if sum(1 for w in palabras if w in texto) >= 2:
-                    fragmentos.append(
-                        f"**{tema_t['titulo']} › {sec['titulo']}**\n{sec['contenido'][:400]}"
-                    )
-        ctx = "\n\n".join(fragmentos[:4])
-        return ctx[:1400] if ctx else ""
-    except Exception:
-        return ""
-
-def _gen_expander(titulo: str, prompt: str, sm_key: str, max_tokens: int = 500):
-    """Expander genérico con generación IA bajo demanda y caché en session_state."""
-    if sm_key not in st.session_state:
-        st.session_state[sm_key] = None
-    with st.expander(titulo, expanded=False):
-        if st.session_state[sm_key] is None:
-            if st.button("🤖 Generar", key=f"btn_{sm_key}", use_container_width=True):
-                client = get_client()
-                placeholder = st.empty()
-                texto = ""
-                try:
-                    with client.messages.stream(
-                        model="claude-sonnet-4-5",
-                        max_tokens=max_tokens,
-                        messages=[{"role": "user", "content": prompt}],
-                    ) as stream:
-                        for chunk in stream.text_stream:
-                            texto += chunk
-                            placeholder.markdown(texto + "▌")
-                    placeholder.markdown(texto)
-                    st.session_state[sm_key] = texto
-                except Exception as e:
-                    placeholder.error(f"Error IA: {e}")
-        else:
-            st.markdown(st.session_state[sm_key])
 
 def explicacion_expandida(p_data: dict, campo_valor: str, key_prefix: str):
     """3 expanders independientes: explicación detallada · truco · preguntas similares."""
